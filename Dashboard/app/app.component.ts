@@ -1,13 +1,11 @@
-import {Component, View} from "angular2/core";
+import { Component } from '@angular/core';
 
 @Component({
-   selector: 'my-app'
+  selector: 'my-app',
+  templateUrl: 'app/app.component.html'
 })
 
-@View({
-  templateUrl: '<h2>Hi!</h2>'
-})
-
-export class AppComponent {
+export class AppComponent  {
+	
 
 }
