@@ -12,6 +12,14 @@ var dataset = [
       "flight": "JKCA",
       "messages": "Hello",
       "recovery_options": "N999QS",
+      "events": "En Route",
+      "etd": "23:30"
+    },
+    {
+      "tail_no": "N999QS",
+      "flight": "KJAC",
+      "messages": "Hi",
+      "recovery_options": "null",
       "events": "Weather",
       "etd": "23:30"
     },
@@ -51,108 +59,20 @@ var dataset = [
       "tail_no": "N999QS",
       "flight": "KJAC",
       "messages": "Hi",
-      "recovery_options": "N555QS",
+      "recovery_options": "null",
       "events": "Weather",
       "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
-    {
-      "tail_no": "N999QS",
-      "flight": "KJAC",
-      "messages": "Hi",
-      "recovery_options": "N555QS",
-      "events": "Weather",
-      "etd": "23:30"
-    },
+    }
 ]
 
 
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+    return '<table cellpadding="5" border="0" style="padding-left:50px;">'+
         '<tr>'+
-            '<td>Events:</td>'+
-            '<td>'+d.events+'</td>'+
+            '<td>Recovery Options:</td>'+
+            '<td>'+d.recovery_options+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>etd:</td>'+
@@ -177,9 +97,16 @@ $(document).ready(function() {
             },
             { "data": "tail_no" },
             { "data": "flight" },
+            { "data": "events" },
             { "data": "messages" },
             { "data": "recovery_options" }
         ],
+        "aoColumnDefs":[{
+          "aTargets":[ 5 ],
+          "mRender": function(data, type, full) {
+            return (data == "null") ? "No" : "Yes";
+          }
+        }],
         "order": [[1, 'asc']]
     } );
      
