@@ -3,7 +3,9 @@ var dataset = [
       "tail_no": "N999QS",
       "flight": "KJAC",
       "messages": "Hi",
-      "recovery_options": "N555QS",
+      "recovery_options": [
+        {"tail_no": "N555QS", "flight": "JKCA"},
+        {"tail_no": "N777QS", "flight": "CMHA"} ],
       "events": "Weather",
       "etd": "23:30"
     },
@@ -11,7 +13,9 @@ var dataset = [
       "tail_no": "N555QS",
       "flight": "JKCA",
       "messages": "Hello",
-      "recovery_options": "N999QS",
+      "recovery_options": [
+        {"tail_no": "N555QS", "flight": "JKCA"},
+        {"tail_no": "N777QS", "flight": "CMHA"} ],
       "events": "En Route",
       "etd": "23:30"
     },
@@ -27,7 +31,9 @@ var dataset = [
       "tail_no": "N999QS",
       "flight": "KJAC",
       "messages": "Hi",
-      "recovery_options": "N555QS",
+      "recovery_options": [
+        {"tail_no": "N555QS", "flight": "JKCA"},
+        {"tail_no": "N777QS", "flight": "CMHA"} ],
       "events": "Weather",
       "etd": "23:30"
     },
@@ -35,7 +41,9 @@ var dataset = [
       "tail_no": "N999QS",
       "flight": "KJAC",
       "messages": "Hi",
-      "recovery_options": "N555QS",
+      "recovery_options": [
+        {"tail_no": "N555QS", "flight": "JKCA"},
+        {"tail_no": "N777QS", "flight": "CMHA"} ],
       "events": "Weather",
       "etd": "23:30"
     },
@@ -43,7 +51,9 @@ var dataset = [
       "tail_no": "N999QS",
       "flight": "KJAC",
       "messages": "Hi",
-      "recovery_options": "N555QS",
+      "recovery_options": [
+        {"tail_no": "N555QS", "flight": "JKCA"},
+        {"tail_no": "N777QS", "flight": "CMHA"} ],
       "events": "Weather",
       "etd": "23:30"
     },
@@ -51,7 +61,9 @@ var dataset = [
       "tail_no": "N999QS",
       "flight": "KJAC",
       "messages": "Hi",
-      "recovery_options": "N555QS",
+      "recovery_options": [
+        {"tail_no": "N555QS", "flight": "JKCA"},
+        {"tail_no": "N777QS", "flight": "CMHA"} ],
       "events": "Weather",
       "etd": "23:30"
     },
@@ -70,19 +82,32 @@ var dataset = [
 function format ( d ) {
     // `d` is the original data object for the row
     return '<table cellpadding="5" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Recovery Options:</td>'+
-            '<td>'+d.recovery_options+'</td>'+
-        '</tr>'+
+        getRecoveryOptions(d) +
         '<tr>'+
             '<td>etd:</td>'+
             '<td>'+d.etd+'</td>'+
         '</tr>'+
-        '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
-        '</tr>'+
-    '</table>';
+    '</table>' +
+    '<button>Add</button>';
+}
+
+function getRecoveryOptions(d) {
+
+    var ret = '';
+    if(d.recovery_options !== 'null') {
+        ret += '<tr>' +
+                  '<td>Recovery Options: </td>' +
+                '</tr>';
+        d.recovery_options.forEach( function(item) {
+            ret += '<tr>' +
+                      '<td></td> <td>'+ item.tail_no + ' ' + item.flight + '</td>' +
+                      '<td> <button class="primary">remove</button> </td>' +
+                    '</tr>';
+        });
+        
+    }
+
+    return ret;
 }
  
 $(document).ready(function() {
