@@ -101,24 +101,27 @@ function getRecoveryOptions(d) {
         ret += '<div class="row">'+
                   '<div class="col-md-2"><b>Flights</b></div>' +
                   '<div class="col-md-1">...</div>'+
-                  '<div class="col-md-1">AB</div>'+
-                  '<div class="col-md-1">OS</div>'+
-                  '<div class="col-md-1">CS</div>'+
-                  '<div class="col-md-1">DX</div>'+
-                  '<div class="col-md-1">OP</div>'+
-                  '<div class="col-md-1">MX</div>'+
-                  '<div class="col-md-1">ITP</div>'+
-                  '<div class="col-md-1">SC</div>'+
+                  '<div class="col-md-1"><b>AB</b></div>'+
+                  '<div class="col-md-1"><b>OS</b></div>'+
+                  '<div class="col-md-1"><b>CS</b></div>'+
+                  '<div class="col-md-1"><b>DX</b></div>'+
+                  '<div class="col-md-1"><b>OP</b></div>'+
+                  '<div class="col-md-1"><b>MX</b></div>'+
+                  '<div class="col-md-1"><b>ITP</b></div>'+
+                  '<div class="col-md-1"><b>SC</b></div>'+
                   '<div class="col-md-1">-</div>'+
                 '</div> <hr style="margin:0px;height:2px;background-color:#333;">';
+        var counter = 0;
         d.recovery_options.forEach( function(item) {
             ret += '<div class="row">' +
                       '<div class="col-md-2">'+item.tail_no+'</div>' +
                       '<div class="col-md-1">...</div>'+
                       '<div class="col-md-1">'+
                         '<div class="dropdown">'+
-                          '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                          '<span class="caret"></span></button>'+
+                          '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">'+
+                              '<span class="glyphicon glyphicon-empty-dot"></span>'+
+                              '<span class="caret"></span>'+
+                          '</button>'+
                           '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
                             '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
                             '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
@@ -211,14 +214,14 @@ function getRecoveryOptions(d) {
                           '</ul>'+
                         '</div>'+
                       '</div>'+
+                      '<div class="col-md-1" style="margin-top:10px;"> <span class="glyphicon glyphicon-remove"></span> </div>'+
                     '</div>';
-
-
+                    counter++;
         });
     }
 
     ret += '<div class="row text-center" style="margin-top:15px;">'+
-              '<button>Add</button>'+
+              '<button class="btn btn-default">Add</button>'+
             '</div>';
     return ret;
 }
@@ -265,15 +268,9 @@ $(document).ready(function() {
         }
     } );
 
-    $('#divNewNotifications li').on('click', function() {
-      window.alert("Clicked");
-      console.log(this.children[0].children[0]);
-      document.getElementById("menu1").innerHTML = this.children[0].children[0].outerHTML;
-    });
-
 } );
 
-function dropdown(val){
-  var y = document.getElementsByClassName('btn btn-default dropdown-toggle');
-  var aNode = y[0].innerHTML = val.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
+function dropdown(node){
+    var y = node.parentNode.previousSibling
+    y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
 }
