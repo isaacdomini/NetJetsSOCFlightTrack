@@ -16,3 +16,8 @@ tr.shown td.details-control {
 .user-profile {
 	color: black;	
 }
+
+hr {
+	height: 5px;
+	background-color: #333;
+}
