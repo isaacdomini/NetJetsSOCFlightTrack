@@ -32,8 +32,7 @@ var dataset = [
       "flight": "KJAC",
       "messages": "Hi",
       "recovery_options": [
-        {"tail_no": "N555QS", "flight": "JKCA"},
-        {"tail_no": "N777QS", "flight": "CMHA"} ],
+        {"tail_no": "N555QS", "flight": "JKCA"} ],
       "events": "Weather",
       "etd": "23:30"
     },
@@ -95,7 +94,7 @@ function format ( d ) {
 
 function getRecoveryOptions(d) {
 
-    var ret = '<div class="row">'+
+    var ret = '<div class="row text-center">'+
                 'Recovery Options:'+
               '</div>';
     if(d.recovery_options !== 'null') {
@@ -111,13 +110,15 @@ function getRecoveryOptions(d) {
                   '<div class="col-md-1">AB</div>'+
                   '<div class="col-md-1">AB</div>'+
                   '<div class="col-md-1">-</div>'+
-                '</div>';
-        /*d.recovery_options.forEach( function(item) {
-            ret += item.tail_no + ' ' + item.flight;
-        });*/
+                '</div> <hr style="margin:0px;height:2px;background-color:#333;">';
+        d.recovery_options.forEach( function(item) {
+            ret += '<div class="row">' +
+                      '<div class="col-md-2">'+item.tail_no+'</div>' +
+                    '</div>';
+        });
     }
 
-    ret += '<div class="row">'+
+    ret += '<div class="row text-center" style="margin-top:15px;">'+
               '<button>Add</button>'+
             '</div>';
     return ret;
