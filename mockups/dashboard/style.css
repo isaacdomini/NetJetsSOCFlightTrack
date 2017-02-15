@@ -30,6 +30,10 @@ tr.shown td.details-control {
     background: url('images/close.png') no-repeat center center;
 }
 
+.dropdown {
+	margin-left: -15px;
+}
+
 .user-profile img {
 	width:40px;
 	height:40px;
@@ -45,10 +49,6 @@ tr.shown td.details-control {
   display: inline-block;
 }
 
-body {
-  padding: 10px;
-}
-
 span[class*="glyphicon"] {
   margin-top: -.4em;
   margin-bottom: 0em;
@@ -56,34 +56,38 @@ span[class*="glyphicon"] {
 
 .glyphicon-red-dot:before {
   content: "\25cf";
-  font-size: 1.5em;
+  font-size: 2em;
   color: red;
 }
 
 .glyphicon-green-dot:before {
   content: "\25cf";
-  font-size: 1.5em;
+  font-size: 2em;
   color: green;
 }
 
 .glyphicon-yellow-dot:before {
   content: "\25cf";
-  font-size: 1.5em;
+  font-size: 2em;
   color: yellow;
 }
 
 .glyphicon-blue-dot:before {
   content: "\25cf";
-  font-size: 1.5em;
+  font-size: 2em;
   color: blue;
 }
 
 .glyphicon-full-dot:before {
   content: "\25cf";
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .glyphicon-empty-dot:before {
   content: "\25cb";
-  font-size: 1.5em;
+  font-size: 2em;
+}
+
+.glyphicon-remove {
+	color: red;
 }
