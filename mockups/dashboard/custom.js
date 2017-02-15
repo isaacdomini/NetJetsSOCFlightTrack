@@ -81,32 +81,45 @@ var dataset = [
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
     // `d` is the original data object for the row
-    return '<table cellpadding="5" border="0" style="padding-left:50px;">'+
-        getRecoveryOptions(d) +
-        '<tr>'+
-            '<td>etd:</td>'+
-            '<td>'+d.etd+'</td>'+
-        '</tr>'+
-    '</table>' +
-    '<button>Add</button>';
+    return '<div class="container">'+
+              '<div class="row">'+
+                  '<div class="col-md-6">'+
+                      'etd: ' + d.etd +
+                  '</div>' +
+                  '<div class="col-md-6">'+
+                      getRecoveryOptions(d) +
+                  '</div>' +
+              '</div>'+
+            '</div>';
 }
 
 function getRecoveryOptions(d) {
 
-    var ret = '';
+    var ret = '<div class="row">'+
+                'Recovery Options:'+
+              '</div>';
     if(d.recovery_options !== 'null') {
-        ret += '<tr>' +
-                  '<td>Recovery Options: </td>' +
-                '</tr>';
-        d.recovery_options.forEach( function(item) {
-            ret += '<tr>' +
-                      '<td></td> <td>'+ item.tail_no + ' ' + item.flight + '</td>' +
-                      '<td> <button class="primary">remove</button> </td>' +
-                    '</tr>';
-        });
-        
+        ret += '<div class="row">'+
+                  '<div class="col-md-2"><b>Flights</b></div>' +
+                  '<div class="col-md-1">...</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">AB</div>'+
+                  '<div class="col-md-1">-</div>'+
+                '</div>';
+        /*d.recovery_options.forEach( function(item) {
+            ret += item.tail_no + ' ' + item.flight;
+        });*/
     }
 
+    ret += '<div class="row">'+
+              '<button>Add</button>'+
+            '</div>';
     return ret;
 }
  
@@ -151,4 +164,5 @@ $(document).ready(function() {
             tr.addClass('shown');
         }
     } );
+
 } );
