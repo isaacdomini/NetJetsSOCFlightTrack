@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tail:</strong>
+  <%= @critical_flight.tail %>
+</p>
+
+<p>
+  <strong>Leg:</strong>
+  <%= @critical_flight.leg %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @critical_flight.source %>
+</p>
+
+<p>
+  <strong>Destination:</strong>
+  <%= @critical_flight.destination %>
+</p>
+
+<p>
+  <strong>Event:</strong>
+  <%= @critical_flight.event %>
+</p>
+
+<p>
+  <strong>Etd:</strong>
+  <%= @critical_flight.etd %>
+</p>
+
+<%= link_to 'Edit', edit_critical_flight_path(@critical_flight) %> |
+<%= link_to 'Back', critical_flights_path %>

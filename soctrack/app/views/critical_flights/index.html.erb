@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Critical Flights</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tail</th>
+      <th>Leg</th>
+      <th>Source</th>
+      <th>Destination</th>
+      <th>Event</th>
+      <th>Etd</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @critical_flights.each do |critical_flight| %>
+      <tr>
+        <td><%= critical_flight.tail %></td>
+        <td><%= critical_flight.leg %></td>
+        <td><%= critical_flight.source %></td>
+        <td><%= critical_flight.destination %></td>
+        <td><%= critical_flight.event %></td>
+        <td><%= critical_flight.etd %></td>
+        <td><%= link_to 'Show', critical_flight %></td>
+        <td><%= link_to 'Edit', edit_critical_flight_path(critical_flight) %></td>
+        <td><%= link_to 'Destroy', critical_flight, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Critical Flight', new_critical_flight_path %>

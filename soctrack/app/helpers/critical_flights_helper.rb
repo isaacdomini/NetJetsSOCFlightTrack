@@ -1,0 +1,2 @@
+module CriticalFlightsHelper
+end

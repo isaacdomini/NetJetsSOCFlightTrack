@@ -1,0 +1,47 @@
+<%= form_for(critical_flight) do |f| %>
+  <% if critical_flight.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(critical_flight.errors.count, "error") %> prohibited this critical_flight from being saved:</h2>
+
+      <ul>
+      <% critical_flight.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tail %>
+    <%= f.text_field :tail %>
+  </div>
+
+  <div class="field">
+    <%= f.label :leg %>
+    <%= f.text_field :leg %>
+  </div>
+
+  <div class="field">
+    <%= f.label :source %>
+    <%= f.text_field :source %>
+  </div>
+
+  <div class="field">
+    <%= f.label :destination %>
+    <%= f.text_field :destination %>
+  </div>
+
+  <div class="field">
+    <%= f.label :event %>
+    <%= f.text_area :event %>
+  </div>
+
+  <div class="field">
+    <%= f.label :etd %>
+    <%= f.datetime_select :etd %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
