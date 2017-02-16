@@ -313,6 +313,7 @@
 
       // Add event listener for opening and closing details
       $('#example tbody').on('click', 'td.details-control', function () {
+          var sp = $(this).find('span');
           var tr = $(this).closest('tr');
           var row = table.row( tr );
 
@@ -320,11 +321,15 @@
               // This row is already open - close it
               row.child.hide();
               tr.removeClass('shown');
+              sp.removeClass('glyphicon-minus');
+              sp.addClass('glyphicon-plus');
           }
           else {
               // Open this row
               row.child( format(row.data()) ).show();
               tr.addClass('shown');
+              sp.removeClass('glyphicon-plus');
+              sp.addClass('glyphicon-minus');
           }
       } );
 
@@ -334,6 +339,9 @@
       var y = node.parentNode.previousSibling
       y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
+  $( document ).ready(function() {
+    $('td.details-control').append('<span class="glyphicon glyphicon-plus"></span>');
+  });
 </script>
 
 
