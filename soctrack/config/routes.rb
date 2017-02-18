@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :events
   devise_for :users
   resources :critical_flights
   devise_scope :user do
