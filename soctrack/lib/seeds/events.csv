@@ -1,0 +1,13 @@
+{"ATC"=> ["En Route ATC","Ground Delay Program"],
+"Aircraft Related" => ["Ammenities" ,"Speed" ,"Weather/SIGOPS" ,"Luggage Space" ,"Release Problems" ,"Seating"],
+"Airport/FBO"=>["De-Ice Delay" ,"Customs/Security" ,"No hangar space" ,"No de-ice available" ,"Early/Late Ops Failed" ,"NOTAM" ,"Slots" ,"Poor Handling" ,"Fuel Late"],
+"Company Change"=>["Denied Vendor" ,"Change of Operating Company" ,"Sub-Contract"],
+"Crew"=>["Duty","Out of Reach","DNIF/Sick","Travel Delayed","Refused Assignment","Fatigued","Late Check In","Missing Documents","Briefing Problems"],
+"Late Positioning"=>["ATC","Aircraft Related","Airport/FBO","Company Change","Crew","Other","Planning","Reschedule","Weather"],
+"Maintenance"=>["Vendor Ops Review","MEL (Pax Convenience)","Multiple","Servicing","MEL (Flight Limiting)","Line Extension","In Position","OCF Required (Unscheduled)","At Ferry Point","En Route","Failed OCF"],
+"New Booking"=>["At Response Time","Prior to Response Time"],
+"Other"=>["Other Uncontrollable","Operational Issues","Peak Period Move","LMAD","Special Event"],
+"Passenger"=>["Profile","Previous Pax Late","Misbooking","Earlier ETD","Missing Documents","Later ETD","Itinerary Change","Catering","This Pax Late"],
+"Planning"=>["Flight Package Documents","Requested Travel Not Available","Permits","Tight Scheduling"],
+"Reschedule"=>["Passenger","Schedule Change","Aircraft Pulled","Hot Spare","New Booking"],
+"Weather"=>["En Route Weather","Weather - Arrival","Ferry Point Below Mins","Weather - Departure"]}
