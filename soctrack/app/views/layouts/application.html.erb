@@ -6,15 +6,14 @@
     <!-- Compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="">
 
@@ -29,7 +28,8 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <div href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <img alt="Profile" src="images/profile.png" class="img-rounded"><%= current_user.name %>
+              <!-- <img alt="Profile" src="images/profile.png" class="img-rounded"> -->
+              <%= current_user.name %>
               <span class="fa fa-angle-down"></span>
             </div>
             <ul class="dropdown-menu pull-right">

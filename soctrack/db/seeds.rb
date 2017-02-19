@@ -56,7 +56,7 @@ CSV.parse(csv_text).map {|a|  codes.insert(-1,a[0]) if a[1].include?('large') &&
 # t.datetime "created_at",  null: false
 # t.datetime "updated_at",  null: false
 # t.boolean  "resolved"
-for i in 0..99
+for i in 0..249
 
   randTail = rand(999).to_s.center(3, rand(9).to_s)
   randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
