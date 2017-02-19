@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218231340) do
+ActiveRecord::Schema.define(version: 20170219030849) do
 
   create_table "critical_flights", force: :cascade do |t|
     t.string   "tail"
+    t.boolean  "resolved",    default: false
     t.string   "leg"
     t.string   "source"
     t.string   "destination"
     t.text     "event"
     t.datetime "etd"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "events", force: :cascade do |t|

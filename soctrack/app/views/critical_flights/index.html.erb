@@ -8,20 +8,24 @@
               <tr>
                   <th></th>
                   <th>Tail No.</th>
-                  <th>Flight</th>
+                  <th>Leg ID</th>
+                  <th>Departure</th>
+                  <th>Arrival</th>
                   <th>Event Types</th>
-                  <th>Messages</th>
-                  <th>Recovery Options</th>
+                  <!-- <th>Messages</th> -->
+                  <th>ETD</th>
               </tr>
           </thead>
           <tfoot>
               <tr>
                   <th></th>
                   <th>Tail No.</th>
-                  <th>Flight</th>
+                  <th>Leg ID</th>
+                  <th>Departure</th>
+                  <th>Arrival</th>
                   <th>Event Types</th>
-                  <th>Messages</th>
-                  <th>Recovery Options</th>
+                  <!-- <th>Messages</th> -->
+                  <th>ETD</th>
               </tr>
           </tfoot>
       </table>
@@ -58,83 +62,39 @@
 </table>
 
 <script>
-  var dataset = [
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": [
-          {"tail_no": "N555QS", "flight": "JKCA"},
-          {"tail_no": "N777QS", "flight": "CMHA"} ],
-        "events": "Weather",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N555QS",
-        "flight": "JKCA",
-        "messages": "Hello",
-        "recovery_options": [
-          {"tail_no": "N555QS", "flight": "JKCA"},
-          {"tail_no": "N777QS", "flight": "CMHA"} ],
-        "events": "En Route",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": "null",
-        "events": "Weather",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": [
-          {"tail_no": "N555QS", "flight": "JKCA"} ],
-        "events": "Weather",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": [
-          {"tail_no": "N555QS", "flight": "JKCA"},
-          {"tail_no": "N777QS", "flight": "CMHA"} ],
-        "events": "Weather",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": [
-          {"tail_no": "N555QS", "flight": "JKCA"},
-          {"tail_no": "N777QS", "flight": "CMHA"} ],
-        "events": "Weather",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": [
-          {"tail_no": "N555QS", "flight": "JKCA"},
-          {"tail_no": "N777QS", "flight": "CMHA"} ],
-        "events": "Weather",
-        "etd": "23:30"
-      },
-      {
-        "tail_no": "N999QS",
-        "flight": "KJAC",
-        "messages": "Hi",
-        "recovery_options": "null",
-        "events": "Weather",
-        "etd": "23:30"
-      }
-  ]
+  var dataset = "";
+  $(document).ready(function() {
+  $.getJSON('critical_flights.json', function(data){
+    console.log(data);
+    dataset = data;
+        var table = $('#example').DataTable( {
+            data: dataset,
+            "columns": [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": ''
+                },
+                { "data": "tail" },
+                { "data": "leg" },
+                { "data": "source" },
+                { "data": "destination" },
+                { "data": "event" },
+                { "data": "etd" },
+                // { "data": "messages" },
+                // { "data": "recovery_options" }
+            ],
+            // "aoColumnDefs":[{
+            //   "aTargets":[ 5 ],
+            //   "mRender": function(data, type, full) {
+            //     return (data == "null") ? "No" : "Yes";
+            //   }
+            // }],
+            "order": [[1, 'asc']]
+        } );
+      });
+  });
 
 
   /* Formatting function for row details - modify as you need */
@@ -286,31 +246,34 @@
       return ret;
   }
 
-  $(document).ready(function() {
-      var table = $('#example').DataTable( {
-          data: dataset,
-          "columns": [
-              {
-                  "className":      'details-control',
-                  "orderable":      false,
-                  "data":           null,
-                  "defaultContent": ''
-              },
-              { "data": "tail_no" },
-              { "data": "flight" },
-              { "data": "events" },
-              { "data": "messages" },
-              { "data": "recovery_options" }
-          ],
-          "aoColumnDefs":[{
-            "aTargets":[ 5 ],
-            "mRender": function(data, type, full) {
-              return (data == "null") ? "No" : "Yes";
-            }
-          }],
-          "order": [[1, 'asc']]
-      } );
-
+  // $(document).ready(function() {
+  //     var table = $('#example').DataTable( {
+  //         data: dataset,
+  //         "columns": [
+  //             {
+  //                 "className":      'details-control',
+  //                 "orderable":      false,
+  //                 "data":           null,
+  //                 "defaultContent": ''
+  //             },
+  //             { "data": "tail" },
+  //             { "data": "leg" },
+  //             { "data": "source" },
+  //             { "data": "destination" },
+  //             { "data": "event" },
+  //             { "data": "etd" },
+  //             { "data": "messages" },
+  //             { "data": "recovery_options" }
+  //         ],
+  //         "aoColumnDefs":[{
+  //           "aTargets":[ 5 ],
+  //           "mRender": function(data, type, full) {
+  //             return (data == "null") ? "No" : "Yes";
+  //           }
+  //         }],
+  //         "order": [[1, 'asc']]
+  //     } );
+  //
       // Add event listener for opening and closing details
       $('#example tbody').on('click', 'td.details-control', function () {
           var sp = $(this).find('span');
@@ -333,7 +296,7 @@
           }
       } );
 
-  } );
+  // } );
 
   function dropdown(node){
       var y = node.parentNode.previousSibling
