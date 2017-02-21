@@ -42,10 +42,10 @@
                                 '<span class="caret"></span>'+
                             '</button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -54,12 +54,12 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Accept</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-thumbs-down"></span>Decline</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-thumbs-up"></span>Accept</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-thumbs-down"></span>Decline</a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -68,10 +68,10 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -80,10 +80,10 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -92,10 +92,10 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -104,10 +104,10 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -116,11 +116,11 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-globe"></span></a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-globe"></span></a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -129,11 +129,11 @@
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
                             '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-plane"></span></a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
+                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-plane"></span></a></li>'+
                             '</ul>'+
                           '</div>'+
                         '</div>'+
@@ -144,7 +144,7 @@
       }
 
       ret += '<div class="row text-center" style="margin-top:15px;">'+
-                '<button class="btn btn-default">Add</button>'+
+                '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>'+
               '</div>';
       return ret;
   }
@@ -185,15 +185,27 @@
 
   function showInfo(){
     console.log("info clicked");
+    bootbox.dialog({
+      title: "Recovery Option Info",
+      message: "<p>More Info</p>"
+    });
+  }
+
+  function addRecoveryOption(){
+    bootbox.prompt({
+      title: "This is a prompt with a date input!",
+      inputType: 'date',
+      callback: function (result) {
+          console.log(result);
+      }
+    });
   }
 
   function tableDrawUpdateElements(){
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
         $(this).append('<span class="glyphicon glyphicon-plus"></span>');
-        console.log("glyphicon-plus added");
       }
-      console.log(i + "th row edited")
     });
 
 

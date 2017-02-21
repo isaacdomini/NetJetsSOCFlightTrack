@@ -48,37 +48,8 @@
       color: red;
   }
 
-  .glyphicon-thumbs-up {
-    margin-top: 10px;
-    font-size: 1.55em;
-  }
-
-  .glyphicon-thumbs-down {
-    margin-top: 10px;
-    font-size: 1.5em;
-  }
-
-  .glyphicon-globe {
-    margin-left: 1px;
-    margin-top: 30px;
-    font-size: 1.60em;
-  }
-
-  .glyphicon-plane {
-    margin-top: 30px;
-    font-size: 1.6em;
-  }
-
-  .glyphicon-info-sign {
-    font-size: .85em;
-  }
-
  .dropdown {
  	margin-left: -15px;
- }
-
-.dropdown-menu {
-  cursor: pointer;
  }
 
  .user-profile img {
@@ -95,10 +66,6 @@
  .inlineTable {
    display: inline-block;
  }
-
- .toolbar {
-    float:right;
-  }
 
  span[class*="glyphicon"] {
    margin-top: -.4em;
@@ -142,10 +109,3 @@
  .glyphicon-remove {
  	color: red;
  }
-
-a.controlBtn {
-  cursor: pointer;
-  margin-left: 5px;
-}
- /*bootstrap navbar padding */
-body { padding-top: 70px; }
