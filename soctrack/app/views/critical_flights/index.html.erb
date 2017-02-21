@@ -64,7 +64,7 @@
                 </div></div>
               </div>
             </div>
-            <select class="selectpicker show-tick" multiple data-live-search="true" title="Choose Events">
+            <select id="eventsSelector" class="selectpicker show-tick" multiple data-live-search="true" title="Choose Events">
               <% Event.find(1).event_hash.each do |type, vals| %>
                 <optgroup label="<%=type%>">
                   <% vals.each do |val| %>
@@ -122,6 +122,12 @@
               error.insertAfter(element);
           }
       }
+  });
+  $('#eventsSelector').on('changed.bs.select', function (event, clickedIndex, newValue, oldValue) {
+    // console.log(event);
+    // console.log(clickedIndex);
+    console.log(newValue);
+    // console.log(oldValue);
   });
 </script>
 <br>
