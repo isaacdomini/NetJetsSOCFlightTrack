@@ -265,7 +265,8 @@
             "order": [[1, 'asc']],
             dom: 'l<"toolbar">frtip',
             initComplete: function(){
-              $("div.toolbar").html('<button type="button" onclick="showAll(this)" id="showBtn">Show All</button>');
+              $("div.toolbar").html('<button type="button" class="btn btn-primary" onclick="showAll(this)" id="showBtn">Show All</button>'
+                                    +'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>');
             }
         } );
       });
