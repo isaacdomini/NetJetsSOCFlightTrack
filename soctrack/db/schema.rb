@@ -39,14 +39,14 @@ ActiveRecord::Schema.define(version: 20170219234914) do
     t.string   "tail"
     t.string   "leg"
     t.boolean  "selected",   default: false
-    t.integer  "AB"
-    t.integer  "OS"
-    t.integer  "CS"
-    t.integer  "DX"
-    t.integer  "OPS"
-    t.integer  "MX"
-    t.integer  "ITP"
-    t.integer  "SC"
+    t.integer  "AB",         default: 0
+    t.integer  "OS",         default: 0
+    t.integer  "CS",         default: 0
+    t.integer  "DX",         default: 0
+    t.integer  "OPS",        default: 0
+    t.integer  "MX",         default: 0
+    t.integer  "ITP",        default: 0
+    t.integer  "SC",         default: 0
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

@@ -44,6 +44,31 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'airport-codes.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 codes = Array.new
 CSV.parse(csv_text).map {|a|  codes.insert(-1,a[0]) if a[1].include?('large') && a[7].include?('US') && !a[2].include?('Air Force')}
+
+
+# create_table "recoveries", force: :cascade do |t|
+#   t.string   "tail"
+#   t.string   "leg"
+#   t.boolean  "selected",   default: false
+#   t.integer  "AB"
+#   t.integer  "OS"
+#   t.integer  "CS"
+#   t.integer  "DX"
+#   t.integer  "OPS"
+#   t.integer  "MX"
+#   t.integer  "ITP"
+#   t.integer  "SC"
+#   t.datetime "created_at",                 null: false
+#   t.datetime "updated_at",                 null: false
+# end
+#
+for i in 0..99
+  randTail = rand(999).to_s.center(3, rand(9).to_s)
+  randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
+  r =Recovery.new(:tail => "N"+randTail+"QS", :leg => randLeg).save
+  # puts r.id
+end
+
 #
 #
 #
@@ -56,17 +81,23 @@ CSV.parse(csv_text).map {|a|  codes.insert(-1,a[0]) if a[1].include?('large') &&
 # t.datetime "created_at",  null: false
 # t.datetime "updated_at",  null: false
 # t.boolean  "resolved"
-for i in 0..249
+for i in 0..99
   randTail = rand(999).to_s.center(3, rand(9).to_s)
   randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
   sourceDest = codes.sample(2);
   randomEvents = Array.new
+  randomRecoveries = Array.new
+  for i in 0..rand(0..5)
+    randReco = rand(1..100)
+    randomRecoveries.insert(-1, randReco) if !randomRecoveries.include?randReco
+  end
+  puts randomRecoveries.to_s
   for i in 0..rand(0..5)
     randEventType = events.values[rand(events.values.size)]
     selectedEvent = randEventType[rand(randEventType.size)]
     randomEvents.insert(-1,selectedEvent) if !randomEvents.include?(selectedEvent)
   end
-  flight = CriticalFlight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :source => sourceDest[0], :destination => sourceDest[1], :event => randomEvents, :etd => rand(3.days).seconds.from_now)
+  flight = CriticalFlight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :source => sourceDest[0], :destination => sourceDest[1], :event => randomEvents, :etd => rand(3.days).seconds.from_now, :recovery_ids => randomRecoveries)
   puts flight
   flight.save
 end
