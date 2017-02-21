@@ -1,7 +1,7 @@
 class CriticalFlightsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
-  
+
   # GET /critical_flights
   # GET /critical_flights.json
   def index
@@ -18,7 +18,7 @@ class CriticalFlightsController < ApplicationController
   def show
     @critical_flight = CriticalFlight.find(params[:id])
     puts @critical_flight.recovery
-    puts "THIS IS A MESSAGE"
+    # puts "THIS IS A MESSAGE"
     respond_to do |format|
       format.html
       format.json { render :json => @critical_flight.to_json(:include => :recovery) }
