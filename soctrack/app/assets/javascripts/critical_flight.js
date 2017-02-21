@@ -32,7 +32,7 @@
           var counter = 0;
           d.recovery.forEach( function(item) {
               ret += '<div class="row">' +
-                        '<div class="col-md-2">'+item.tail_no+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
+                        '<div class="col-md-2">'+item.tail+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
                           '<div class="dropdown">'+
@@ -185,7 +185,7 @@
   function showInfo(){
     console.log("info clicked");
   }
-  
+
   var dataset = "";
   $(document).ready(function() {
   $.getJSON('critical_flights.json', function(data){
