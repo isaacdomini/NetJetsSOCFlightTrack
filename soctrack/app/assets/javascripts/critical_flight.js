@@ -153,33 +153,31 @@
       y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
 
-  function showAll(node){
-      var y = node,innerHTML;
-      var table = $('#flightsTable').DataTable();
-      if(node.innerHTML == "Show All"){
-        y .innerHTML= "Hide All";
-        table.rows().every( function (){
-          var tr = this.node();
-          var sp = this.node().querySelector("span");
-          this.child( format(this.data()) ).show();
-          tr.className += " shown";
-          sp.className = "glyphicon glyphicon-minus";
-        });
-      } else {
-        y.innerHTML = "Show All";
-        table.rows().every( function (){
-          var tr = this.node();
-          var sp = this.node().querySelector("span");
-          this.child.hide();
-          if(tr.className == "odd shown"){
-            tr.className = "odd";
-          } else if(tr.className == "even shown"){
-            tr.className = "even";
-          }
-          sp.className = "glyphicon glyphicon-plus";
-        });
-      }
 
+  function showAll(node){
+    var table = $('#flightsTable').DataTable();
+    table.rows().every( function (){
+      var tr = this.node();
+      var sp = this.node().querySelector("span");
+      this.child( format(this.data()) ).show();
+      tr.className += " shown";
+      sp.className = "glyphicon glyphicon-minus";
+    });
+  }
+
+  function hideAll(node){
+    var table = $('#flightsTable').DataTable();
+    table.rows().every( function (){
+      var tr = this.node();
+      var sp = this.node().querySelector("span");
+      this.child.hide();
+      if(tr.className == "odd shown"){
+        tr.className = "odd";
+      } else if(tr.className == "even shown"){
+        tr.className = "even";
+      }
+      sp.className = "glyphicon glyphicon-plus";
+    });
   }
 
   function showInfo(){
@@ -219,7 +217,8 @@
 
             dom: 'l<"toolbar">frtip',
             initComplete: function(){
-              $("div.toolbar").html('<button type="button" onclick="showAll(this)" id="showBtn">Show All</button>');
+              $("div.toolbar").html('<button type="button" onclick="showAll(this)" id="showBtn">Show All</button><button type="button" onclick="hideAll(this)" id="hideBtn">Hide All</button>');
+
             }
         } );
 
