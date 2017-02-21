@@ -39,10 +39,18 @@ class CriticalFlightsController < ApplicationController
   def create
     @critical_flight = CriticalFlight.new(critical_flight_params)
 
+    # if @critical_flight.save
+    #   flash.now[:notice] = 'Flight Saved'
+    #   return true
+    # else
+    #   flash.now[:alert] = 'Error while creating flight!'
+    #   return false
+    # end
     respond_to do |format|
       if @critical_flight.save
-        format.html { redirect_to @critical_flight, notice: 'Critical flight was successfully created.' }
-        format.json { render :show, status: :created, location: @critical_flight }
+        format.html { render :json => @critical_flight.to_json(:include => :recovery), status: :created }
+        format.json { render :json => @critical_flight.to_json(:include => :recovery), status: :created}
+        # format.json { render json: final_obj, status: :ok }
       else
         format.html { render :new }
         format.json { render json: @critical_flight.errors, status: :unprocessable_entity }
