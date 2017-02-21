@@ -1,10 +1,7 @@
 class CriticalFlightsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
-
-  def as_json(options={})
-    super(include: :recoveries)
-  end
+  
   # GET /critical_flights
   # GET /critical_flights.json
   def index
