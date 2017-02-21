@@ -8,11 +8,11 @@ class CriticalFlightsController < ApplicationController
   # GET /critical_flights
   # GET /critical_flights.json
   def index
-    @critical_flights = CriticalFlight.all.map {|cFlight| cFlight["recovery"] = cFlight.recovery_ids}
+    @critical_flights = CriticalFlight.all
     puts "THIS IS THE TYPE OF ALL FLIGHTS"
     respond_to do |format|
       format.html
-      format.json { render :json => @critical_flights.to_json() }
+      format.json { render :json => @critical_flights.to_json(:include => :recovery) }
     end
   end
 

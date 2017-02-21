@@ -1,0 +1,150 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ /*td.details-control {
+     background: url('images/open.png') no-repeat center center;
+     cursor: pointer;
+ }*/
+ /*tr.shown td.details-control {
+     background: url('images/close.png') no-repeat center center;
+ }*/
+
+ .user-profile img {
+ 	width:40px;
+ 	height:40px;
+ 	border-radius:50%;
+ 	margin-top: 5px;
+ }
+
+ .user-profile {
+ 	color: black;
+ }
+
+ hr {
+ 	height: 5px;
+ 	background-color: #333;
+ }
+
+ td.details-control {
+     cursor: pointer;
+ }
+
+ .glyphicon-plus {
+     color: green;
+ }
+  .glyphicon-minus {
+      color: red;
+  }
+
+  .glyphicon-thumbs-up {
+    margin-top: 10px;
+    font-size: 1.55em;
+  }
+
+  .glyphicon-thumbs-down {
+    margin-top: 10px;
+    font-size: 1.5em;
+  }
+
+  .glyphicon-globe {
+    margin-left: 1px;
+    margin-top: 30px;
+    font-size: 1.60em;
+  }
+
+  .glyphicon-plane {
+    margin-top: 30px;
+    font-size: 1.6em;
+  }
+
+  .glyphicon-info-sign {
+    margin-left: 1px;
+    font-size: .85em;
+  }
+
+ .dropdown {
+ 	margin-left: -15px;
+ }
+
+ .user-profile img {
+ 	width:40px;
+ 	height:40px;
+ 	border-radius:50%;
+ 	margin-top: 5px;
+ }
+
+ .user-profile {
+ 	color: black;
+ }
+
+ .inlineTable {
+   display: inline-block;
+ }
+
+ .toolbar {
+    float:right;
+  }
+
+ span[class*="glyphicon"] {
+   margin-top: -.4em;
+   margin-bottom: 0em;
+ }
+
+ .glyphicon-red-dot:before {
+   content: "\25cf";
+   font-size: 2em;
+   color: red;
+ }
+
+ .glyphicon-green-dot:before {
+   content: "\25cf";
+   font-size: 2em;
+   color: green;
+ }
+
+ .glyphicon-yellow-dot:before {
+   content: "\25cf";
+   font-size: 2em;
+   color: yellow;
+ }
+
+ .glyphicon-blue-dot:before {
+   content: "\25cf";
+   font-size: 2em;
+   color: blue;
+ }
+
+ .glyphicon-full-dot:before {
+   content: "\25cf";
+   font-size: 2em;
+ }
+
+ .glyphicon-empty-dot:before {
+   content: "\25cb";
+   font-size: 2em;
+ }
+
+ .glyphicon-remove {
+ 	color: red;
+ }
+<<<<<<< HEAD
+ /*bootstrap navbar padding */
+body { padding-top: 70px; }
+=======
+
+a.controlBtn {
+  cursor: pointer;
+}
+>>>>>>> Add Expand/Collapse all, info, remove, and extra user options.
