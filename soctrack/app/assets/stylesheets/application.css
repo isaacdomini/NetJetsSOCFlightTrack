@@ -13,6 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+ ul.navbar-right{
+  margin-right: 0 !important
+ }
+ div {
+    border: 1px solid black;
+ }
+
  td.details-control {
      background: url('images/open.png') no-repeat center center;
      cursor: pointer;
@@ -73,7 +81,7 @@
     font-size: .85em;
   }
 
- .dropdown {
+ #actionsDropdown {
  	margin-left: -15px;
  }
 

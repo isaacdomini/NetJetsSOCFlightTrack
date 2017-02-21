@@ -7,6 +7,9 @@
                     '<div class="col-md-9">'+
                         getRecoveryOptions(d) +
                     '</div>' +
+                    '<div class="col">'+
+                         '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>' +
+                    '</div>' +
                 '</div>'+
               '</div>';
   }
@@ -36,7 +39,7 @@
                         '<div class="col-md-2">'+item.tail+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
+                          '<div id="actionsDropdown" class="dropdown">'+
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">'+
                                 '<span class="glyphicon glyphicon-empty-dot"></span>'+
                                 '<span class="caret"></span>'+
@@ -143,9 +146,6 @@
           });
       }
 
-      ret += '<div class="row text-center" style="margin-top:15px;">'+
-                '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>'+
-              '</div>';
       return ret;
   }
 
