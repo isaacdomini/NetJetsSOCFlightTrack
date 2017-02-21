@@ -1,1 +1,0 @@
-json.array! @critical_flights, partial: 'critical_flights/critical_flight', as: :critical_flight

@@ -2,15 +2,30 @@ class CriticalFlightsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
 
+  def as_json(options={})
+    super(include: :recoveries)
+  end
   # GET /critical_flights
   # GET /critical_flights.json
   def index
-    @critical_flights = CriticalFlight.all
+    @critical_flights = CriticalFlight.all.map {|cFlight| cFlight["recovery"] = cFlight.recovery_ids}
+    puts "THIS IS THE TYPE OF ALL FLIGHTS"
+    respond_to do |format|
+      format.html
+      format.json { render :json => @critical_flights.to_json() }
+    end
   end
 
   # GET /critical_flights/1
   # GET /critical_flights/1.json
   def show
+    @critical_flight = CriticalFlight.find(params[:id])
+    puts @critical_flight.recovery
+    puts "THIS IS A MESSAGE"
+    respond_to do |format|
+      format.html
+      format.json { render :json => @critical_flight.to_json(:include => :recovery) }
+    end
   end
 
   # GET /critical_flights/new

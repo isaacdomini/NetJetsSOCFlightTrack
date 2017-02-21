@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219030849) do
+ActiveRecord::Schema.define(version: 20170219234914) do
 
   create_table "critical_flights", force: :cascade do |t|
     t.string   "tail"
@@ -24,8 +24,31 @@ ActiveRecord::Schema.define(version: 20170219030849) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "critical_flights_recoveries", id: false, force: :cascade do |t|
+    t.integer "critical_flight_id", null: false
+    t.integer "recovery_id",        null: false
+    t.index ["critical_flight_id", "recovery_id"], name: "critical_flight_id_recovery_id_index"
+    t.index ["recovery_id", "critical_flight_id"], name: "recovery_id_critical_flight_id_index"
+  end
+
   create_table "events", force: :cascade do |t|
     t.text "event_hash"
+  end
+
+  create_table "recoveries", force: :cascade do |t|
+    t.string   "tail"
+    t.string   "leg"
+    t.boolean  "selected",   default: false
+    t.integer  "AB"
+    t.integer  "OS"
+    t.integer  "CS"
+    t.integer  "DX"
+    t.integer  "OPS"
+    t.integer  "MX"
+    t.integer  "ITP"
+    t.integer  "SC"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "users", force: :cascade do |t|

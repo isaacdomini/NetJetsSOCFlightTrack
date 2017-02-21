@@ -1,0 +1,72 @@
+<%= form_for(recovery) do |f| %>
+  <% if recovery.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(recovery.errors.count, "error") %> prohibited this recovery from being saved:</h2>
+
+      <ul>
+      <% recovery.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tail %>
+    <%= f.text_field :tail %>
+  </div>
+
+  <div class="field">
+    <%= f.label :leg %>
+    <%= f.text_field :leg %>
+  </div>
+
+  <div class="field">
+    <%= f.label :selected %>
+    <%= f.check_box :selected %>
+  </div>
+
+  <div class="field">
+    <%= f.label :AB %>
+    <%= f.number_field :AB %>
+  </div>
+
+  <div class="field">
+    <%= f.label :OS %>
+    <%= f.number_field :OS %>
+  </div>
+
+  <div class="field">
+    <%= f.label :CS %>
+    <%= f.number_field :CS %>
+  </div>
+
+  <div class="field">
+    <%= f.label :DX %>
+    <%= f.number_field :DX %>
+  </div>
+
+  <div class="field">
+    <%= f.label :OPS %>
+    <%= f.number_field :OPS %>
+  </div>
+
+  <div class="field">
+    <%= f.label :MX %>
+    <%= f.number_field :MX %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ITP %>
+    <%= f.number_field :ITP %>
+  </div>
+
+  <div class="field">
+    <%= f.label :SC %>
+    <%= f.number_field :SC %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

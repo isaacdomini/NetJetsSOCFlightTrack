@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tail: MyString
+  leg: MyString
+  selected: false
+  AB: 1
+  OS: 1
+  CS: 1
+  DX: 1
+  OPS: 1
+  MX: 1
+  ITP: 1
+  SC: 1
+
+two:
+  tail: MyString
+  leg: MyString
+  selected: false
+  AB: 1
+  OS: 1
+  CS: 1
+  DX: 1
+  OPS: 1
+  MX: 1
+  ITP: 1
+  SC: 1

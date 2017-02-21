@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Recoveries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tail</th>
+      <th>Leg</th>
+      <th>Selected</th>
+      <th>Ab</th>
+      <th>Os</th>
+      <th>Cs</th>
+      <th>Dx</th>
+      <th>Ops</th>
+      <th>Mx</th>
+      <th>Itp</th>
+      <th>Sc</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recoveries.each do |recovery| %>
+      <tr>
+        <td><%= recovery.tail %></td>
+        <td><%= recovery.leg %></td>
+        <td><%= recovery.selected %></td>
+        <td><%= recovery.AB %></td>
+        <td><%= recovery.OS %></td>
+        <td><%= recovery.CS %></td>
+        <td><%= recovery.DX %></td>
+        <td><%= recovery.OPS %></td>
+        <td><%= recovery.MX %></td>
+        <td><%= recovery.ITP %></td>
+        <td><%= recovery.SC %></td>
+        <td><%= link_to 'Show', recovery %></td>
+        <td><%= link_to 'Edit', edit_recovery_path(recovery) %></td>
+        <td><%= link_to 'Destroy', recovery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Recovery', new_recovery_path %>
