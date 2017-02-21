@@ -1,4 +1,5 @@
   /* Formatting function for row details - modify as you need */
+  var table = ""
   function format ( d ) {
       // `d` is the original data object for the row
       return '<div class="container">'+
@@ -186,66 +187,73 @@
     console.log("info clicked");
   }
 
+  function tableDrawUpdateElements(){
+    $('td.details-control').each(function(i, obj) {
+      if($(this).children().length < 1){
+        $(this).append('<span class="glyphicon glyphicon-plus"></span>');
+        console.log("glyphicon-plus added");
+      }
+      console.log(i + "th row edited")
+    });
+
+
+    $('#flightsTable tbody').on('click', 'td.details-control', function () {
+        console.log("clicked");
+        var sp = $(this).find('span');
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+            sp.removeClass('glyphicon-minus');
+            sp.addClass('glyphicon-plus');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+            sp.removeClass('glyphicon-plus');
+            sp.addClass('glyphicon-minus');
+        }
+    } );
+  }
+
   var dataset = "";
   $(document).ready(function() {
   $.getJSON('critical_flights.json', function(data){
     console.log(data);
     dataset = data;
-        var table = $('#flightsTable').DataTable( {
+        table = $('#flightsTable').DataTable( {
             data: dataset,
             "columns": [
-                {
-                    "className":      'details-control',
-                    "orderable":      false,
-                    "data":           null,
-                    "defaultContent": ''
-                },
-                { "data": "tail" },
-                { "data": "leg" },
-                { "data": "source" },
-                { "data": "destination" },
-                { "data": "event" },
-                { "data": "recovery" },
-                // { "data": "messages" },
-                { "data": "etd" }
+              {
+                  "className":      'details-control',
+                  "orderable":      false,
+                  "data":           null,
+                  "defaultContent": ''
+              },
+              { "data": "tail" },
+              { "data": "leg" },
+              { "data": "source" },
+              { "data": "destination" },
+              { "data": "event" },
+              { "data": "recovery" },
+              // { "data": "messages" },
+              { "data": "etd" }
             ],
-             "aoColumnDefs":[{
-               "aTargets":[ 6 ],
-               "mRender": function(data, type, full) {
-                 return (data == "null") ? "No" : "Yes";
-               }
-             }],
+            "aoColumnDefs":[{
+             "aTargets":[ 6 ],
+             "mRender": function(data, type, full) {
+               return (data == "null") ? "No" : "Yes";
+             }
+            }],
+            "fnDrawCallback": tableDrawUpdateElements,
             "order": [[1, 'asc']],
-
             dom: 'l<"toolbar">frtip',
             initComplete: function(){
               $("div.toolbar").html('<button type="button" onclick="showAll(this)" id="showBtn">Show All</button>');
-            }
-        } );
-
-        $('td.details-control').append('<span class="glyphicon glyphicon-plus"></span>');
-
-        console.log("glyphicon-plus added");
-
-        $('#flightsTable tbody').on('click', 'td.details-control', function () {
-            console.log("clicked");
-            var sp = $(this).find('span');
-            var tr = $(this).closest('tr');
-            var row = table.row( tr );
-
-            if ( row.child.isShown() ) {
-                // This row is already open - close it
-                row.child.hide();
-                tr.removeClass('shown');
-                sp.removeClass('glyphicon-minus');
-                sp.addClass('glyphicon-plus');
-            }
-            else {
-                // Open this row
-                row.child( format(row.data()) ).show();
-                tr.addClass('shown');
-                sp.removeClass('glyphicon-plus');
-                sp.addClass('glyphicon-minus');
             }
         } );
       });
