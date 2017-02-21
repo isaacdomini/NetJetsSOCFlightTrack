@@ -70,15 +70,12 @@
   }
 
   .glyphicon-info-sign {
+    margin-left: 1px;
     font-size: .85em;
   }
 
  .dropdown {
  	margin-left: -15px;
- }
-
-.dropdown-menu {
-  cursor: pointer;
  }
 
  .user-profile img {
@@ -145,7 +142,6 @@
 
 a.controlBtn {
   cursor: pointer;
-  margin-left: 5px;
 }
  /*bootstrap navbar padding */
 body { padding-top: 70px; }
