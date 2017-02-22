@@ -53,6 +53,9 @@ for i in 0..499
   randTail = rand(999).to_s.center(3, rand(9).to_s)
   randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
   sourceDest = codes.sample(2);
+  until !Flight.find_by_leg(randLeg)
+    randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
+  end
   flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(3.days).seconds.from_now)
   flight.save
   puts flight.id
