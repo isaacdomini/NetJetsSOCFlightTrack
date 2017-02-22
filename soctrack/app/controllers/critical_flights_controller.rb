@@ -27,15 +27,27 @@ class CriticalFlightsController < ApplicationController
   def create
     @critical_flight = CriticalFlight.new(critical_flight_params)
 
-    respond_to do |format|
-      if @critical_flight.save
-        format.html { redirect_to @critical_flight, notice: 'Critical flight was successfully created.' }
-        format.json { render :show, status: :created, location: @critical_flight }
-      else
-        format.html { render :new }
-        format.json { render json: @critical_flight.errors, status: :unprocessable_entity }
-      end
-    end
+	if @critical_flight.save
+
+	ActionCable.server.broadcast 'criticalflights_channel', @critical_flight
+
+	end
+    #respond_to do |format|
+     # if @critical_flight.save
+
+	
+
+      # format.html { redirect_to @critical_flight, notice: 'Critical flight was successfully created.' }
+       # format.json { render :show, status: :created, location: @critical_flight }
+	
+	#Broadcasts update to users subscribed to 'criticalflights_channel'
+
+	
+      #else
+       # format.html { render :new }
+        #format.json { render json: @critical_flight.errors, status: :unprocessable_entity }
+      #end
+    #end
   end
 
   # PATCH/PUT /critical_flights/1
