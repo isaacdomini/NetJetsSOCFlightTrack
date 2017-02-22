@@ -49,7 +49,7 @@ CSV.parse(csv_text).map {|a|  codes.insert(-1,a[0]) if a[1].include?('large') &&
 
 fls = Array.new
 # CREATE FLIGHTS
-for i in 0..499
+for i in 0..999
   randTail = rand(999).to_s.center(3, rand(9).to_s)
   randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
   sourceDest = codes.sample(2);
