@@ -46,45 +46,36 @@ codes = Array.new
 CSV.parse(csv_text).map {|a|  codes.insert(-1,a[0]) if a[1].include?('large') && a[7].include?('US') && !a[2].include?('Air Force')}
 
 
-# create_table "recoveries", force: :cascade do |t|
-#   t.string   "tail"
-#   t.string   "leg"
-#   t.boolean  "selected",   default: false
-#   t.integer  "AB"
-#   t.integer  "OS"
-#   t.integer  "CS"
-#   t.integer  "DX"
-#   t.integer  "OPS"
-#   t.integer  "MX"
-#   t.integer  "ITP"
-#   t.integer  "SC"
-#   t.datetime "created_at",                 null: false
-#   t.datetime "updated_at",                 null: false
-# end
-#
-for i in 0..99
-  randTail = rand(999).to_s.center(3, rand(9).to_s)
-  randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
-  r =Recovery.new(:tail => "N"+randTail+"QS", :leg => randLeg).save
-  # puts r.id
-end
 
-#
-#
-#
-# t.string   "tail"
-# t.string   "leg"
-# t.string   "source"
-# t.string   "destination"
-# t.text     "event"
-# t.datetime "etd"
-# t.datetime "created_at",  null: false
-# t.datetime "updated_at",  null: false
-# t.boolean  "resolved"
-for i in 0..99
+fls = Array.new
+# CREATE FLIGHTS
+for i in 0..499
   randTail = rand(999).to_s.center(3, rand(9).to_s)
   randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
   sourceDest = codes.sample(2);
+  flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(3.days).seconds.from_now)
+  puts flight
+  fls.insert(-1,i+1) if flight.save
+end
+
+#
+for i in 0..99
+  r =Recovery.new(:flight =>  Flight.find(fls.delete_at(rand(fls.size)))).save
+  puts r
+end
+
+  randomEvents = Array.new
+  for i in 0..rand(0..5)
+    randEventType = events.values[rand(events.values.size)]
+    selectedEvent = randEventType[rand(randEventType.size)]
+    randomEvents.insert(-1,selectedEvent) if !randomEvents.include?(selectedEvent)
+  end
+# cflight = CriticalFlight.new(:event => randomEvents, :recovery_ids => [1,2,3], :flight_id =>  fls.delete_at(rand(fls.size))).save
+
+
+
+# CREATE CriticalFlights
+for i in 0..99
   randomEvents = Array.new
   randomRecoveries = Array.new
   for i in 0..rand(0..5)
@@ -97,11 +88,11 @@ for i in 0..99
     selectedEvent = randEventType[rand(randEventType.size)]
     randomEvents.insert(-1,selectedEvent) if !randomEvents.include?(selectedEvent)
   end
-  flight = CriticalFlight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :source => sourceDest[0], :destination => sourceDest[1], :event => randomEvents, :etd => rand(3.days).seconds.from_now, :recovery_ids => randomRecoveries)
-  puts flight
-  flight.save
+  cflight = CriticalFlight.new(:event => randomEvents, :recovery_ids => randomRecoveries, :flight =>  Flight.find(fls.delete_at(rand(fls.size)))).save
+  # puts cflight
+  # cflight.save
+  cflight = nil
 end
-# CriticalFlight.new(:tail => "N500QS", :leg => "00000000", :source => "KCMH", :destination =>"KLGA", :event => "En Route Weather", :etd => DateTime.new(2001,2,3.5)).save
 
 
 

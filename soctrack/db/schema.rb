@@ -10,18 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219234914) do
+ActiveRecord::Schema.define(version: 20170222183953) do
 
   create_table "critical_flights", force: :cascade do |t|
-    t.string   "tail"
-    t.boolean  "resolved",    default: false
-    t.string   "leg"
-    t.string   "source"
-    t.string   "destination"
     t.text     "event"
-    t.datetime "etd"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "resolved",   default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "critical_flights_recoveries", id: false, force: :cascade do |t|
@@ -32,12 +27,25 @@ ActiveRecord::Schema.define(version: 20170219234914) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.text "event_hash"
+    t.text     "event_hash"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "flights", force: :cascade do |t|
+    t.string   "tail"
+    t.string   "leg",                null: false
+    t.string   "arrival"
+    t.string   "departure"
+    t.datetime "etd"
+    t.integer  "recovery_id"
+    t.integer  "critical_flight_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["leg"], name: "index_flights_on_leg"
   end
 
   create_table "recoveries", force: :cascade do |t|
-    t.string   "tail"
-    t.string   "leg"
     t.boolean  "selected",   default: false
     t.integer  "AB",         default: 0
     t.integer  "OS",         default: 0

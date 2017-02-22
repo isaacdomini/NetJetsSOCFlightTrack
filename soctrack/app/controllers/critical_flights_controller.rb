@@ -9,7 +9,7 @@ class CriticalFlightsController < ApplicationController
     puts "THIS IS THE TYPE OF ALL FLIGHTS"
     respond_to do |format|
       format.html
-      format.json { render :json => @critical_flights.to_json(:include => :recovery) }
+      format.json { render :json => @critical_flights.to_json(include: [{ :recovery => { :include => :flight }}, :flight]) }
     end
   end
 
@@ -90,6 +90,6 @@ class CriticalFlightsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def critical_flight_params
-      params.require(:critical_flight).permit(:tail, :leg, :source, :destination, :event, :etd)
+      params.require(:critical_flight).permit(:event)
     end
 end

@@ -5,6 +5,10 @@ class RecoveriesController < ApplicationController
   # GET /recoveries.json
   def index
     @recoveries = Recovery.all
+    respond_to do |format|
+      format.html
+      format.json { render :json => @recoveries.to_json(:include => :flight) }
+    end
   end
 
   # GET /recoveries/1
@@ -69,6 +73,6 @@ class RecoveriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recovery_params
-      params.require(:recovery).permit(:tail, :leg, :selected, :AB, :OS, :CS, :DX, :OPS, :MX, :ITP, :SC)
+      params.require(:recovery).permit(:selected, :AB, :OS, :CS, :DX, :OPS, :MX, :ITP, :SC)
     end
 end

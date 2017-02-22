@@ -36,7 +36,7 @@
           var counter = 0;
           d.recovery.forEach( function(item) {
               ret += '<div class="row">' +
-                        '<div class="col-md-2">'+item.tail+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
+                        '<div class="col-md-2">'+item.flight.tail+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
                           '<div id="actionsDropdown" class="dropdown">'+
@@ -247,14 +247,14 @@
                   "data":           null,
                   "defaultContent": ''
               },
-              { "data": "tail" },
-              { "data": "leg" },
-              { "data": "source" },
-              { "data": "destination" },
+              { "data": "flight.tail" },
+              { "data": "flight.leg" },
+              { "data": "flight.departure" },
+              { "data": "flight.arrival" },
               { "data": "event" },
               { "data": "recovery" },
               // { "data": "messages" },
-              { "data": "etd" }
+              { "data": "flight.etd" }
             ],
             "aoColumnDefs":[{
              "aTargets":[ 6 ],
