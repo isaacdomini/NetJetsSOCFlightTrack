@@ -54,8 +54,9 @@ for i in 0..499
   randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
   sourceDest = codes.sample(2);
   flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(3.days).seconds.from_now)
-  puts flight
-  fls.insert(-1,i+1) if flight.save
+  flight.save
+  puts flight.id
+  fls << i+1
 end
 
 #
