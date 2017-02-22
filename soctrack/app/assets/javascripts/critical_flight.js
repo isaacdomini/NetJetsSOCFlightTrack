@@ -145,13 +145,9 @@
                       counter++;
           });
       }
-
-<<<<<<< HEAD
       ret += '<div class="row text-center" style="margin-top:15px;">'+
                 '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>'+
               '</div>';
-=======
->>>>>>> origin/updateUserForm
       return ret;
   }
 
@@ -272,6 +268,7 @@
               $("div.toolbar").html('<button type="button" class="btn btn-primary" onclick="showAll(this)" id="showBtn">Show All</button>'+
                                     '<button type="button" class="btn btn-primary" onclick="hideAll(this)" id="hideBtn">Hide All</button>'+
                                     +'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>');
+
             }
         } );
       });
