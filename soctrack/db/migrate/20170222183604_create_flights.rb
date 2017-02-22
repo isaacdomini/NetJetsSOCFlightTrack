@@ -6,8 +6,8 @@ class CreateFlights < ActiveRecord::Migration[5.0]
       t.string :arrival
       t.string :departure
       t.datetime :etd
-      t.integer :recovery_id
-      t.integer :critical_flight_id
+      t.integer :recovery_id, null: true
+      t.integer :critical_flight_id, null: true
 
       t.timestamps
     end
