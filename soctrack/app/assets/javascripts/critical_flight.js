@@ -7,6 +7,9 @@
                     '<div class="col-md-9">'+
                         getRecoveryOptions(d) +
                     '</div>' +
+                    '<div class="col">'+
+                         '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>' +
+                    '</div>' +
                 '</div>'+
               '</div>';
   }
@@ -36,7 +39,7 @@
                         '<div class="col-md-2">'+item.tail+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
+                          '<div id="actionsDropdown" class="dropdown">'+
                             '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">'+
                                 '<span class="glyphicon glyphicon-empty-dot"></span>'+
                                 '<span class="caret"></span>'+
@@ -143,9 +146,12 @@
           });
       }
 
+<<<<<<< HEAD
       ret += '<div class="row text-center" style="margin-top:15px;">'+
                 '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>'+
               '</div>';
+=======
+>>>>>>> origin/updateUserForm
       return ret;
   }
 
@@ -154,33 +160,31 @@
       y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
 
-  function showAll(node){
-      var y = node,innerHTML;
-      var table = $('#flightsTable').DataTable();
-      if(node.innerHTML == "Show All"){
-        y .innerHTML= "Hide All";
-        table.rows().every( function (){
-          var tr = this.node();
-          var sp = this.node().querySelector("span");
-          this.child( format(this.data()) ).show();
-          tr.className += " shown";
-          sp.className = "glyphicon glyphicon-minus";
-        });
-      } else {
-        y.innerHTML = "Show All";
-        table.rows().every( function (){
-          var tr = this.node();
-          var sp = this.node().querySelector("span");
-          this.child.hide();
-          if(tr.className == "odd shown"){
-            tr.className = "odd";
-          } else if(tr.className == "even shown"){
-            tr.className = "even";
-          }
-          sp.className = "glyphicon glyphicon-plus";
-        });
-      }
 
+  function showAll(node){
+    var table = $('#flightsTable').DataTable();
+    table.rows().every( function (){
+      var tr = this.node();
+      var sp = this.node().querySelector("span");
+      this.child( format(this.data()) ).show();
+      tr.className += " shown";
+      sp.className = "glyphicon glyphicon-minus";
+    });
+  }
+
+  function hideAll(node){
+    var table = $('#flightsTable').DataTable();
+    table.rows().every( function (){
+      var tr = this.node();
+      var sp = this.node().querySelector("span");
+      this.child.hide();
+      if(tr.className == "odd shown"){
+        tr.className = "odd";
+      } else if(tr.className == "even shown"){
+        tr.className = "even";
+      }
+      sp.className = "glyphicon glyphicon-plus";
+    });
   }
 
   function showInfo(){
@@ -265,7 +269,8 @@
             "order": [[1, 'asc']],
             dom: 'l<"toolbar">frtip',
             initComplete: function(){
-              $("div.toolbar").html('<button type="button" class="btn btn-primary" onclick="showAll(this)" id="showBtn">Show All</button>'
+              $("div.toolbar").html('<button type="button" class="btn btn-primary" onclick="showAll(this)" id="showBtn">Show All</button>'+
+                                    '<button type="button" class="btn btn-primary" onclick="hideAll(this)" id="hideBtn">Hide All</button>'+
                                     +'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>');
             }
         } );
