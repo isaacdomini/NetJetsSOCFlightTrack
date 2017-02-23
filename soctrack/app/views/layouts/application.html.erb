@@ -7,6 +7,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'cable', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -28,7 +30,8 @@
         <div class="collapse navbar-collapse" >
           <% if user_signed_in? %>
           <ul class="nav navbar-nav">
-            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+            <!-- <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li> -->
+            <li><%= button_to "Logout", destroy_user_session_path, :method => :delete %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <div href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

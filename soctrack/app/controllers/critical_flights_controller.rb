@@ -46,8 +46,15 @@ class CriticalFlightsController < ApplicationController
     #   flash.now[:alert] = 'Error while creating flight!'
     #   return false
     # end
+    #
+    puts "about to broadcast"
+    ActionCable.server.broadcast 'critical_flight_channel',
+                               content:  @critical_flight
+                              #  username: message.user.username
+          head :ok
     respond_to do |format|
       if @critical_flight.save
+
         format.html { render :json => @critical_flight.to_json(:include => :recovery), status: :created }
         format.json { render :json => @critical_flight.to_json(:include => :recovery), status: :created}
         # format.json { render json: final_obj, status: :ok }
@@ -55,6 +62,7 @@ class CriticalFlightsController < ApplicationController
         format.html { render :new }
         format.json { render json: @critical_flight.errors, status: :unprocessable_entity }
       end
+      return
     end
   end
 
