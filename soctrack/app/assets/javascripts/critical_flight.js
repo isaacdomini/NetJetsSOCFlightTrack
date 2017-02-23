@@ -207,7 +207,8 @@
     });
 
 
-    $('#flightsTable tbody').on('click', 'td.details-control', function (e) {
+    $('.details-control').on('click', function (e) {
+        e.stopPropagation();
         console.log("clicked");
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
@@ -227,7 +228,6 @@
             sp.removeClass('glyphicon-plus');
             sp.addClass('glyphicon-minus');
         }
-        stopBubble(e);
     } );
   }
 
