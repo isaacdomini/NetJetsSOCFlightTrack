@@ -145,9 +145,6 @@
                       counter++;
           });
       }
-      ret += '<div class="row text-center" style="margin-top:15px;">'+
-                '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>'+
-              '</div>';
 
       return ret;
   }
