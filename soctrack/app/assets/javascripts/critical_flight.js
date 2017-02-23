@@ -145,13 +145,10 @@
                       counter++;
           });
       }
-<<<<<<< HEAD
       ret += '<div class="row text-center" style="margin-top:15px;">'+
                 '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>'+
               '</div>';
 
-=======
->>>>>>> updateUserForm
       return ret;
   }
 
@@ -214,7 +211,7 @@
 
 
     $('#flightsTable tbody').on('click', 'td.details-control', function (e) {
-        window.alert("clicked");
+        console.log("clicked");
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
         var row = table.row( tr );
@@ -270,16 +267,12 @@
             "order": [[1, 'asc']],
             dom: 'l<"toolbar">frtip',
             initComplete: function(){
-              /*$("div.toolbar").html('<div class="btn-group" role="toolbar" aria-label="...">'+
+              $("div.toolbar").html('<div class="btn-group" role="toolbar" aria-label="...">'+
                                     '<button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>'+
                                     '<button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>'+
                                     '<button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>'+
-<<<<<<< HEAD
                                     '</div>');
-=======
-                                    '</div>');*/
 
->>>>>>> updateUserForm
             }
         } );
       });
