@@ -31,7 +31,8 @@
           <% if user_signed_in? %>
           <ul class="nav navbar-nav">
             <!-- <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li> -->
-            <li><%= button_to "Logout", destroy_user_session_path, :method => :delete %></li>
+            <!-- <li><%= button_to "Logout", destroy_user_session_path, :method => :delete %></li> -->
+            <li><h4><%= @title || "SocTrack" %></h4></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <div href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

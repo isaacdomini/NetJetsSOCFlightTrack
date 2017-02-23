@@ -1,5 +1,6 @@
   /* Formatting function for row details - modify as you need */
-  var table = ""
+  var table = "";
+  var initalized = false;
   function format ( d ) {
       // `d` is the original data object for the row
       return '<div class="container">'+
@@ -156,18 +157,20 @@
 
 
   function showAll(node){
-    var table = $('#flightsTable').DataTable();
+
     table.rows().every( function (){
       var tr = this.node();
       var sp = this.node().querySelector("span");
       this.child( format(this.data()) ).show();
       tr.className += " shown";
-      sp.className = "glyphicon glyphicon-minus";
+      if(sp!=null){
+        sp.className = "glyphicon glyphicon-minus";
+      }
     });
   }
 
   function hideAll(node){
-    var table = $('#flightsTable').DataTable();
+
     table.rows().every( function (){
       var tr = this.node();
       var sp = this.node().querySelector("span");
@@ -177,7 +180,9 @@
       } else if(tr.className == "even shown"){
         tr.className = "even";
       }
-      sp.className = "glyphicon glyphicon-plus";
+      if(sp!=null){
+        sp.className = "glyphicon glyphicon-plus";
+      }
     });
   }
 
@@ -205,8 +210,6 @@
         $(this).append('<span class="glyphicon glyphicon-plus"></span>');
       }
     });
-
-
     $('#flightsTable tbody').on('click', 'td.details-control', function (e) {
         console.log("clicked");
         var sp = $(this).find('span');
@@ -230,47 +233,94 @@
         stopBubble(e);
     } );
   }
-
-  var dataset = "";
   $(document).ready(function() {
-  $.getJSON('critical_flights.json', function(data){
-    console.log(data);
-    dataset = data;
+    if(!initalized){
+      initalized = true;
+      $.getJSON('critical_flights.json', function(data){
         table = $('#flightsTable').DataTable( {
-            data: dataset,
-            "columns": [
-              {
-                  "className":      'details-control',
-                  "orderable":      false,
-                  "data":           null,
-                  "defaultContent": ''
-              },
-              { "data": "flight.tail" },
-              { "data": "flight.leg" },
-              { "data": "flight.departure" },
-              { "data": "flight.arrival" },
-              { "data": "event" },
-              { "data": "recovery" },
-              // { "data": "messages" },
-              { "data": "flight.etd" }
-            ],
-            "aoColumnDefs":[{
-             "aTargets":[ 6 ],
-             "mRender": function(data, type, full) {
+          data: data,
+          "rowId": "flight.leg",
+          "columns": [
+            {
+              "className": 'details-control',
+              "orderable": false,
+              "data": null,
+              "defaultContent": ''
+            },
+            { "data": "flight.tail" },
+            { "data": "flight.leg" },
+            { "data": "flight.departure" },
+            { "data": "flight.arrival" },
+            { "data": "event" },
+            { "data": "recovery" },
+            // { "data": "messages" },
+            { "data": "flight.etd" }
+          ],
+          "aoColumnDefs":[{
+            "aTargets":[ 6 ],
+            "mRender": function(data, type, full) {
                return (data == "null") ? "No" : "Yes";
-             }
-            }],
-            "fnDrawCallback": tableDrawUpdateElements,
-            "order": [[1, 'asc']],
-            dom: 'l<"toolbar">frtip',
-            initComplete: function(){
-              $("div.toolbar").html('<div class="btn-group" role="toolbar" aria-label="...">'+
-                                    '<button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>'+
-                                    '<button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>'+
-                                    '<button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>'+
-                                    '</div>');
-
             }
-        } );
+          }],
+          "fnDrawCallback": tableDrawUpdateElements,
+          "order": [[1, 'asc']],
+          dom: 'l<"toolbar">frtip',
+          initComplete: function(){
+          $("div.toolbar").html('<div class="btn-group" role="toolbar" aria-label="...">'+
+                                '<button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>'+
+                                '<button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>'+
+                                '<button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>'+
+                                '</div>');
+
+          }
+        });
       });
+    }
+  });
+
+
+  $.validator.addMethod("regx", function(value, element, regexpr) {
+    console.log(value);
+    return regexpr.test(value);
+  }, "Invalid format");
+  $('#newFlightForm').validate({
+      rules: {
+          tail: {
+            required: true,
+            regx: /^N[0-9]{3}QS$/
+          },
+          leg: {
+            required: true,
+            regx: /^[0-9]{8}$/
+          },
+          source: {
+            required: true,
+            regx: /^K[A-Z]{3}$/
+          },
+          destination: {
+            required: true,
+            regx: /^K[A-Z]{3}$/
+          }
+      },
+      highlight: function(element) {
+          $(element).closest('.form-group').addClass('has-error');
+      },
+      unhighlight: function(element) {
+          $(element).closest('.form-group').removeClass('has-error');
+      },
+      errorElement: 'span',
+      errorClass: 'help-block',
+      errorPlacement: function(error, element) {
+          if(element.parent('.input-group').length) {
+              error.insertAfter(element.parent());
+          } else {
+              error.insertAfter(element);
+          }
+      }
+  });
+  $('#eventsSelector').on('changed.bs.select', function (event, clickedIndex, newValue, oldValue) {
+    // console.log(event);
+    // console.log(clickedIndex);
+    console.log(newValue);
+    // console.log(oldValue);
   });
