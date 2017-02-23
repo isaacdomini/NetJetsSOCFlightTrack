@@ -210,7 +210,10 @@
         $(this).append('<span class="glyphicon glyphicon-plus"></span>');
       }
     });
-    $('#flightsTable tbody').on('click', 'td.details-control', function (e) {
+
+
+    $('.details-control').on('click', function (e) {
+        e.stopPropagation();
         console.log("clicked");
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
@@ -230,9 +233,10 @@
             sp.removeClass('glyphicon-plus');
             sp.addClass('glyphicon-minus');
         }
-        stopBubble(e);
     } );
   }
+
+  
   $(document).ready(function() {
     if(!initalized){
       initalized = true;
