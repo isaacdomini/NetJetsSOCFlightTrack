@@ -17,15 +17,6 @@
  ul.navbar-right{
   margin-right: 0 !important
  }
-
- td.details-control {
-     background: url('images/open.png') no-repeat center center;
-     cursor: pointer;
- }
- tr.shown td.details-control {
-     background: url('images/close.png') no-repeat center center;
- }
-
  .user-profile img {
  	width:40px;
  	height:40px;
