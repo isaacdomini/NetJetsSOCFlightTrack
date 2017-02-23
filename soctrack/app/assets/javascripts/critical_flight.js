@@ -278,7 +278,7 @@
     }
   });
 
-
+$(document).ready(function() {
   $.validator.addMethod("regx", function(value, element, regexpr) {
     console.log(value);
     return regexpr.test(value);
@@ -324,3 +324,4 @@
     console.log(newValue);
     // console.log(oldValue);
   });
+});
