@@ -144,26 +144,31 @@
                         '<div class="col-md-1" style="margin-top:10px;"><a class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>'+
                       '</div>'+
                       "<script>"+
-                      "$(\"[data-toggle="+d.flight.leg+"-"+item.flight.leg+"]\").popover({"+
-                        "trigger: 'click',"+
-                        "placement: 'right',"+
-                        "title: \"Recovery Flight Info\","+
-                        "html : true,"+
-                        "content: '<div><table>'+"+
-                                    "'<tr>'+"+
-                                      "'<th>Leg</th>'+"+
-                                      "'<th>ETD</th>'+"+
-                                      "'<th>Departure</th>'+"+
-                                      "'<th>Arrival</th>'+"+
-                                    "'</tr>'+"+
-                                    "'<tr>'+"+
-                                      "'<td>"+item.flight.leg+"</td>'+"+
-                                      "'<td>"+item.flight.etd+"</td>'+"+
-                                      "'<td>"+item.flight.departure+"</td>'+"+
-                                      "'<td>"+item.flight.arrival+"</td>'+"+
-                                    "'</tr>'+"+
-                                  "'</table></div>'"+
-                      "});"+
+                        "$(\"[data-toggle="+d.flight.leg+"-"+item.flight.leg+"]\").popover({"+
+                          "trigger: 'click',"+
+                          "placement: 'right',"+
+                          "title: \"Recovery Flight Info\","+
+                          "html : true,"+
+                          "container : 'body'," +
+                          "content: '<div><table class = \"table\">'+"+
+                                      "'<thead>'+" +
+                                        "'<tr>'+"+                                      
+                                          "'<th>Leg</th>'+"+
+                                          "'<th>ETD</th>'+"+
+                                          "'<th>Departure</th>'+"+
+                                          "'<th>Arrival</th>'+"+
+                                        "'</tr>'+"+
+                                      "'</thead>'+" +
+                                      "'<tbody>'+" +
+                                        "'<tr>'+"+
+                                          "'<td>"+item.flight.leg+"</td>'+"+
+                                          "'<td>"+item.flight.etd+"</td>'+"+
+                                          "'<td>"+item.flight.departure+"</td>'+"+
+                                          "'<td>"+item.flight.arrival+"</td>'+"+
+                                        "'</tr>'+"+
+                                      "'</tbody>'+" +
+                                    "'</table></div>'"+
+                        "});"+
                       "</script>";
                       counter++;
           });
