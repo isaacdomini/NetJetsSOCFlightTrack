@@ -37,7 +37,7 @@
           var counter = 0;
           d.recovery.forEach( function(item) {
               ret += '<div class="row">' +
-                        '<div class="col-md-2">'+item.flight.tail+'<a class="controlBtn" data-toggle="popover" id="'+item.flight.id+'" onclick="showRecInfo(this,\'' + item.flight.leg + '\',\'' + item.flight.etd + '\',\'' + item.flight.departure + '\',\'' + item.flight.arrival + '\')"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
+                        '<div class="col-md-2">'+item.flight.tail+'<a class="controlBtn" data-toggle="'+d.flight.leg+"-"+item.flight.leg+'" id="'+d.flight.leg+"-"+item.flight.leg+'"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
                           '<div id="actionsDropdown" class="dropdown">'+
@@ -142,7 +142,29 @@
                           '</div>'+
                         '</div>'+
                         '<div class="col-md-1" style="margin-top:10px;"><a class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>'+
-                      '</div>';
+                      '</div>'+
+                      "<script>"+
+                      "$(\"[data-toggle="+d.flight.leg+"-"+item.flight.leg+"]\").popover({"+
+                        "trigger: 'click',"+
+                        "placement: 'right',"+
+                        "title: \"Recovery Flight Info\","+
+                        "html : true,"+
+                        "content: '<div><table>'+"+
+                                    "'<tr>'+"+
+                                      "'<th>Leg</th>'+"+
+                                      "'<th>ETD</th>'+"+
+                                      "'<th>Departure</th>'+"+
+                                      "'<th>Arrival</th>'+"+
+                                    "'</tr>'+"+
+                                    "'<tr>'+"+
+                                      "'<td>"+item.flight.leg+"</td>'+"+
+                                      "'<td>"+item.flight.etd+"</td>'+"+
+                                      "'<td>"+item.flight.departure+"</td>'+"+
+                                      "'<td>"+item.flight.arrival+"</td>'+"+
+                                    "'</tr>'+"+
+                                  "'</table></div>'"+
+                      "});"+
+                      "</script>";
                       counter++;
           });
       }
@@ -228,38 +250,6 @@
     } );
   }
 
-  function showRecInfo(node, leg, etd, departure, arrival){
-    console.log(node);
-    console.log(leg + " " + etd+ " " +departure + " " + arrival);
-    var id = node.getAttribute('id');
-    console.log(id);
-    $("[data-toggle=popover]").popover({
-      trigger: 'click',
-      placement: 'right',
-      title: "Recovery Flight Info",
-      html : true,
-      content: '<table>'+
-                  '<tr>'+
-                    '<th>Leg</th>'+
-                    '<th>ETD</th>'+
-                    '<th>Departure</th>'+
-                    '<th>Arrival</th>'+
-                  '</tr>'+
-                  '<tr>'+
-                    '<td>'+leg+'</td>'+
-                    '<td>'+etd+'</td>'+
-                    '<td>'+departure+'</td>'+
-                    '<td>'+arrival+'</td>'+
-                  '</tr>'+
-                '</table>'
-    });
-
-    //console.log(dataById);
-    //var json = JSON.parse(dataById);
-    //console.log(json);
-    //console.log(json.id)
-  }
-
   $(document).ready(function() {
     if(!initalized){
       initalized = true;
@@ -303,52 +293,49 @@
         });
       });
     }
+    $.validator.addMethod("regx", function(value, element, regexpr) {
+      console.log(value);
+      return regexpr.test(value);
+    }, "Invalid format");
+    $('#newFlightForm').validate({
+        rules: {
+            tail: {
+              required: true,
+              regx: /^N[0-9]{3}QS$/
+            },
+            leg: {
+              required: true,
+              regx: /^[0-9]{8}$/
+            },
+            source: {
+              required: true,
+              regx: /^K[A-Z]{3}$/
+            },
+            destination: {
+              required: true,
+              regx: /^K[A-Z]{3}$/
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function(error, element) {
+            if(element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    $('#eventsSelector').on('changed.bs.select', function (event, clickedIndex, newValue, oldValue) {
+      // console.log(event);
+      // console.log(clickedIndex);
+      console.log(newValue);
+      // console.log(oldValue);
+    });
   });
-
-$(document).ready(function() {
-  $.validator.addMethod("regx", function(value, element, regexpr) {
-    console.log(value);
-    return regexpr.test(value);
-  }, "Invalid format");
-  $('#newFlightForm').validate({
-      rules: {
-          tail: {
-            required: true,
-            regx: /^N[0-9]{3}QS$/
-          },
-          leg: {
-            required: true,
-            regx: /^[0-9]{8}$/
-          },
-          source: {
-            required: true,
-            regx: /^K[A-Z]{3}$/
-          },
-          destination: {
-            required: true,
-            regx: /^K[A-Z]{3}$/
-          }
-      },
-      highlight: function(element) {
-          $(element).closest('.form-group').addClass('has-error');
-      },
-      unhighlight: function(element) {
-          $(element).closest('.form-group').removeClass('has-error');
-      },
-      errorElement: 'span',
-      errorClass: 'help-block',
-      errorPlacement: function(error, element) {
-          if(element.parent('.input-group').length) {
-              error.insertAfter(element.parent());
-          } else {
-              error.insertAfter(element);
-          }
-      }
-  });
-  $('#eventsSelector').on('changed.bs.select', function (event, clickedIndex, newValue, oldValue) {
-    // console.log(event);
-    // console.log(clickedIndex);
-    console.log(newValue);
-    // console.log(oldValue);
-  });
-});
