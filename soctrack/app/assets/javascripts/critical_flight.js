@@ -37,7 +37,7 @@
           var counter = 0;
           d.recovery.forEach( function(item) {
               ret += '<div class="row">' +
-                        '<div class="col-md-2">'+item.flight.tail+'<a class="controlBtn" onclick="showInfo()" title="Flight Info"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
+                        '<div class="col-md-2">'+item.flight.tail+'<a class="controlBtn" data-toggle="popover" id="'+item.flight.id+'" onclick="showRecInfo(this,\'' + item.flight.leg + '\',\'' + item.flight.etd + '\',\'' + item.flight.departure + '\',\'' + item.flight.arrival + '\')"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
                           '<div id="actionsDropdown" class="dropdown">'+
@@ -186,14 +186,6 @@
     });
   }
 
-  function showInfo(){
-    console.log("info clicked");
-    bootbox.dialog({
-      title: "Recovery Option Info",
-      message: "<p>More Info</p>"
-    });
-  }
-
   function addRecoveryOption(){
     bootbox.prompt({
       title: "This is a prompt with a date input!",
@@ -236,7 +228,38 @@
     } );
   }
 
-  
+  function showRecInfo(node, leg, etd, departure, arrival){
+    console.log(node);
+    console.log(leg + " " + etd+ " " +departure + " " + arrival);
+    var id = node.getAttribute('id');
+    console.log(id);
+    $("[data-toggle=popover]").popover({
+      trigger: 'click',
+      placement: 'right',
+      title: "Recovery Flight Info",
+      html : true,
+      content: '<table>'+
+                  '<tr>'+
+                    '<th>Leg</th>'+
+                    '<th>ETD</th>'+
+                    '<th>Departure</th>'+
+                    '<th>Arrival</th>'+
+                  '</tr>'+
+                  '<tr>'+
+                    '<td>'+leg+'</td>'+
+                    '<td>'+etd+'</td>'+
+                    '<td>'+departure+'</td>'+
+                    '<td>'+arrival+'</td>'+
+                  '</tr>'+
+                '</table>'
+    });
+
+    //console.log(dataById);
+    //var json = JSON.parse(dataById);
+    //console.log(json);
+    //console.log(json.id)
+  }
+
   $(document).ready(function() {
     if(!initalized){
       initalized = true;
