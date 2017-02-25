@@ -54,13 +54,7 @@
       return listHTML;
     }
     function getDefaultIcon(role, indexOfIcon){
-      // console.log("Role: "+role+" Index: "+indexOfIcon);
-      // console.log(recoveryReactionOptions[recoveryReactionSelectors[role][3]]);
-      if(indexOfIcon==0){
-        return "empty-dot";
-      }else{
-        return recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
-      }
+      return indexOfIcon == 0 ? "empty-dot" : recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
     }
     var expandedSection = `<div class="row text-center">Recovery Options:</div>`;
     if(data.recovery.length>0){
@@ -77,20 +71,20 @@
         </table></div>`;
 
         /// COME BACK TO THIS POPEVER THING
-        expandedSection +=`<div class="col-md-2">${recoveryItem.flight.tail}
+        expandedSection +=`<div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
         <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${data.flight.leg}-${recoveryItem.flight.leg}-popover" id="${data.flight.leg}-${recoveryItem.flight.leg}">
-        <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1">...</div>`;
+        <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1 col-sm-1">...</div>`;
 
         //Dropdown reaction selector
         Object.keys(recoveryReactionSelectors).forEach(role=> {
           expandedSection +=
-          `<div class="col-md-1"><div class="dropdown">
+          `<div class="col-md-1 col-sm-1"><div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-${getDefaultIcon(role, recoveryItem[role])}"></span>
               <span class="caret"></span></button>
               <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
           </div></div>`
         });
-        expandedSection += `<div class="col-md-1" style="margin-top:10px;"><a class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>`;
+        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>`;
       });
       expandedSection += `</div>`
     }

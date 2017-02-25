@@ -21,25 +21,20 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="">
         <div class="navbar-header">
-          <a class="navbar-brand" href="">
-
-            <%= image_tag "netjetsLogo.png", :style => "max-height: 100%;"%>
-          </a>
+          <a class="navbar-brand" href=""><%= image_tag "netjetsLogo.png", :style => "max-height: 100%;"%></a>
+          <a class="navbar-brand" href=""><%= @title || "SocTrack" %></a>
         </div>
         <div class="collapse navbar-collapse" >
           <% if user_signed_in? %>
-          <ul class="nav navbar-nav">
-            <li><h4><%= @title || "SocTrack" %></h4></li>
-          </ul>
           <ul class="nav navbar-nav navbar-right">
-            <div href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <li><%= current_user.name %></li>
-              <span class="fa fa-angle-down"></span>
-            </div>
-            <ul class="dropdown-menu pull-right">
-              <li><a href="javascript:;">Role: <%= current_user.role %></a></li>
-              <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
-            </ul>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.name %><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:;">Role: <%= current_user.role %></a></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+              </ul>
+            </li>
           </ul>
           <%end%>
         </div>
