@@ -3,7 +3,6 @@
   var initalized = false;
   function format (rowData) {
       // `d` is the original data object for the row
-      console.log(getExpandedSection(rowData));
       return `<div class="container"><div class="row">
                 <div class="col-md-9">${getExpandedSection(rowData)}</div>
                 <div class="col"><button class="btn btn-default" onclick="addRecoveryOption()">Add</button></div>
@@ -11,7 +10,7 @@
   }
 
   function getExpandedSection(data){
-    const recoveryReactionHeaders = ["...","AB","OS","CS","DX","OP","MX","ITP","SC","-"];
+    const recoveryReactionHeaders = ["...","AB","OS","CS","DX","OPS","MX","ITP","SC","-"];
     const recoveryReactionOptions = {
       "null":"empty-dot", "Yes":"green-dot", "Maybe":"yellow-dot", "No":"red-dot", "Working":"blue-dot", "Accept":"thumbs-up" ,"Decline":"thumbs-down", "ITP":"plane", "SC":"globe"
     };
@@ -20,7 +19,7 @@
       "OS" : ["Yes", "Maybe", "No", "Working", "Accept", "Decline"],
       "CS" : ["Yes", "Maybe", "No", "Working"],
       "DX" : ["Yes", "Maybe", "No", "Working"],
-      "OP" : ["Yes", "Maybe", "No", "Working"],
+      "OPS" : ["Yes", "Maybe", "No", "Working"],
       "MX" : ["Yes", "Maybe", "No", "Working"],
       "ITP" : ["Yes", "Maybe", "No", "Working","ITP"],
       "SC" : ["Yes", "Maybe", "No", "Working", "SC"],
@@ -31,6 +30,15 @@
         listHTML += `<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-${recoveryReactionOptions[option]}"></span>${option}</a></li>`
       });
       return listHTML;
+    }
+    function getDefaultIcon(role, indexOfIcon){
+      // console.log("Role: "+role+" Index: "+indexOfIcon);
+      // console.log(recoveryReactionOptions[recoveryReactionSelectors[role][3]]);
+      if(indexOfIcon==0){
+        return "empty-dot";
+      }else{
+        return recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
+      }
     }
     var expandedSection = `<div class="row text-center">Recovery Options:</div>`;
     if(data.recovery.length>0){
@@ -48,7 +56,7 @@
         Object.keys(recoveryReactionSelectors).forEach(role=> {
           expandedSection +=
           `<div class="col-md-1"><div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>
+              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-${getDefaultIcon(role, recoveryItem[role])}"></span>
               <span class="caret"></span></button>
               <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
           </div></div>`
