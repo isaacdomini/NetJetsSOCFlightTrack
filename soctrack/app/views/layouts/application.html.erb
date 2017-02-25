@@ -4,7 +4,6 @@
     <title>Soctrack</title>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
-    <!-- Compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -25,20 +24,16 @@
           <a class="navbar-brand" href="">
 
             <%= image_tag "netjetsLogo.png", :style => "max-height: 100%;"%>
-            <!-- <img alt="Brand" src="images/netjetsLogo.png" style="max-height: 100%;"> -->
           </a>
         </div>
         <div class="collapse navbar-collapse" >
           <% if user_signed_in? %>
           <ul class="nav navbar-nav">
-            <!-- <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li> -->
-            <!-- <li><%= button_to "Logout", destroy_user_session_path, :method => :delete %></li> -->
             <li><h4><%= @title || "SocTrack" %></h4></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <div href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <!-- <img alt="Profile" src="images/profile.png" class="img-rounded"> -->
-              <%= current_user.name %>
+              <li><%= current_user.name %></li>
               <span class="fa fa-angle-down"></span>
             </div>
             <ul class="dropdown-menu pull-right">
@@ -51,11 +46,16 @@
       </div>
     </nav>
     <% if flash[:alert] %>
-      <p class="flash-error"><%= flash[:alert] %></p>
+    <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= flash[:alert] %>
+    </div>
     <% end %>
     <% if flash[:notice] %>
-      <p class="flash-notice"><%= flash[:notice] %></p>
-    <% end %>
+    <div class="alert alert-info alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= flash[:notice] %>
+    </div>        <% end %>
     <%= yield %>
   </body>
 </html>

@@ -8,6 +8,7 @@
                 <div class="col"><button class="btn btn-default" onclick="addRecoveryOption()">Add</button></div>
               </div></div>`;
   }
+
   function recoveryReactionPopover(){
     // console.log("REcovery Option Popover");
     // console.log($('[rel="recoveryItemPopover"]'));
@@ -23,6 +24,11 @@
     }).click(function(e) {
         e.preventDefault();
     });
+  }
+
+  function dropdown(node){
+      var y = node.parentNode.previousSibling
+      y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
 
   function getExpandedSection(data){
@@ -90,11 +96,6 @@
     }
     expandedSection += `<script>recoveryReactionPopover()</script>`
     return expandedSection;
-  }
-
-  function dropdown(node){
-      var y = node.parentNode.previousSibling
-      y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
 
   function showAll(node){
