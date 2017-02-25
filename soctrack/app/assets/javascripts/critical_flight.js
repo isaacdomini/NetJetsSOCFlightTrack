@@ -165,49 +165,56 @@
     } );
   }
 
+  function refreshTable(flightsData){
+    if($.fn.DataTable.isDataTable('#flightsTable')){
+      table.destroy();
+    }
+    table = $('#flightsTable').DataTable( {
+      data: flightsData,
+      "rowId": "flight.leg",
+      "columns": [
+        {
+          "className": 'details-control',
+          "orderable": false,
+          "data": null,
+          "defaultContent": ''
+        },
+        { "data": "flight.tail" },
+        { "data": "flight.leg" },
+        { "data": "flight.departure" },
+        { "data": "flight.arrival" },
+        { "data": "event" },
+        { "data": "recovery" },
+        // { "data": "messages" },
+        { "data": "flight.etd" }
+      ],
+      "aoColumnDefs":[{
+        "aTargets":[ 6 ],
+        "mRender": function(data, type, full) {
+           return (data == "null") ? "No" : "Yes";
+        }
+      }],
+      "fnDrawCallback": tableDrawUpdateElements,
+      "order": [[1, 'asc']],
+      dom: 'l<"toolbar">frtip',
+      initComplete: function(){
+      $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
+                            <button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>
+                            <button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>
+                            <button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>
+                            </div>`);
+
+      }
+    });
+  }
+
+
   $(document).ready(function() {
     if(!initalized){
       initalized = true;
       $.getJSON('critical_flights.json', function(data){
         criticalFlightData = data;
-
-        table = $('#flightsTable').DataTable( {
-          data: criticalFlightData,
-          "rowId": "flight.leg",
-          "columns": [
-            {
-              "className": 'details-control',
-              "orderable": false,
-              "data": null,
-              "defaultContent": ''
-            },
-            { "data": "flight.tail" },
-            { "data": "flight.leg" },
-            { "data": "flight.departure" },
-            { "data": "flight.arrival" },
-            { "data": "event" },
-            { "data": "recovery" },
-            // { "data": "messages" },
-            { "data": "flight.etd" }
-          ],
-          "aoColumnDefs":[{
-            "aTargets":[ 6 ],
-            "mRender": function(data, type, full) {
-               return (data == "null") ? "No" : "Yes";
-            }
-          }],
-          "fnDrawCallback": tableDrawUpdateElements,
-          "order": [[1, 'asc']],
-          dom: 'l<"toolbar">frtip',
-          initComplete: function(){
-          $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
-                                <button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>
-                                <button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>
-                                <button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>
-                                </div>`);
-
-          }
-        });
+        refreshTable(criticalFlightData);
       });
     }
     $.validator.addMethod("regx", function(value, element, regexpr) {

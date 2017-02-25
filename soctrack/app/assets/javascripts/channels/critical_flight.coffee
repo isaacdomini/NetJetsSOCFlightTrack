@@ -9,7 +9,6 @@ App.critical_flight = App.cable.subscriptions.create "CriticalFlightChannel",
     console.log("received");
     criticalFlightData.push(data.content);
     console.log("pushed to table");
-    table.ajax.reload()
+    refreshTable(criticalFlightData);
     console.log("tried first method")
-    $('#flightsTable').DataTable().ajax.reload();
     console.log("tried second method")
