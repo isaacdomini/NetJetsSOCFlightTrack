@@ -8,6 +8,22 @@
                 <div class="col"><button class="btn btn-default" onclick="addRecoveryOption()">Add</button></div>
               </div></div>`;
   }
+  function recoveryReactionPopover(){
+    // console.log("REcovery Option Popover");
+    // console.log($('[rel="recoveryItemPopover"]'));
+    $('[rel="recoveryItemPopover"]').popover({
+        container: 'body',
+        html: true,
+        content: function () {
+            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+            console.log("CONTETN");
+            console.log(clone);
+            return clone;
+        }
+    }).click(function(e) {
+        e.preventDefault();
+    });
+  }
 
   function getExpandedSection(data){
     const recoveryReactionHeaders = ["...","AB","OS","CS","DX","OPS","MX","ITP","SC","-"];
@@ -47,9 +63,16 @@
       recoveryReactionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
       expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
       data.recovery.forEach(recoveryItem=> {
+        expandedSection +=
+        `<div id="${data.flight.leg}-${recoveryItem.flight.leg}-popover" class="hide"><table>
+          <tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr>
+          <tr><td>${recoveryItem.flight.leg}</td><td>${recoveryItem.flight.etd}</td>
+          <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr>
+        </table></div>`;
+
         /// COME BACK TO THIS POPEVER THING
         expandedSection +=`<div class="col-md-2">${recoveryItem.flight.tail}
-        <a class="controlBtn" data-toggle="${data.flight.leg}-${recoveryItem.flight.leg}" id="${data.flight.leg}-${recoveryItem.flight.leg}">
+        <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${data.flight.leg}-${recoveryItem.flight.leg}-popover" id="${data.flight.leg}-${recoveryItem.flight.leg}">
         <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1">...</div>`;
 
         //Dropdown reaction selector
@@ -65,6 +88,7 @@
       });
       expandedSection += `</div>`
     }
+    expandedSection += `<script>recoveryReactionPopover()</script>`
     return expandedSection;
   }
 
@@ -83,6 +107,7 @@
         sp.className = "glyphicon glyphicon-minus";
       }
     });
+    recoveryReactionPopover();
   }
 
   function hideAll(node){
@@ -140,6 +165,7 @@
             sp.removeClass('glyphicon-plus');
             sp.addClass('glyphicon-minus');
         }
+        recoveryReactionPopover();
     } );
   }
 
