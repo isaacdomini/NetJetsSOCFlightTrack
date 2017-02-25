@@ -1,19 +1,47 @@
   /* Formatting function for row details - modify as you need */
   var table = "";
   var initalized = false;
-  function format ( d ) {
+  function format (rowData) {
       // `d` is the original data object for the row
-      return '<div class="container">'+
-                '<div class="row">'+
-                    '<div class="col-md-9">'+
-                        getRecoveryOptions(d) +
-                    '</div>' +
-                    '<div class="col">'+
-                         '<button class="btn btn-default" onclick="addRecoveryOption()">Add</button>' +
-                    '</div>' +
-                '</div>'+
-              '</div>';
+      console.log(getExpandedSection(rowData));
+      return `<div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        ${getRecoveryOptions(rowData)}
+                    </div>
+                    <div class="col">
+                         <button class="btn btn-default" onclick="addRecoveryOption()">Add</button>
+                    </div>
+                </div>
+              </div>`;
   }
+
+  function getExpandedSection(data){
+    const recoveryReactionHeaders = ["...","AB","OS","CS","DX","OP","MX","ITP","SC","-"];
+    const recoveryReactionOptions = {
+      "Yes":"green-dot", "Maybe":"yellow-dot", "No":"red-dot", "Working":"blue-dot", "Accept":"thumbs-up" ,"Decline":"thumbs-down"
+    };
+    const recoveryReactionSelectors = {
+      "AB" : ["Yes", "Maybe", "No", "Working"],
+      "OS" : ["Yes", "Maybe", "No", "Working", "Accept", "Decline"],
+    }
+    var expandedSection = `<div class="row text-center">Recovery Options:</div>`;
+    if(data.recovery.length>0){
+      expandedSection += `<div class="row">`;
+      expandedSection += `<div class="col-md-2 col-sm-2"><b>Flights</b></div>`;
+      recoveryRectionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
+      expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
+      data.recovery.forEach(recoveryItem=> {
+        /// COME BACK TO THIS POPEVER THING
+        expandedSection +=`<div class="col-md-2">${recoveryItem.flight.tail}
+                          <a class="controlBtn" data-toggle="${d.flight.leg}-${recoveryItem.flight.leg}" id="${d.flight.leg}-${recoveryItem.flight.leg}">
+                          <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1">...</div>`;
+
+      });
+    }
+    return expandedSection;
+  }
+
 
   function getRecoveryOptions(d) {
 
@@ -41,10 +69,8 @@
                         '<div class="col-md-1">...</div>'+
                         '<div class="col-md-1">'+
                           '<div id="actionsDropdown" class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">'+
-                                '<span class="glyphicon glyphicon-empty-dot"></span>'+
-                                '<span class="caret"></span>'+
-                            '</button>'+
+                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
+                                '<span class="caret"></span></button>'+
                             '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
                               '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
                               '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
@@ -179,11 +205,10 @@
 
 
   function showAll(node){
-
     table.rows().every( function (){
       var tr = this.node();
       var sp = this.node().querySelector("span");
-      this.child( format(this.data()) ).show();
+      this.child( format(this.data())).show();
       tr.className += " shown";
       if(sp!=null){
         sp.className = "glyphicon glyphicon-minus";
@@ -192,7 +217,6 @@
   }
 
   function hideAll(node){
-
     table.rows().every( function (){
       var tr = this.node();
       var sp = this.node().querySelector("span");
@@ -283,11 +307,11 @@
           "order": [[1, 'asc']],
           dom: 'l<"toolbar">frtip',
           initComplete: function(){
-          $("div.toolbar").html('<div class="btn-group" role="toolbar" aria-label="...">'+
-                                '<button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>'+
-                                '<button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>'+
-                                '<button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>'+
-                                '</div>');
+          $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
+                                <button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>
+                                <button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>
+                                <button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>
+                                </div>`);
 
           }
         });
