@@ -1,6 +1,7 @@
   /* Formatting function for row details - modify as you need */
   var table = "";
   var initalized = false;
+  var criticalFlightData = "";
   function format (rowData) {
       // `d` is the original data object for the row
       return `<div class="container"><div class="row">
@@ -168,8 +169,10 @@
     if(!initalized){
       initalized = true;
       $.getJSON('critical_flights.json', function(data){
+        criticalFlightData = data;
+
         table = $('#flightsTable').DataTable( {
-          data: data,
+          data: criticalFlightData,
           "rowId": "flight.leg",
           "columns": [
             {

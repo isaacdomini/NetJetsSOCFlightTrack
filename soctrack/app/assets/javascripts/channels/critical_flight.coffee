@@ -6,5 +6,10 @@ App.critical_flight = App.cable.subscriptions.create "CriticalFlightChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    alert(data);
-    console.log(data);
+    console.log("received");
+    criticalFlightData.push(data.content);
+    console.log("pushed to table");
+    table.ajax.reload()
+    console.log("tried first method")
+    $('#flightsTable').DataTable().ajax.reload();
+    console.log("tried second method")
