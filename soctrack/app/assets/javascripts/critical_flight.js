@@ -4,205 +4,66 @@
   function format (rowData) {
       // `d` is the original data object for the row
       console.log(getExpandedSection(rowData));
-      return `<div class="container">
-                <div class="row">
-                    <div class="col-md-9">
-                        ${getRecoveryOptions(rowData)}
-                    </div>
-                    <div class="col">
-                         <button class="btn btn-default" onclick="addRecoveryOption()">Add</button>
-                    </div>
-                </div>
-              </div>`;
+      return `<div class="container"><div class="row">
+                <div class="col-md-9">${getExpandedSection(rowData)}</div>
+                <div class="col"><button class="btn btn-default" onclick="addRecoveryOption()">Add</button></div>
+              </div></div>`;
   }
 
   function getExpandedSection(data){
     const recoveryReactionHeaders = ["...","AB","OS","CS","DX","OP","MX","ITP","SC","-"];
     const recoveryReactionOptions = {
-      "Yes":"green-dot", "Maybe":"yellow-dot", "No":"red-dot", "Working":"blue-dot", "Accept":"thumbs-up" ,"Decline":"thumbs-down"
+      "null":"empty-dot", "Yes":"green-dot", "Maybe":"yellow-dot", "No":"red-dot", "Working":"blue-dot", "Accept":"thumbs-up" ,"Decline":"thumbs-down", "ITP":"plane", "SC":"globe"
     };
     const recoveryReactionSelectors = {
       "AB" : ["Yes", "Maybe", "No", "Working"],
       "OS" : ["Yes", "Maybe", "No", "Working", "Accept", "Decline"],
+      "CS" : ["Yes", "Maybe", "No", "Working"],
+      "DX" : ["Yes", "Maybe", "No", "Working"],
+      "OP" : ["Yes", "Maybe", "No", "Working"],
+      "MX" : ["Yes", "Maybe", "No", "Working"],
+      "ITP" : ["Yes", "Maybe", "No", "Working","ITP"],
+      "SC" : ["Yes", "Maybe", "No", "Working", "SC"],
+    }
+    function getDropdownList(role){
+      listHTML = "";
+      recoveryReactionSelectors[role].forEach(option=> {
+        listHTML += `<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-${recoveryReactionOptions[option]}"></span>${option}</a></li>`
+      });
+      return listHTML;
     }
     var expandedSection = `<div class="row text-center">Recovery Options:</div>`;
     if(data.recovery.length>0){
       expandedSection += `<div class="row">`;
       expandedSection += `<div class="col-md-2 col-sm-2"><b>Flights</b></div>`;
-      recoveryRectionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
+      recoveryReactionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
       expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
       data.recovery.forEach(recoveryItem=> {
         /// COME BACK TO THIS POPEVER THING
         expandedSection +=`<div class="col-md-2">${recoveryItem.flight.tail}
-                          <a class="controlBtn" data-toggle="${d.flight.leg}-${recoveryItem.flight.leg}" id="${d.flight.leg}-${recoveryItem.flight.leg}">
-                          <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1">...</div>`;
+        <a class="controlBtn" data-toggle="${data.flight.leg}-${recoveryItem.flight.leg}" id="${data.flight.leg}-${recoveryItem.flight.leg}">
+        <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1">...</div>`;
 
+        //Dropdown reaction selector
+        Object.keys(recoveryReactionSelectors).forEach(role=> {
+          expandedSection +=
+          `<div class="col-md-1"><div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
+          </div></div>`
+        });
+        expandedSection += `<div class="col-md-1" style="margin-top:10px;"><a class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>`;
       });
+      expandedSection += `</div>`
     }
     return expandedSection;
-  }
-
-
-  function getRecoveryOptions(d) {
-
-      var ret = '<div class="row text-center">'+
-                  'Recovery Options:'+
-                '</div>';
-      if(d.recovery !== 'null') {
-          ret += '<div class="row">'+
-                    '<div class="col-md-2"><b>Flights</b></div>' +
-                    '<div class="col-md-1">...</div>'+
-                    '<div class="col-md-1"><b>AB</b></div>'+
-                    '<div class="col-md-1"><b>OS</b></div>'+
-                    '<div class="col-md-1"><b>CS</b></div>'+
-                    '<div class="col-md-1"><b>DX</b></div>'+
-                    '<div class="col-md-1"><b>OP</b></div>'+
-                    '<div class="col-md-1"><b>MX</b></div>'+
-                    '<div class="col-md-1"><b>ITP</b></div>'+
-                    '<div class="col-md-1"><b>SC</b></div>'+
-                    '<div class="col-md-1">-</div>'+
-                  '</div> <hr style="margin:0px;height:2px;background-color:#333;">';
-          var counter = 0;
-          d.recovery.forEach( function(item) {
-              ret += '<div class="row">' +
-                        '<div class="col-md-2">'+item.flight.tail+'<a class="controlBtn" data-toggle="'+d.flight.leg+"-"+item.flight.leg+'" id="'+d.flight.leg+"-"+item.flight.leg+'"><span class="glyphicon glyphicon-info-sign"></span></a></div>' +
-                        '<div class="col-md-1">...</div>'+
-                        '<div class="col-md-1">'+
-                          '<div id="actionsDropdown" class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                                '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-thumbs-up"></span>Accept</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-thumbs-down"></span>Decline</a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-globe"></span></a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                          '<div class="dropdown">'+
-                            '<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-empty-dot"></span>'+
-                            '<span class="caret"></span></button>'+
-                            '<ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-green-dot"></span>Yes</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-yellow-dot"></span>Maybe</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-red-dot"></span>No</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-blue-dot"></span>Working</a></li>'+
-                              '<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-plane"></span></a></li>'+
-                            '</ul>'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1" style="margin-top:10px;"><a class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>'+
-                      '</div>'+
-                      "<script>"+
-                      "$(\"[data-toggle="+d.flight.leg+"-"+item.flight.leg+"]\").popover({"+
-                        "trigger: 'click',"+
-                        "placement: 'right',"+
-                        "title: \"Recovery Flight Info\","+
-                        "html : true,"+
-                        "content: '<div><table>'+"+
-                                    "'<tr>'+"+
-                                      "'<th>Leg</th>'+"+
-                                      "'<th>ETD</th>'+"+
-                                      "'<th>Departure</th>'+"+
-                                      "'<th>Arrival</th>'+"+
-                                    "'</tr>'+"+
-                                    "'<tr>'+"+
-                                      "'<td>"+item.flight.leg+"</td>'+"+
-                                      "'<td>"+item.flight.etd+"</td>'+"+
-                                      "'<td>"+item.flight.departure+"</td>'+"+
-                                      "'<td>"+item.flight.arrival+"</td>'+"+
-                                    "'</tr>'+"+
-                                  "'</table></div>'"+
-                      "});"+
-                      "</script>";
-                      counter++;
-          });
-      }
-
-      return ret;
   }
 
   function dropdown(node){
       var y = node.parentNode.previousSibling
       y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
-
 
   function showAll(node){
     table.rows().every( function (){
