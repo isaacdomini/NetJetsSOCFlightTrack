@@ -165,6 +165,27 @@
     } );
   }
 
+  function addToCriticalFlightData(newData){
+    newId = newData.id
+    idCount = 0;
+    criticalFlightData.forEach(cFlight=> {
+      if(cFlight.id == newId){
+        idCount++;
+      }
+    });
+    console.log("checked everyflight");
+    if(idCount==0){
+      criticalFlightData.push(newData);
+      promptCriticalFlightCreationToUser();
+    }
+  }
+
+
+  function promptCriticalFlightCreationToUser(){
+    console.log("prompt called");
+    $('#updateTableAlertDiv').removeClass('hide');
+  }
+
   function refreshTable(flightsData){
     if($.fn.DataTable.isDataTable('#flightsTable')){
       table.destroy();
@@ -261,5 +282,9 @@
       // console.log(clickedIndex);
       console.log(newValue);
       // console.log(oldValue);
+    });
+    $("#updateTableAlert").click(function(){
+      $('#updateTableAlertDiv').addClass('hide');
+      refreshTable(criticalFlightData);
     });
   });

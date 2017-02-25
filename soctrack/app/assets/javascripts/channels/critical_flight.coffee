@@ -7,8 +7,5 @@ App.critical_flight = App.cable.subscriptions.create "CriticalFlightChannel",
 
   received: (data) ->
     console.log("received");
-    criticalFlightData.push(data.content);
+    addToCriticalFlightData(data.content);
     console.log("pushed to table");
-    refreshTable(criticalFlightData);
-    console.log("tried first method")
-    console.log("tried second method")
