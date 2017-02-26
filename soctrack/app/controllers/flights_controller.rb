@@ -12,6 +12,19 @@ class FlightsController < ApplicationController
   def show
   end
 
+  def findFlight
+    @flight = Flight.find_by_leg(params[:leg])
+
+    respond_to do |format|
+    if @flight!=nil
+      format.html { render :json => @flight.to_json, status: :ok }
+      format.json { render :json => @flight.to_json, status: :ok }
+    else
+      format.html { redirect_to flights_url, notice: 'Flight was successfully destroyed.'  }
+      format.json { render json: @flight.errors, status: :unprocessable_entity }
+    end
+    end
+  end
   # GET /flights/new
   def new
     @flight = Flight.new
