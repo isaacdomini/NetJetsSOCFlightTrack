@@ -10,20 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222183953) do
+ActiveRecord::Schema.define(version: 20170222183940) do
 
   create_table "critical_flights", force: :cascade do |t|
     t.text     "event"
     t.boolean  "resolved",   default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-  end
-
-  create_table "critical_flights_recoveries", id: false, force: :cascade do |t|
-    t.integer "critical_flight_id", null: false
-    t.integer "recovery_id",        null: false
-    t.index ["critical_flight_id", "recovery_id"], name: "critical_flight_id_recovery_id_index"
-    t.index ["recovery_id", "critical_flight_id"], name: "recovery_id_critical_flight_id_index"
   end
 
   create_table "events", force: :cascade do |t|
@@ -46,17 +39,19 @@ ActiveRecord::Schema.define(version: 20170222183953) do
   end
 
   create_table "recoveries", force: :cascade do |t|
-    t.boolean  "selected",   default: false
-    t.integer  "AB",         default: 0
-    t.integer  "OS",         default: 0
-    t.integer  "CS",         default: 0
-    t.integer  "DX",         default: 0
-    t.integer  "OPS",        default: 0
-    t.integer  "MX",         default: 0
-    t.integer  "ITP",        default: 0
-    t.integer  "SC",         default: 0
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.boolean  "selected",                                                              default: false
+    t.integer  "AB",                                                                    default: 0
+    t.integer  "OS",                                                                    default: 0
+    t.integer  "CS",                                                                    default: 0
+    t.integer  "DX",                                                                    default: 0
+    t.integer  "OPS",                                                                   default: 0
+    t.integer  "MX",                                                                    default: 0
+    t.integer  "ITP",                                                                   default: 0
+    t.integer  "SC",                                                                    default: 0
+    t.datetime "created_at",                                                                            null: false
+    t.datetime "updated_at",                                                                            null: false
+    t.integer  "critical_flight_id"
+    t.integer  "#<ActiveRecord::ConnectionAdapters::TableDefinition:0x007ffc04d34930>"
   end
 
   create_table "users", force: :cascade do |t|
