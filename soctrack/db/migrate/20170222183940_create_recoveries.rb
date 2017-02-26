@@ -10,6 +10,7 @@ class CreateRecoveries < ActiveRecord::Migration[5.0]
       t.integer :MX, default: 0
       t.integer :ITP, default: 0
       t.integer :SC, default: 0
+      t.integer :critical_flight_id,
       t.timestamps
     end
   end

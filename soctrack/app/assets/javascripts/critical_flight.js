@@ -9,6 +9,19 @@
                 <div class="col"><button class="btn btn-default" onclick="addRecoveryOption()">Add</button></div>
               </div></div>`;
   }
+  function actionCableHandle(data){
+    if(data.action=="flightcreate"){
+      console.log("received");
+      console.log(data.content);
+      addToCriticalFlightData(data.content);
+      console.log("pushed to table");
+    }else if(data.action == "removerecovery"){
+      console.log("received");
+      console.log(data.content);
+    }else{
+      console.log("error");
+    }
+  }
 
   function recoveryReactionPopover(){
     // console.log("REcovery Option Popover");

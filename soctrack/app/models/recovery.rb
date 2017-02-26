@@ -1,4 +1,4 @@
 class Recovery < ApplicationRecord
   has_one :flight
-  has_and_belongs_to_many :critical_flight
+  belongs_to :critical_flight
 end

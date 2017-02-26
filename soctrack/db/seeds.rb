@@ -58,15 +58,15 @@ for i in 0..999
   end
   flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(3.days).seconds.from_now)
   flight.save
-  puts flight.id
   fls << i+1
 end
 
 #
-for i in 0..99
-  r =Recovery.new(:flight =>  Flight.find(fls.delete_at(rand(fls.size)))).save
-  puts r
-end
+# for i in 0..99
+#   r =Recovery.new(:flight =>  Flight.find(fls.delete_at(rand(fls.size))))
+#   puts r
+#   r.save
+# end
 
   randomEvents = Array.new
   for i in 0..rand(0..5)
@@ -82,9 +82,15 @@ end
 for i in 0..99
   randomEvents = Array.new
   randomRecoveries = Array.new
+  randR = Array.new
   for i in 0..rand(0..5)
-    randReco = rand(1..100)
-    randomRecoveries.insert(-1, randReco) if !randomRecoveries.include?randReco
+    r = Recovery.new(:flight => Flight.find(fls[rand(fls.size)]))
+    r.save
+    randomRecoveries << r.id;
+    puts r.flight.leg
+    randR << r
+    # randReco = rand(1..100)
+    # randomRecoveries.insert(-1, randReco) if !randomRecoveries.include?randReco
   end
   puts randomRecoveries.to_s
   for i in 0..rand(0..5)

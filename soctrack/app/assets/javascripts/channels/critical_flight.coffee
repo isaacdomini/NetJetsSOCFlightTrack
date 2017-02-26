@@ -6,6 +6,4 @@ App.critical_flight = App.cable.subscriptions.create "CriticalFlightChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    console.log("received");
-    addToCriticalFlightData(data.content);
-    console.log("pushed to table");
+      actionCableHandle(data);
