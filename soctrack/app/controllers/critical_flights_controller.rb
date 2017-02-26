@@ -1,5 +1,5 @@
 class CriticalFlightsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
 
   # GET /critical_flights
@@ -11,6 +11,24 @@ class CriticalFlightsController < ApplicationController
       format.html
       format.json { render :json => @critical_flights.to_json(include: [{ :recovery => { :include => :flight }}, :flight]) }
     end
+  end
+
+  def removeRecovery
+    cFlight = CriticalFlight.find(params[:critical_flight])
+    recoveryid = params[:recovery]
+    dRecovery = nil
+    cFlight.recovery.each{ |r|
+      if(r.id == recoveryid)
+        dRecovery = r
+        cFlight.recovery.delete(r.id)
+        dRecovery.destroy
+        ActionCable.server.broadcast 'critical_flight_channel',
+                                   content:  cFlight,
+                                   action: "removerecovery"
+        head :ok
+      end
+    }
+
   end
 
   # GET /critical_flights/1
@@ -37,31 +55,36 @@ class CriticalFlightsController < ApplicationController
   # POST /critical_flights
   # POST /critical_flights.json
   def create
-    @critical_flight = CriticalFlight.new(critical_flight_params)
+    puts critical_flight_params
+    puts params.keys
+    foundFlight = Flight.find_by_leg(params["flight_leg"])
+    puts "FLIGHT FOUND: "
+    puts params[:flight_leg]
+    puts foundFlight
+    # params.except(:password, :password_confirmation, :credit_card)
+    @critical_flight = CriticalFlight.new(critical_flight_params.except(:flight_leg))
 
-    # if @critical_flight.save
-    #   flash.now[:notice] = 'Flight Saved'
-    #   return true
-    # else
-    #   flash.now[:alert] = 'Error while creating flight!'
-    #   return false
-    # end
-    #
-    puts "about to broadcast"
-    ActionCable.server.broadcast 'critical_flight_channel',
-                               content:  @critical_flight
-                              #  username: message.user.username
-          head :ok
     respond_to do |format|
+      @critical_flight.flight = foundFlight
+      puts @critical_flight
       if @critical_flight.save
-
-        format.html { render :json => @critical_flight.to_json(:include => :recovery), status: :created }
-        format.json { render :json => @critical_flight.to_json(:include => :recovery), status: :created}
-        # format.json { render json: final_obj, status: :ok }
+        puts "saved"
+        flash.now[:notice] = 'Flight Saved'
+        format.html { render :json => @critical_flights.to_json(include: [{ :recovery => { :include => :flight }}, :flight]) , status: :created}
+        format.json { render :json => @critical_flights.to_json(include: [{ :recovery => { :include => :flight }}, :flight]) , status: :created}
+        puts "about to broadcast"
+        ActionCable.server.broadcast 'critical_flight_channel',
+                                   content:  JSON.parse(@critical_flight.to_json(include: [{ :recovery => { :include => :flight }}, :flight])),
+                                   action: "flightcreate"
+              head :ok
+        puts "finished broadcast"
       else
+        puts "not saved"
         format.html { render :new }
         format.json { render json: @critical_flight.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Error while creating flight!'
       end
+      puts "completes"
       return
     end
   end
