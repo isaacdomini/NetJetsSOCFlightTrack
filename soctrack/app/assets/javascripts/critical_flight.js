@@ -252,25 +252,25 @@
       });
     }
     $.validator.addMethod("regx", function(value, element, regexpr) {
-      console.log(value);
+      // console.log(value);
       return regexpr.test(value);
     }, "Invalid format");
     $('#newFlightForm').validate({
         rules: {
             tail: {
-              required: true,
+              // required: true,
               regx: /^N[0-9]{3}QS$/
             },
             leg: {
-              required: true,
+              // required: true,
               regx: /^[0-9]{8}$/
             },
-            source: {
-              required: true,
+            departure: {
+              // required: true,
               regx: /^K[A-Z]{3}$/
             },
-            destination: {
-              required: true,
+            arrival: {
+              // required: true,
               regx: /^K[A-Z]{3}$/
             }
         },
@@ -300,4 +300,72 @@
       $('#updateTableAlertDiv').addClass('hide');
       refreshTable(criticalFlightData);
     });
+
+    //CHECKBOX SELECTOR
+    function checkboxInit(){
+      $("input:checkbox").on('click', function() {
+        var $box = $(this);
+        if ($box.is(":checked")) {
+          var group = "input:checkbox[name='" + $box.attr("name") + "']";
+          $(group).prop("checked", false);
+          $box.prop("checked", true);
+        } else {
+          $box.prop("checked", false);
+        }
+      });
+    }
+    checkboxInit();
+
+    $("#findFlightsButton").click(function(){
+      var url = "/flights.json?"
+      var paramCount = 0;
+      if($('input[name="tail"]').val() != ""){
+        url+=`tail=${$('input[name="tail"]').val()}`;
+        paramCount++;
+      }
+      if($('input[name="leg"]').val() != ""){
+        if(paramCount>0){
+          url+="&"
+        }
+        url+=`leg=${$('input[name="leg"]').val()}`;
+        paramCount++;
+      }
+      if($('input[name="departure"]').val() != ""){
+        if(paramCount>0){
+          url+="&"
+        }
+        url+=`departure=${$('input[name="departure"]').val()}`;
+        paramCount++;
+      }
+      if($('input[name="arrival"]').val() != ""){
+        if(paramCount>0){
+          url+="&"
+        }
+        url+=`arrival=${$('input[name="arrival"]').val()}`;
+        paramCount++;
+      }
+      if(paramCount>0){
+        $.getJSON(url, function(data){
+          console.log(data);
+          flightsSelectTable = $("#flightsSelectTable").find("tbody");
+          flightsSelectTable.html("");
+          flightsSelectTableContent = ""
+          data.forEach(d=> {
+            flightsSelectTableContent+=`<tr><td><input type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
+            <td>${d.tail}</td><td>${d.leg}</td><td>${d.departure}</td><td>${d.arrival}</td><td>${d.etd}</td></tr>`;
+            flightsSelectTable.html(flightsSelectTableContent);
+          });
+        });
+      }else{
+        console.log("error");
+      }
+      console.log(url);
+
+      checkboxInit();
+      console.log(url);
+      console.log($('input[name="tail"]').val());
+      console.log($('input[name="leg"]').val());
+      console.log($('input[name="departure"]').val());
+      console.log($('input[name="arrival"]').val());
+    })
   });

@@ -57,15 +57,56 @@
               <div class="col-md-6 col-xs-6 col-sm-6">
                 <div class="form-group"><div class="input-group">
                   <span class="input-group-addon">Departure</span>
-                  <input class="form-control" placeholder="Enter Departure Airport Code" name="source" type="text"/>
+                  <input class="form-control" placeholder="Enter Departure Airport Code" name="departure" type="text"/>
                 </div></div>
               </div>
               <div class="col-md-6 col-xs-6 col-sm-6">
                 <div class="form-group"><div class="input-group">
                   <span class="input-group-addon">Arrival</span>
-                  <input class="form-control" placeholder="Enter Arrival Airport Code" name="destination" type="text"/>
+                  <input class="form-control" placeholder="Enter Arrival Airport Code" name="arrival" type="text"/>
                 </div></div>
               </div>
+            </div>
+            <button type="button" id="findFlightsButton" class="btn btn-success" >Find Flights</button>
+            <div class="row">
+              <table class="table table-striped"id="flightsSelectTable">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Tail</th>
+                    <th>Leg</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>ETD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
+                    <td>TAIL1</td>
+                    <td>LEG1</td>
+                    <td>KCMH</td>
+                    <td>KLGA</td>
+                    <td>12:30</td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
+                    <td>TAIL1</td>
+                    <td>LEG1</td>
+                    <td>KCMH</td>
+                    <td>KLGA</td>
+                    <td>12:30</td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
+                    <td>TAIL1</td>
+                    <td>LEG1</td>
+                    <td>KCMH</td>
+                    <td>KLGA</td>
+                    <td>12:30</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <select id="eventsSelector" class="selectpicker show-tick" multiple data-live-search="true" title="Choose Events">
               <% Event.find(1).event_hash.each do |type, vals| %>
@@ -86,5 +127,5 @@
     </form>
   </div>
 </div>
-<%= javascript_include_tag 'critical_flight', 'data-turbolinks-track': 'reload' %>
+<!-- # <%= javascript_include_tag 'critical_flight', 'data-turbolinks-track': 'reload' %> -->
 </div>
