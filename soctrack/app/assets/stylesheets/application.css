@@ -69,6 +69,7 @@
 
   .glyphicon-info-sign {
     font-size: .85em;
+    color: #2196F3;
   }
 
  #actionsDropdown {
@@ -145,5 +146,10 @@ a.controlBtn {
   cursor: pointer;
   margin-left: 5px;
 }
+
+a.controlBtn:hover {
+    background-color: transparent;
+}
+
  /*bootstrap navbar padding */
 body { padding-top: 70px; }

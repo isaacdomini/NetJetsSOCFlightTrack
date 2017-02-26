@@ -65,10 +65,10 @@
       expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
       data.recovery.forEach(recoveryItem=> {
         expandedSection +=
-        `<div id="${data.flight.leg}-${recoveryItem.flight.leg}-popover" class="hide"><table>
-          <tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr>
-          <tr><td>${recoveryItem.flight.leg}</td><td>${recoveryItem.flight.etd}</td>
-          <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr>
+        `<div id="${data.flight.leg}-${recoveryItem.flight.leg}-popover" class="hide"><table class="table">
+          <thead><tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr></thead>
+          <tbody><tr><td>${recoveryItem.flight.leg}</td><td>${recoveryItem.flight.etd}</td>
+          <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr></tbody>
         </table></div>`;
 
         /// COME BACK TO THIS POPEVER THING
