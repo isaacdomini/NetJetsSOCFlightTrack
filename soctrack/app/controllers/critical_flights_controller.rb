@@ -57,13 +57,14 @@ class CriticalFlightsController < ApplicationController
   def create
     puts critical_flight_params
     puts params.keys
-    foundFlight = Flight.find_by_leg(params["flight_leg"])
+    foundFlight = Flight.find_by_leg(params[:critical_flight][:flight_leg])
     puts "FLIGHT FOUND: "
-    puts params[:flight_leg]
+    puts params[:critical_flight][:flight_leg]
     puts foundFlight
     # params.except(:password, :password_confirmation, :credit_card)
-    @critical_flight = CriticalFlight.new(critical_flight_params.except(:flight_leg))
-
+    # @critical_flight = CriticalFlight.new(params[:critical_flight].permit(:event))
+    @critical_flight = CriticalFlight.new(critical_flight_params.except(:flight_leg, :authenticity_token))
+    @critical_flight.event = params[:critical_flight][:event]
     respond_to do |format|
       @critical_flight.flight = foundFlight
       puts @critical_flight
@@ -121,6 +122,6 @@ class CriticalFlightsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def critical_flight_params
-      params.require(:critical_flight).permit(:event)
+      params.require(:critical_flight).permit(:event, :flight_leg, "event")
     end
 end

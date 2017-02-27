@@ -351,21 +351,46 @@
           flightsSelectTable.html("");
           flightsSelectTableContent = ""
           data.forEach(d=> {
-            flightsSelectTableContent+=`<tr><td><input type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
-            <td>${d.tail}</td><td>${d.leg}</td><td>${d.departure}</td><td>${d.arrival}</td><td>${d.etd}</td></tr>`;
+            flightsSelectTableContent+=`<tr><td><input id="flightsSelectTableLeg${d.leg}" type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
+            <td>${d.tail}</td><td id="flightsSelectTableLeg">${d.leg}</td><td>${d.departure}</td><td>${d.arrival}</td><td>${d.etd}</td></tr>`;
             flightsSelectTable.html(flightsSelectTableContent);
           });
+          checkboxInit();
         });
       }else{
-        console.log("error");
+        alert("Fill at least one of the fields!");
       }
       console.log(url);
-
+      $("input:checked")
+      selectedFlight =
       checkboxInit();
       console.log(url);
       console.log($('input[name="tail"]').val());
       console.log($('input[name="leg"]').val());
       console.log($('input[name="departure"]').val());
       console.log($('input[name="arrival"]').val());
-    })
+    });
+    $("#criticalFlightFormButton").click(function(){
+      if($("input:checked").length != 1){
+        alert("Pick 1 Flight.");
+      }else{
+        tr = $("input:checked").attr('id')
+        // console.log(tr);
+        console.log(tr.slice(21));
+        flightLeg = tr.slice(21);
+        eventsArray = $("#eventsSelector").siblings("button")[0].title.split(", ");
+        console.log(eventsArray);
+        $.post( "/critical_flights.json",
+          {
+            authenticity_token: window._token,
+            critical_flight: {
+              "flight_leg": flightLeg,
+              "event": eventsArray
+            }
+          })
+        .done(function( data ) {
+          console.log( "Data Loaded: " + data );
+        });
+      }
+    });
   });
