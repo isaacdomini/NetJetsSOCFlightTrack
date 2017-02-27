@@ -52,8 +52,8 @@ def getProgressBarString(ch, times)
   return ret
 end
 def printProgressUpdate(curr,total)
-  fraction = ((curr*100.0)/total)
-  print "\r[#{getProgressBarString('=',fraction.to_i)}#{">" if fraction.to_i < 100}#{"=" if fraction.to_i == 100}#{getProgressBarString(' ',(100-fraction).to_i) if fraction.to_i <100}] - #{fraction.round(2)}%          "
+  fraction = ((curr*60.0)/total)
+  print "\r[#{getProgressBarString('=',fraction.to_i)}#{">" if fraction.to_i < 60}#{"=" if fraction.to_i == 60}#{getProgressBarString(' ',(60-fraction).to_i) if fraction.to_i <60}] - #{((fraction*100)/60).round(2)}%"
 end
 
 
