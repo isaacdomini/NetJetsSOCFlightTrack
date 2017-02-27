@@ -44,10 +44,21 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'airport-codes.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 codes = Array.new
 CSV.parse(csv_text).map {|a|  codes.insert(-1,a[0]) if a[1].include?('large') && a[7].include?('US') && !a[2].include?('Air Force')}
-
+def getProgressBarString(ch, times)
+  ret = ""
+  for i in 0..times
+    ret=ret +ch
+  end
+  return ret
+end
+def printProgressUpdate(curr,total)
+  fraction = ((curr*100.0)/total)
+  print "\r[#{getProgressBarString('=',fraction.to_i)}#{">" if fraction.to_i < 100}#{"=" if fraction.to_i == 100}#{getProgressBarString(' ',(100-fraction).to_i) if fraction.to_i <100}] - #{fraction.round(2)}%          "
+end
 
 
 fls = Array.new
+puts "\nCREATING FLIGHTS..."
 # CREATE FLIGHTS
 for i in 0..999
   randTail = rand(999).to_s.center(3, rand(9).to_s)
@@ -59,6 +70,7 @@ for i in 0..999
   flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(3.days).seconds.from_now)
   flight.save
   fls << i+1
+  printProgressUpdate(i,999);
 end
 
 #
@@ -77,46 +89,49 @@ end
 # cflight = CriticalFlight.new(:event => randomEvents, :recovery_ids => [1,2,3], :flight_id =>  fls.delete_at(rand(fls.size))).save
 
 
-
+fls2 = fls.join("--!--").split("--!--")
 # CREATE CriticalFlights
+puts "\nCREATING CRITICAL FLIGHTS ..."
 for i in 0..99
   randomEvents = Array.new
   randomRecoveries = Array.new
   randR = Array.new
-  for i in 0..rand(0..5)
-    r = Recovery.new(:flight => Flight.find(fls[rand(fls.size)]))
-    r.save
-    randomRecoveries << r.id;
-    puts r.flight.leg
-    randR << r
-    # randReco = rand(1..100)
-    # randomRecoveries.insert(-1, randReco) if !randomRecoveries.include?randReco
-  end
-  puts randomRecoveries.to_s
-  for i in 0..rand(0..5)
+  for j in 0..rand(0..5)
     randEventType = events.values[rand(events.values.size)]
     selectedEvent = randEventType[rand(randEventType.size)]
     randomEvents.insert(-1,selectedEvent) if !randomEvents.include?(selectedEvent)
   end
-  cflight = CriticalFlight.new(:event => randomEvents, :recovery_ids => randomRecoveries, :flight =>  Flight.find(fls.delete_at(rand(fls.size)))).save
+  cflight = CriticalFlight.new(:event => randomEvents, :flight =>  Flight.find(fls.delete_at(rand(fls.size))))
+  cflight.save
   # puts cflight
   # cflight.save
+  for k in 0..rand(0..5)
+    rf = Flight.find(fls[rand(fls.size)]);
+    # while rf.recovery_id
+    r = Recovery.new(:flight => Flight.find(rf), :critical_flight => cflight)
+    r.save
+    r.flight = Flight.find(rf)
+    r.save
+    randomRecoveries << r.id;
+    randR << r
+  end
   cflight = nil
+  printProgressUpdate(i,99);
 end
-
-
 
 domains = ["osu.edu", "gmail.com", "netjets.com"]
 roles = ["AB","OS","CS","DX","OPS","MX","ITP","SC"]
 lname = ["Buckeye", "Doe", "Bedich", "Nanayakkara", "Bhardwaj", "Domini"]
 fname = ["Josh", "Jacob", "Jonathan", "Jared", "John", "Brutus"]
 i=0
+puts "\nCREATING USERS ..."
 for r in roles
   for d in domains
     u = User.new(:email => r+"@"+d, :password => 'password', :password_confirmation => 'password', :role => r, :name => fname.sample+" "+lname.sample+" ("+r+")")
-    print u.email + " " + u.name;
+    # print u.email + " " + u.name;
     u.save
-    puts i
+    # puts i
     i= i+1
+    printProgressUpdate(i,24);
   end
 end

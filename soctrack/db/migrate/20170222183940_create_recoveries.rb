@@ -2,6 +2,8 @@ class CreateRecoveries < ActiveRecord::Migration[5.0]
   def change
     create_table :recoveries do |t|
       t.boolean :selected, default: false
+      t.integer :critical_flight_id, null: false
+      t.integer :flight_id, null: false
       t.integer :AB, default: 0
       t.integer :OS, default: 0
       t.integer :CS, default: 0
@@ -10,7 +12,6 @@ class CreateRecoveries < ActiveRecord::Migration[5.0]
       t.integer :MX, default: 0
       t.integer :ITP, default: 0
       t.integer :SC, default: 0
-      t.integer :critical_flight_id,
       t.timestamps
     end
   end

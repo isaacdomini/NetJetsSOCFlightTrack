@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20170222183940) do
     t.string   "arrival"
     t.string   "departure"
     t.datetime "etd"
-    t.integer  "recovery_id"
     t.integer  "critical_flight_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -39,19 +38,19 @@ ActiveRecord::Schema.define(version: 20170222183940) do
   end
 
   create_table "recoveries", force: :cascade do |t|
-    t.boolean  "selected",                                                              default: false
-    t.integer  "AB",                                                                    default: 0
-    t.integer  "OS",                                                                    default: 0
-    t.integer  "CS",                                                                    default: 0
-    t.integer  "DX",                                                                    default: 0
-    t.integer  "OPS",                                                                   default: 0
-    t.integer  "MX",                                                                    default: 0
-    t.integer  "ITP",                                                                   default: 0
-    t.integer  "SC",                                                                    default: 0
-    t.datetime "created_at",                                                                            null: false
-    t.datetime "updated_at",                                                                            null: false
-    t.integer  "critical_flight_id"
-    t.integer  "#<ActiveRecord::ConnectionAdapters::TableDefinition:0x007ffc04d34930>"
+    t.boolean  "selected",           default: false
+    t.integer  "critical_flight_id",                 null: false
+    t.integer  "flight_id",                          null: false
+    t.integer  "AB",                 default: 0
+    t.integer  "OS",                 default: 0
+    t.integer  "CS",                 default: 0
+    t.integer  "DX",                 default: 0
+    t.integer  "OPS",                default: 0
+    t.integer  "MX",                 default: 0
+    t.integer  "ITP",                default: 0
+    t.integer  "SC",                 default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   create_table "users", force: :cascade do |t|
