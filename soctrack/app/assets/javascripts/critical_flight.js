@@ -391,6 +391,7 @@
         .done(function( data ) {
           console.log( "Data Loaded: " + data );
         });
+        $("#flightsSelectTable").find("tbody").html(" ")
       }
     });
   });
