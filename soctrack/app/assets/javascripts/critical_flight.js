@@ -17,6 +17,7 @@
       console.log("pushed to table");
     }else if(data.action == "removerecovery"){
       console.log("received");
+      console.log("deleted");
       console.log(data.content);
     }else{
       console.log("error");
@@ -98,7 +99,7 @@
               <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
           </div></div>`
         });
-        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="${recoveryItem.id}-${data.id}" class="controlBtn" title="Remove Flight"><span class="glyphicon glyphicon-remove"></span></a></div>`;
+        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeBtn" class="controlBtn" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${data.id}" class="glyphicon glyphicon-remove"></span></a></div>`;
       });
       expandedSection += `</div>`
     }
@@ -143,6 +144,27 @@
           console.log(result);
       }
     });
+  }
+
+  function removeRecoveryOption(node){
+    console.log(node.children[0]);
+    var childId = node.children[0].id;
+    var ids = childId.split("-");
+    console.log(ids[0]);
+    console.log(ids[1]);
+    var criticalFlightId = ids[0];
+    var recoveryId = ids[1];
+    $.post( "/critical_flight/remove_recovery.json",
+      {
+        authenticity_token: window._token,
+        critical_flight: {
+          "critical_flight": criticalFlightId,
+          "recovery": recoveryId
+        }
+      })
+    .done(function( data ){
+      console.log("Recovery Removed");
+    })
   }
 
   function tableDrawUpdateElements(){
@@ -394,4 +416,6 @@
         $("#flightsSelectTable").find("tbody").html(" ")
       }
     });
+
+
   });
