@@ -18,7 +18,7 @@
     }else if(data.action == "removerecovery"){
       console.log("received");
       console.log("deleted");
-      console.log(data.content);
+
     }else{
       console.log("error");
     }
@@ -154,16 +154,16 @@
     console.log(ids[1]);
     var criticalFlightId = ids[0];
     var recoveryId = ids[1];
-    $.post( "/critical_flight/remove_recovery.json",
+    console.log(" "+criticalFlightId+" : "+recoveryId);
+    $.post( "/critical_flight/remove_recovery",
       {
         authenticity_token: window._token,
-        critical_flight: {
-          "critical_flight": criticalFlightId,
-          "recovery": recoveryId
-        }
+        "critical_flight": recoveryId,
+        "recovery": criticalFlightId
       })
     .done(function( data ){
       console.log("Recovery Removed");
+      console.log(data);
     })
   }
 

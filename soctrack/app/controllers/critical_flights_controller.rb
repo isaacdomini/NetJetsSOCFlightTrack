@@ -17,11 +17,16 @@ class CriticalFlightsController < ApplicationController
     cFlight = CriticalFlight.find(params[:critical_flight])
     recoveryid = params[:recovery]
     dRecovery = nil
+    print "Recovery ID: #{recoveryid} ; CFlightID: #{params[:critical_flight]}"
     cFlight.recovery.each{ |r|
-      if(r.id == recoveryid)
+      if(r.id.to_i == recoveryid.to_i)
         dRecovery = r
-        cFlight.recovery.delete(r.id)
         dRecovery.destroy
+        # cFlight.recovery.delete(r.id)
+        #
+        # dRecovery.destroy
+
+        cFlight.save
         ActionCable.server.broadcast 'critical_flight_channel',
                                    content:  cFlight,
                                    action: "removerecovery"
