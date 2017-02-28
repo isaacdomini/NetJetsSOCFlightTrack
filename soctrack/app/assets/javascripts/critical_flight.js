@@ -18,10 +18,16 @@
     }else if(data.action == "removerecovery"){
       console.log("received");
       console.log("deleted");
-
+      console.log(data.content);
+      removeRecoveryFromDashboard(data.content);
     }else{
       console.log("error");
     }
+  }
+
+  function removeRecoveryFromDashboard(data){
+    console.log(data);
+    $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
   }
 
   function recoveryReactionPopover(){
@@ -79,14 +85,13 @@
       expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
       data.recovery.forEach(recoveryItem=> {
         expandedSection +=
-        `<div id="${data.flight.leg}-${recoveryItem.flight.leg}-popover" class="hide"><table class="table">
+        `<div id="${data.id}-${recoveryItem.id}-popover" class="hide"><table class="table">
           <thead><tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr></thead>
           <tbody><tr><td>${recoveryItem.flight.leg}</td><td>${recoveryItem.flight.etd}</td>
           <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr></tbody>
         </table></div>`;
 
-        /// COME BACK TO THIS POPEVER THING
-        expandedSection +=`<div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
+        expandedSection +=`<div class="row" id="${data.id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
         <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${data.flight.leg}-${recoveryItem.flight.leg}-popover" id="${data.flight.leg}-${recoveryItem.flight.leg}">
         <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1 col-sm-1">...</div>`;
 
@@ -99,7 +104,7 @@
               <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
           </div></div>`
         });
-        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeBtn" class="controlBtn" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${data.id}" class="glyphicon glyphicon-remove"></span></a></div>`;
+        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeBtn" class="controlBtn" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${data.id}" class="glyphicon glyphicon-remove"></span></a></div></div>`;
       });
       expandedSection += `</div>`
     }
