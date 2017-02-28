@@ -1,5 +1,5 @@
 class CriticalFlightsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
 
   # GET /critical_flights
@@ -11,6 +11,48 @@ class CriticalFlightsController < ApplicationController
       format.html
       format.json { render :json => @critical_flights.to_json(include: [{ :recovery => { :include => :flight }}, :flight]) }
     end
+  end
+
+  def changeRecoveryReaction
+    cFlight = CriticalFlight.find(params[:critical_flight])
+    recoveryid = params[:recovery]
+    department = params[:department]
+    reactionNumber = params[:recovery_reaction]
+    puts "STEP 1"
+    cFlight.recovery.each{ |r|
+      print "#{r.id} == #{recoveryid}"
+      if(r.id.to_i == recoveryid.to_i)
+        dRecovery = r
+        dRecovery[department] = reactionNumber
+        dRecovery.save
+        puts "RECOVERy"
+        puts dRecovery
+        ActionCable.server.broadcast 'critical_flight_channel',
+                                   content:  dRecovery,
+                                   recoveryid: recoveryid,
+                                   department: department,
+                                   reactionnumber: reactionNumber,
+                                   action: "recoveryreaction"
+        head :ok
+      end
+    }
+  end
+
+  def removeRecovery
+    cFlight = CriticalFlight.find(params[:critical_flight])
+    recoveryid = params[:recovery]
+    dRecovery = nil
+    cFlight.recovery.each{ |r|
+      if(r.id == recoveryid)
+        dRecovery = r
+        cFlight.recovery.delete(r.id)
+        dRecovery.destroy
+        ActionCable.server.broadcast 'critical_flight_channel',
+                                   content:  cFlight,
+                                   action: "removerecovery"
+        head :ok
+      end
+    }
   end
 
   # GET /critical_flights/1
