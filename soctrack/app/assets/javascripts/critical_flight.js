@@ -13,21 +13,16 @@
     if(data.action=="flightcreate"){
       console.log("received");
       console.log(data.content);
-      addToCriticalFlightData(data.content);
+      actionCableHandleAddToCriticalFlightData(data.content);
       console.log("pushed to table");
     }else if(data.action == "removerecovery"){
       console.log("received");
       console.log("deleted");
       console.log(data.content);
-      removeRecoveryFromDashboard(data.content);
+      actionCableHandleRemoveRecoveryFromDashboard(data.content);
     }else{
       console.log("error");
     }
-  }
-
-  function removeRecoveryFromDashboard(data){
-    console.log(data);
-    $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
   }
 
   function recoveryReactionPopover(){
@@ -205,7 +200,30 @@
     } );
   }
 
-  function addToCriticalFlightData(newData){
+
+  function actionCableHandleRemoveRecoveryFromDashboard(data){
+    console.log(data);
+    $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
+    criticalFlightData.forEach(cFlight=> {
+      if(cFlight.id == data.critical_flight_id){
+        console.log(cFlight.recovery);
+        i = 0;
+        deleteIndex = -1;
+        cFlight.recovery.forEach(r=> {
+          if(r.id == data.recovery_id){
+            deleteIndex = i;
+            console.log(`deleteIndex set to: ${deleteIndex}`);
+          }
+        });
+        if(deleteIndex!=-1){
+          cFlight.recovery.splice(deleteIndex,1);
+        }
+        console.log(cFlight.recovery);
+      }
+    });
+  }
+
+  function actionCableHandleAddToCriticalFlightData(newData){
     newId = newData.id
     idCount = 0;
     criticalFlightData.forEach(cFlight=> {
