@@ -54,12 +54,12 @@
   }
 
   function addRecoveryOptionToDashboard(recoveryItem){
-    cFlightRow = $(`critical_flight_row_${recoveryItem.critical_flight_id}`);
+    cFlightRow = $(`#critical_flight_row_${recoveryItem.critical_flight_id}`);
     console.log("CFLIGHT ROW "+ `critical_flight_row_${recoveryItem.critical_flight_id}`);
-    console.log(cFlightRow);
+    console.log($(`#critical_flight_row_${recoveryItem.critical_flight_id}`).html());
     console.log("CHILD");
-    console.log(cFlightRow.find(`${recoveryItem.critical_flight_id}-${recoveryItem.id}-row`));
-    if(cFlightRow.find(`${recoveryItem.critical_flight_id}-${recoveryItem.id}-row`).length == 0){
+    console.log($(`#critical_flight_row_${recoveryItem.critical_flight_id}`).find(`#${recoveryItem.critical_flight_id}-${recoveryItem.id}-row`));
+    if(cFlightRow.find(`#${recoveryItem.critical_flight_id}-${recoveryItem.id}-row`).length == 0){
       console.log("about to add");
       console.log(recoveryOptionExpandedHTML(recoveryItem));
       cFlightRow.append(recoveryOptionExpandedHTML(recoveryItem).toString());

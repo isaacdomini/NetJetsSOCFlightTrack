@@ -86,6 +86,7 @@ class CriticalFlightsController < ApplicationController
                                    content:  returnHash,
                                    action: "removerecovery"
         head :ok
+        return
       end
     }
   end
