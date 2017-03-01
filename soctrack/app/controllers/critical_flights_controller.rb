@@ -1,5 +1,5 @@
 class CriticalFlightsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
 
   # GET /critical_flights
