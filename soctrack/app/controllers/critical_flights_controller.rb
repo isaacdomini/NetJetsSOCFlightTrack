@@ -1,5 +1,5 @@
 class CriticalFlightsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_critical_flight, only: [:show, :edit, :update, :destroy]
 
   # GET /critical_flights
@@ -10,6 +10,32 @@ class CriticalFlightsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render :json => @critical_flights.to_json(include: [{ :recovery => { :include => :flight }}, :flight]) }
+    end
+  end
+
+
+  def addRecovery
+    cFlight = CriticalFlight.find(params[:critical_flight])
+    newRecovery = Recovery.new
+    newRecovery.flight_id = Flight.find_by_leg(params[:flight_leg].to_i).id
+
+    newRecovery.critical_flight_id = params[:critical_flight]
+    respond_to do |format|
+      if newRecovery.save
+        puts "new recovery saved"
+        ActionCable.server.broadcast 'critical_flight_channel',
+                content:  JSON.parse(newRecovery.to_json(include: :flight)),
+                action: "addrecovery"
+        head :ok
+        return
+      else
+        puts "not saved"
+        puts newRecovery.errors
+        format.html { render json: newRecovery.errors, status: :unprocessable_entity}
+        format.json { render json: newRecovery.errors, status: :unprocessable_entity }
+        flash.now[:alert] = 'Error while adding recovery option!'
+        return
+      end
     end
   end
 
