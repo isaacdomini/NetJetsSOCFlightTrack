@@ -15,15 +15,24 @@ class CriticalFlightsController < ApplicationController
 
   def removeRecovery
     cFlight = CriticalFlight.find(params[:critical_flight])
+    critical_flight_id = params[:critical_flight]
     recoveryid = params[:recovery]
     dRecovery = nil
+    print "Recovery ID: #{recoveryid} ; CFlightID: #{params[:critical_flight]}"
     cFlight.recovery.each{ |r|
-      if(r.id == recoveryid)
+      if(r.id.to_i == recoveryid.to_i)
         dRecovery = r
-        cFlight.recovery.delete(r.id)
         dRecovery.destroy
+        returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid]
+
+        # cFlight.recovery.delete(r.id)
+        #
+        # dRecovery.destroy
+        print "RETURN HASH"
+        puts returnHash
+        cFlight.save
         ActionCable.server.broadcast 'critical_flight_channel',
-                                   content:  cFlight,
+                                   content:  returnHash,
                                    action: "removerecovery"
         head :ok
       end
