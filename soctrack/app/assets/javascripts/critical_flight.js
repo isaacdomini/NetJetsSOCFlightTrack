@@ -5,24 +5,30 @@
   function format (rowData) {
       // `d` is the original data object for the row
       return `<div class="container"><div class="row">
-                <div class="col-md-9">${getExpandedSection(rowData)}</div>
-                <div class="col"><button class="btn btn-default" onclick="addRecoveryOption()">Add</button></div>
+                <div class="row"><div class="col-md-9">${getExpandedSection(rowData)}</div></div>
+                <br/>
+                <div class="container"><div class="row"><div class="col-md-offset-5"><button class="btn btn-default">Add</button></div></div></div>
               </div></div>`;
   }
   function actionCableHandle(data){
     if(data.action=="flightcreate"){
       console.log("received");
       console.log(data.content);
-      actionCableHandleAddToCriticalFlightData(data.content);
+      addToCriticalFlightData(data.content);
       console.log("pushed to table");
     }else if(data.action == "removerecovery"){
       console.log("received");
       console.log("deleted");
       console.log(data.content);
-      actionCableHandleRemoveRecoveryFromDashboard(data.content);
+      removeRecoveryFromDashboard(data.content);
     }else{
       console.log("error");
     }
+  }
+
+  function removeRecoveryFromDashboard(data){
+    console.log(data);
+    $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
   }
 
   function recoveryReactionPopover(){
@@ -100,8 +106,8 @@
           </div></div>`
         });
         expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${data.id}" class="glyphicon glyphicon-remove"></span></a></div>`;
+        expandedSection += `</div>`
       });
-      expandedSection += `</div>`
     }
     expandedSection += `<script>reInitializeListeners()</script>`
     return expandedSection;
@@ -228,30 +234,7 @@
     } );
   }
 
-
-  function actionCableHandleRemoveRecoveryFromDashboard(data){
-    console.log(data);
-    $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
-    criticalFlightData.forEach(cFlight=> {
-      if(cFlight.id == data.critical_flight_id){
-        console.log(cFlight.recovery);
-        i = 0;
-        deleteIndex = -1;
-        cFlight.recovery.forEach(r=> {
-          if(r.id == data.recovery_id){
-            deleteIndex = i;
-            console.log(`deleteIndex set to: ${deleteIndex}`);
-          }
-        });
-        if(deleteIndex!=-1){
-          cFlight.recovery.splice(deleteIndex,1);
-        }
-        console.log(cFlight.recovery);
-      }
-    });
-  }
-
-  function actionCableHandleAddToCriticalFlightData(newData){
+  function addToCriticalFlightData(newData){
     newId = newData.id
     idCount = 0;
     criticalFlightData.forEach(cFlight=> {
