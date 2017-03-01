@@ -99,12 +99,40 @@
               <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
           </div></div>`
         });
-        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeBtn" class="controlBtn" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${data.id}" class="glyphicon glyphicon-remove"></span></a></div></div>`;
+        expandedSection += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${data.id}" class="glyphicon glyphicon-remove"></span></a></div>`;
       });
       expandedSection += `</div>`
     }
-    expandedSection += `<script>recoveryReactionPopover()</script>`
+    expandedSection += `<script>reInitializeListeners()</script>`
     return expandedSection;
+  }
+
+  function reInitializeListeners(){
+    recoveryReactionPopover();
+    removeRecoveryOptionListener();
+  }
+
+  function removeRecoveryOptionListener(){
+    $("#removeRecoveryOptionButton").click(function(){
+      console.log(this.children[0]);
+      var childId = this.children[0].id;
+      var ids = childId.split("-");
+      console.log(ids[0]);
+      console.log(ids[1]);
+      var criticalFlightId = ids[0];
+      var recoveryId = ids[1];
+      $.post( "/critical_flight/remove_recovery.json",
+        {
+          authenticity_token: window._token,
+          critical_flight: {
+            "critical_flight": criticalFlightId,
+            "recovery": recoveryId
+          }
+        })
+      .done(function( data ){
+        console.log("Recovery Removed");
+      });
+    });
   }
 
   function showAll(node){
