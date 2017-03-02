@@ -23,7 +23,7 @@
       return `<div class="container"><div class="row">
                 <div class="row"><div class="col-md-9" id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
-                <div class="container"><div class="row"><div class="col-md-offset-5"><button id="critical_flight_add_recovery_${rowData.id}" class="btn btn-default addRecoveryButton">Add</button></div></div></div>
+                <div class="container"><div class="row"><div class="col-md-offset-5"><button id="critical_flight_add_recovery_${rowData.id}" class="btn btn-default addRecoveryButton" data-toggle="modal" data-target="#addFlightModal">Add</button></div></div></div>
               </div></div>`;
   }
 
