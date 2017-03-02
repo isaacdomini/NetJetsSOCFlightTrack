@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Token Generator Example</title>
+
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+  <link rel="stylesheet" href="main.css">
+
+  <script language="JavaScript" type="text/javascript"
+        src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js">
+  </script>
+  <script>
+        // NOTE: This is an example token generator to allow you to easily create
+        // Firebase custom auth tokens with a service account JSON file. You should
+        // integrate token generation and signing in to your own code using a Google
+        // client library for the language you work with.
+        // These values are extracted from the service account JSON.
+        var kid = "5b122f71700b67f22bd4f65dd4705b288a7384fc";
+        var sPKCS8PEM = "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCt5ZIBcNZO6EZJ\npxzJe4NjRERE5k90XC1vWQFaq4Mx7OMCzSyB28SAF59N6j6KmkhejhzOyRm8uNV5\nSmD3XxM5F0Rf8ijrh71pTKvU+lS66W+81jwHFoJTCklMALD25JMWAJ35FkUH+FJv\naVVJKMrkLuuBuqYmqebfpPtos57KsRDhtAaaaCFg9b36F1bIPe8g57hHQzc0/01f\nIp5ZtB95IF73AcVlglr3krU/R5norOYSbk07GurQCsLnk4G9NkImTqfENXir+mmL\nJxACUbbAJ2Egz/ZVkzj4wDpxIxk2mqXjSQ3qBxABi9sSF2wZRQ42TX7SY3RWxXwj\ng7RztPidAgMBAAECggEARjuzFXviQmpTgQnKeaG19hCrVfyC2Kcl/pO/FUSyLybS\npN4C/Muq+GUSBSD3c3lOg0n4XpggGfW42kztDtvKYsN/7RRb7IydNnst503XjMod\nQ/JuuhogNrOv2M9qqby1nyxOoTyaUta7TJ4JQQwFrdU5buLYmkMCqQ70L1xkZM4m\nTnZlOVcrxOD4UNnUHNJCYgXf0xMTw4ILT3lbkcycx0z+pckaJhgrRrQ/alVBP+jO\n02okezF0upEKu8tCRMcepijeZo/Q+0hjfARURDgpTq+57187EJNEbxt6HyNmIK1l\nwg/xu0YKNSasQeYN93Se3LJ5yzDynPMbQ0ZIAoB+DQKBgQDajZQNnulwNG/v+Wf8\nMXv+QuOt3PaNs/zHxOHVpPA8/SgiAyIsHpDEIGCoVlPBp9i5/eWSifdbF8qYhV5l\nSKlQ9ADxRCerqjVLvU4zv19iCSHf+yyFUbMUvsE/KvsJGnspOYSwSJG7hXLbfQC5\nO8LLwa6m5SmOFhAGVUXyDgLmawKBgQDLsTo7+JlnfB0RbP8xq94Gh3Of3NoXw+aw\nQmYMcfONBqn3MV5T2hD/0YDklUQ9aGoa9YvarsKh6XZh1UCXQaKQXtirmxCZsB40\nYjF9MXJFywC9cHxualMW565do40NWkmc1h/SwLWzPIlUw94cZdhQsumex6T8fS3Q\nCfB4WlYPFwKBgCHEqlGIci0iDQGZGZX/11ar4x3j/DxcyPvc0b/+4heqTd8jeM40\nUs3a6tRXsk1Dr9rc/fGsW4m5nVX/lVw04+RcLyEYFMETZXS0ZTbdpNEy9Ab1eiWH\nQBI+fwFRlMQNUWZHOtc5/zpoHh0HrWrxbuGopWGoGsmXYxZ3an1B6PTNAoGAZQiM\nZRDDLpRearVQw1eHcl+fV20ZdG5EL6tPqN6gupPSnH0NV7QzeGB3eWochgUTlDm1\nXAwRGHSPtqkrN5tjwg55lGz+x+yWns8R0xJCpyGxRUXVQoNUoWjbkTC9lyDwoG2J\nLWVO+w+M4tGgix9tM2H7BTnruR1yKt2zPE86npMCgYAWAqcPws8LsGPDTmlbHsMh\nep+HvOh+XwuvkQn8nQ0khZ65srFrBVRjEnCQ0ttN2f2nLlC1YstfRleQyjdpoQK6\n5tGbf2U08ebP85swWEouwbWxiuU0eOuAucg/f7cBfJ48RXrecfv5ynMQ5ATE9eWr\nqgCmUM9HAEL9NALsP/Jn5Q==\n-----END PRIVATE KEY-----\n";
+        var sub = "firebase-adminsdk-nz8lz@firechatdev.iam.gserviceaccount.com";
+        // Generate an ID token and sign it with the private key.
+        function handleGenerateClick() {
+          var uid = "shan94";
+          if (uid == '') {
+            console.log('Blank uid');
+            return;
+          }
+          // Header
+          var oHeader = {alg: 'RS256', kid: kid, typ: 'JWT'};
+          // Payload
+          var oPayload = {};
+          var tNow = KJUR.jws.IntDate.get('now');
+          var tEnd = KJUR.jws.IntDate.get('now + 1hour');
+          oPayload.aud = 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit';
+          oPayload.exp = tEnd;
+          oPayload.iat = tNow;
+          oPayload.iss = sub;
+          oPayload.sub = sub;
+          oPayload.user_id = uid;
+          oPayload.displayName = "shantanu";
+          oPayload.scope = 'https://www.googleapis.com/auth/identitytoolkit';
+          var sHeader = JSON.stringify(oHeader);
+          var sPayload = JSON.stringify(oPayload);
+          var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
+          document.getElementById('tokenbox').textContent = sJWT;
+          console.log(sJWT);
+          var link = '<a href="../customauth.html#token=' + sJWT + '">Use this token in the web custom auth example</a>';
+          document.getElementById('linktokenbox').innerHTML = link;
+        }
+</script>
+</head>
+<body>
+    <button onclick="handleGenerateClick()">Generate</button>
+    <p id="tokenbox"></p>
+    <p id="linktokenbox"></p>
+</body>
+</html>

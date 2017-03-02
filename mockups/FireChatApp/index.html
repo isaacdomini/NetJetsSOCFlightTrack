@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<head>
+  		<title>My FireChat</title>
+  		<link rel="stylesheet" href="main.css">
+
+  		<!-- jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+		<!-- Firebase -->
+		<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+		<!-- Firechat -->
+		<link rel="stylesheet" href="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.css" />
+		<script src="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.js"></script>
+
+		<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+		<script>
+		  // Initialize Firebase
+		  var config = {
+		    apiKey: "AIzaSyBZqsJ46RifUwRaNmmm-J9gbCkmnrHKI1s",
+		    authDomain: "firechatdev.firebaseapp.com",
+		    databaseURL: "https://firechatdev.firebaseio.com",
+		    storageBucket: "firechatdev.appspot.com",
+		    messagingSenderId: "172301450451"
+		  };
+		  firebase.initializeApp(config);
+		</script>
+	</head>
+
+	<body>
+	  <div id="firechat-wrapper">
+		<p>Enter a custom token below</p>
+        <textarea id="tokentext" style="width: 100%; height: 200px;" name="tokentext" placeholder="Enter Your Custom Token"></textarea>
+
+		<button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin" onclick="signIn()">Sign In</button>
+
+		<!-- Container where we'll display the user details -->
+		<div class="quickstart-user-details-container">
+			Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+			<div>Firebase auth <code>currentUser</code> object value:</div>
+			<pre><code id="quickstart-account-details">null</code></pre>
+		</div>
+	  </div>
+
+		<script src="custom.js"></script>
+	</body>
