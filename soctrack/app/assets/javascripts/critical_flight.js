@@ -471,6 +471,75 @@
     });
   }
 
+  $(document).on("click", "#btnFirechat", function() {
+      console.log("clickkk");
+      initApp();
+      var userId = document.getElementById("txtUserId").value;
+      var token = generateToken(userId);
+      signIn(token);
+  });
+
+  // Generate an ID token and sign it with the private key.
+  function generateToken(userId) {
+    console.log(userId);
+    var kid = "618c8bdfb010aedd9ce33b8f7aeb3eff3fb49e99";
+    var sPKCS8PEM = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDcyOgcm6rRMZa+\nVYrvjVgDh8o3b0fNc1UZODLEJDjIWHVGpLG3T8gomJXxe9/VtniwtSKp8M/WMAZ0\nt4gooxjl5rxT4agllqtd2WLoDWUfq05S4JZjoiEKUr2Kd5KPm6RniHE747Ap8HfN\ng7rXeO5JNNSy+RmDTbot1a6fQFrCX86mKCizpamsAeMnQpvLjC+MKaFVx2jCd73Y\nd4BVm9f3kjidJ6UOjeMeHyrqUnsWORNCyMQlK9zGuzSs7/tD7UqVqqZcBcsErju0\nNfb1gH58A1vS1jXtfXfyrgbEwtYBnIgZjqkToph04d1qhKueqYF6fRBMhkIaSWXK\nZOyDYR3xAgMBAAECggEBANAautYEUJz//dOH8/5aHwSs4Ikh5e8cb7DmzMseTTti\nTaB5ql1b4RGKyYKlvVTGurns8jB2oKCGAf/P4pJTMSu6MfdqssBDZWF/fv+1aITS\nRnBN6tMcxcHiPXAfxtB/5xYDgJ/vvGO7mmDncpyZCxmLp5TOwSKHiB6d1AudcC7W\nuPrna/330Xht4RkC/YVOOri3OGqUB97gFwft9e+LWnYtTKytQYenffuk/ijfz4Ya\nqKTgnVotRhCe3BmhBJOJOAs7vXyIQzrMxnS5BX1+L1/RLmfCX4IZ8yRjsUFJqTKG\ngngwFGauPs091U8CCrwENCeTfA1Kr/pBDObUi+GS6GUCgYEA9295FZ2QIlPYAVYk\n6MW0if2UOYw1mDcOrelcykLjqwGEHQAsVejZu+NDg8TuN2lOKihrX6ye8RhIpzS5\n6l5DaSV+4dV5Jpq6ObAYwVHmT3KL38vk27m/Ykg70rUxFFx3ZdYwvn5a+TPZ6Rwa\nn8jqqJGNdYKwD4RPQV9f3AkmVoMCgYEA5G1IOV5q98vfXOqypNxgYWjt+p4OxvJt\nXlNht/X2KzS5irT/ZP3j537ggKBQJIDLI1Kc8FJ2buQ9VGoN2Yt5XstbWCUrfZlX\nlXLBDc+l8x67hNvRsIQCffUc6ba/OHI+NNBZtz/12Lx9C+uvdWZpY5FRBzXGC+iB\nNJXIL+tGr3sCgYAfcjpYResQgclc+h68uoukUebpnWkeTDkAXz0cs32NuSaaLPB1\nhp9NYqes8nU385ksgHCM+zpD98sb/PZ3070LeulyOBgqkNWECV5MC2WSyUL/kUEn\nr6akDfwUXlS7erjt51fQjexv6WgTWTAFCJrSC5WHzrEjd7Q+4akkJMGLkwKBgQDJ\nMeg3f45AC/YE5UPMKb9KjR1vbOAfI1BpkI+1dJMKozn5jkqVLXsbX4lmQc3VGQvT\nZOSOWFOwgJ/0RiVEw7B3ai5eiP6xderK23RnMco9RYhtESC0lNGNF+QLhscOdLGN\n2yXqXg+wgvSxFzpH8ZhJ9qij7R0vR+7l3jeg3V45GQKBgAndlCOtggAMjlbrz+ir\ntla+AicmOm3XYsruMDuNfcR2LROrFPsMh7AMFsrN/lRZLrb0+CYqVt5qNIJBGNf2\nCxrNAT0Tn+iDYEtVwDD2qGgRaiG7AuUytJp4Brf9iDkrLtXWiPKoqQCNHfDv9Gxe\nLU0o1McF/DBIZZ0xp5ysPNDx\n-----END PRIVATE KEY-----\n";
+    var sub = "firebase-adminsdk-glsqf@soctrack-5ec1b.iam.gserviceaccount.com";
+
+    var uid = userId;
+    if (uid == '') {
+      console.log('Blank uid');
+      return;
+    }
+    // Header
+    var oHeader = {alg: 'RS256', kid: kid, typ: 'JWT'};
+    // Payload
+    var oPayload = {};
+    var tNow = KJUR.jws.IntDate.get('now');
+    var tEnd = KJUR.jws.IntDate.get('now + 1hour');
+    oPayload.aud = 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit';
+    oPayload.exp = tEnd;
+    oPayload.iat = tNow;
+    oPayload.iss = sub;
+    oPayload.sub = sub;
+    oPayload.user_id = uid;
+    oPayload.scope = 'https://www.googleapis.com/auth/identitytoolkit';
+    var sHeader = JSON.stringify(oHeader);
+    var sPayload = JSON.stringify(oPayload);
+    var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
+    console.log(sJWT);
+    return sJWT
+  }
+
+  function signIn(token) {
+      firebase.auth().signInWithCustomToken(token).catch(function(error) {
+        console.log("Error authenticating user:", error);
+      });
+    }
+
+  function initChat(user) {
+        // Get a Firebase Database ref
+        var chatRef = firebase.database().ref("chat");
+
+        // Create a Firechat instance
+        var chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
+
+        // Set the Firechat user
+        console.log("userId: "+ user.uid + "    userName: ");
+        chat.setUser(user.uid, "Shan");
+        console.log(user);
+  }
+
+  function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          initChat(user);
+        }
+      });
+  }
+
   $(document).ready(function() {
     dataTableInitialize();
     addValidatorRegExMethod();
