@@ -14,8 +14,8 @@ var browserify = require('browserify'),
     apidoc = require('gulp-apidoc'),
     fs = require('fs-extra'),
     mocha = require('gulp-mocha'),
-    exit = require('gulp-exit'),
-    jsdoc = require("gulp-jsdoc");
+    exit = require('gulp-exit');
+    // jsdoc = require("gulp-jsdoc");
 
 var props = {
     entries: sourceFile,
@@ -34,18 +34,18 @@ gulp.task('browserify-build', function() {
 
     var bundler = browserify({
         // Required watchify args
-        cache: {}, 
-        packageCache: {}, 
+        cache: {},
+        packageCache: {},
         fullPaths: true,
         // Browserify Options
         entries: sourceFile,
         debug: true
     });
-    
+
     hbsfy.configure({
         extensions: ['hbs']
     });
-    
+
     var bundle = function() {
         return bundler
         .transform(hbsfy)
@@ -59,11 +59,11 @@ gulp.task('browserify-build', function() {
     };
 
     return bundle();
-  
+
 });
 
 gulp.task('copy', function() {
-    
+
     fs.mkdirsSync('public/uploads')
     gulp.src('src/client/js/adapter.js').pipe( gulp.dest('public/js') );
     gulp.src('src/client/*.html').pipe( gulp.dest('public') );
@@ -102,39 +102,39 @@ var JSDocOptions = {
     outputSourceFiles: true
 };
 
-gulp.task("jsdoc", function() {
-	gulp.src(["./src/client/**/*.js", "README.md"])
-		.pipe(jsdoc.parser(infos))
-		.pipe(jsdoc.generator("./doc/WebClient", JSDocTemplate, JSDocOptions))
-});
+// gulp.task("jsdoc", function() {
+// 	gulp.src(["./src/client/**/*.js", "README.md"])
+// 		.pipe(jsdoc.parser(infos))
+// 		.pipe(jsdoc.generator("./doc/WebClient", JSDocTemplate, JSDocOptions))
+// });
 
 
 gulp.task('build-dist',['browserify-build','build-css','build-apidoc','copy'],function(){
 
     console.log('test');
-    
+
     exit();
-    
+
 });
 
 gulp.task('dev-all',['copy','browserify-build','build-css','build-apidoc'],function(){
-    
+
     gulp.watch("./src/client/**/*.js", ["jsdoc"])
     gulp.watch('src/client/**/*',['build-dist']);
     gulp.watch('src/server/**/*',['build-dist']);
-    
+
 });
 
 gulp.task('build-dev-fast',['browserify-build'],function(){
-    
+
     gulp.watch('src/client/**/*',['build-dist']);
     gulp.watch('src/server/**/*',['build-dist']);
-    
+
 });
 
 gulp.task('default',['dev-all'],function(){
-    
-    
+
+
 });
 
 // tests
@@ -143,4 +143,3 @@ gulp.task('server-test', function (done) {
     .pipe(mocha({ reporter: 'spec' }))
     .pipe(exit());
 });
-
