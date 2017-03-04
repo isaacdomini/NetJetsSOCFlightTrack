@@ -471,7 +471,57 @@
     });
   }
 
+  function startChat(chatID){
+    console.log("ABOUT TO attach");
+    SpikaAdapter.attach({
+
+       spikaURL: "http://localhost:3001/socchat",
+       attachTo : chatID, // id or div to show into
+       user : {
+           id : $("#current_user_id").html(),
+           name : $("#current_user_name").html(),
+           avatarURL : "NA",
+           roomID : "cFlight12341234"
+       },
+       config : {
+           apiBaseUrl : "http://localhost:3001/socchat/v1",
+           socketUrl : "http://localhost:3001/socchat",
+           showSidebar : false,
+           showTitlebar : false
+       },
+       listener : {
+
+           onPageLoad: function(){
+
+           },
+           onNewMessage:function(obj){
+
+           },
+           onNewUser:function(obj){
+
+           },
+           onUserLeft:function(obj){
+
+           },
+           OnUserTyping:function(obj){
+
+           },
+           OnMessageChanges:function(obj){
+
+           },
+           onOpenMessage:function(obj){
+               return true;
+           },
+           OnOpenFile:function(obj){
+               return true;
+           }
+       }
+
+    });
+  }
+
   $(document).ready(function() {
+    startChat("generalChat");
     dataTableInitialize();
     addValidatorRegExMethod();
     flightFormValidation('#newFlightForm');
