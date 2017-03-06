@@ -99,6 +99,9 @@
         // }
       }
     });
+    if(options.department == "OS"){
+      $(`#${options.critical_flight_id}-${options.recovery_id}-osreaction`).html(getOSAcceptContent(options.reaction_number));
+    }
   }
 
   function addRecoveryOptionToDashboard(recoveryItem){
