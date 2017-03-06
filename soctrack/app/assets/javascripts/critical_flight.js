@@ -471,14 +471,14 @@
     });
   }
 
-  $(document).on("click", "#btnFirechat", function() {
+  function initFireChat() {
       console.log("clickkk");
       console.log(this);
       initApp();
-      var userId = document.getElementById("txtUserId").value;
+      var userId = window._userid;
       var token = generateToken(userId);
       signIn(token);
-  });
+  }
 
   // Generate an ID token and sign it with the private key.
   function generateToken(userId) {
@@ -527,7 +527,7 @@
 
         // Set the Firechat user
         console.log("userId: "+ user.uid + "    userName: ");
-        chat.setUser(window._userid, window._username);
+        chat.setUser(user.uid, window._username);
         console.log(user);
   }
 
@@ -547,4 +547,5 @@
     flightFormValidation('#newFlightForm');
     checkboxInit();
     initializeEventListeners();
+    initFireChat();
   });

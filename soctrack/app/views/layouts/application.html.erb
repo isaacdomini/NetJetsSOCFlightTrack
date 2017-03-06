@@ -5,8 +5,10 @@
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
+    <% if user_signed_in? %>
     <%= javascript_tag "window._userid = '#{current_user.id}'" %>
     <%= javascript_tag "window._username = '#{current_user.name}'" %>
+    <% end %>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -31,17 +33,17 @@
 
     <script language="JavaScript" type="text/javascript" src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
     <!--<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>-->
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDgOF6TspoNEYW-ewhgX6sW6NqSJhtsR1U",
-    authDomain: "soctrack-5ec1b.firebaseapp.com",
-    databaseURL: "https://soctrack-5ec1b.firebaseio.com",
-    storageBucket: "soctrack-5ec1b.appspot.com",
-    messagingSenderId: "848984876300"
-  };
-  firebase.initializeApp(config);
-</script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDgOF6TspoNEYW-ewhgX6sW6NqSJhtsR1U",
+        authDomain: "soctrack-5ec1b.firebaseapp.com",
+        databaseURL: "https://soctrack-5ec1b.firebaseio.com",
+        storageBucket: "soctrack-5ec1b.appspot.com",
+        messagingSenderId: "848984876300"
+      };
+      firebase.initializeApp(config);
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -80,9 +82,6 @@
     <%= yield %>
     <div class="row">
         <div id="firechat-wrapper">
-          UserId <input type="text" id="txtUserId"></input>
-          DisplayName <input type="text" id="txtDisplayName"></input>
-          <button id="btnFirechat">Chat</button>
         </div>
   </body>
 </html>
