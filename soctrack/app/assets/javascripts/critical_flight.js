@@ -473,6 +473,7 @@
 
   $(document).on("click", "#btnFirechat", function() {
       console.log("clickkk");
+      console.log(this);
       initApp();
       var userId = document.getElementById("txtUserId").value;
       var token = generateToken(userId);
@@ -526,7 +527,7 @@
 
         // Set the Firechat user
         console.log("userId: "+ user.uid + "    userName: ");
-        chat.setUser(user.uid, "Shan");
+        chat.setUser(window._userid, window._username);
         console.log(user);
   }
 
