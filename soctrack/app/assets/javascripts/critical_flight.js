@@ -163,19 +163,21 @@
   function getDefaultIcon(role, indexOfIcon){
     return indexOfIcon == 0 ? "empty-dot" : recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
   }
+  function getOSAcceptContent(osReaction){
+    console.log(osReaction);
+    return parseInt(osReaction) == 5 ? `<span class="glyphicon glyphicon-thumbs-up"></span>` : "..."
+  }
 
   function getExpandedSection(data){
 
     var expandedSection = `<div class="row text-center">Recovery Options:</div>`;
-    if(data.recovery.length>0){
-      expandedSection += `<div class="row">`;
-      expandedSection += `<div class="col-md-2 col-sm-2"><b>Flights</b></div>`;
-      recoveryReactionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
-      expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
-      data.recovery.forEach(recoveryItem=> {
-        expandedSection +=recoveryOptionExpandedHTML(recoveryItem);
-      });
-    }
+    expandedSection += `<div class="row">`;
+    expandedSection += `<div class="col-md-2 col-sm-2"><b>Flights</b></div>`;
+    recoveryReactionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
+    expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
+    data.recovery.forEach(recoveryItem=> {
+      expandedSection +=recoveryOptionExpandedHTML(recoveryItem);
+    });
     return expandedSection;
   }
 
@@ -189,7 +191,7 @@
 
     returnString +=`<div class="row" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
     <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${recoveryItem.critical_flight_id}-${recoveryItem.id}-popover" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}">
-    <span class="glyphicon glyphicon-info-sign"></span></a></div><div class="col-md-1 col-sm-1">...</div>`;
+    <span class="glyphicon glyphicon-info-sign"></span></a></div><div id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-osreaction" class="col-md-1 col-sm-1">${getOSAcceptContent(recoveryItem["OS"])}</div>`;
 
     //Dropdown reaction selector
     Object.keys(recoveryReactionSelectors).forEach(role=> {
@@ -495,24 +497,6 @@
         console.log(tr.slice(21));
         flightLeg = tr.slice(21);
         criticalFlight = $("#addFlightModal").attr("data-critical_flight_id");
-        //GET CRITICALFLIGHT ID and send request
-        //
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
-        ////
         $.post( "/critical_flight/add_recovery.json",
           {
             authenticity_token: window._token,
@@ -522,7 +506,7 @@
         .done(function( data ) {
           console.log( "Data Loaded: " + data );
         });
-        $("#addFlightModal").find(".flightsSelectTable").find("tbody").html(" ")
+        $("#addRecoveryModal").find(".flightsSelectTable").find("tbody").html(" ");
       }
     });
     $(document).on("click","#criticalFlightFormButton",function(){
