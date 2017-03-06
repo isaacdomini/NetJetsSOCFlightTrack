@@ -80,6 +80,25 @@
     dropdownitem = $(`#${options.critical_flight_id}-${options.recovery_id}-${options.department}-selectedrecovery`);
     dropdownitem.removeClass();
     dropdownitem.addClass(`glyphicon glyphicon-${getDefaultIcon(options.department, parseInt(options.reaction_number))}`);
+
+    criticalFlightData.forEach(cFlight=> {
+      if(cFlight.id == options.critical_flight_id){
+        rIndex = -1;
+        rIterator = 0;
+        cFlight.recovery.forEach(r=> {
+          if(r.id == options.recovery_id){
+            rIndex = rIterator;
+            r[options.department]=options.reaction_number;
+          }
+          rIterator ++;
+        });
+        console.log("Found CriticalFlight in dataset");
+
+        // if(rIndex==-1){
+        //   cFlight.recovery.push(recoveryItem);
+        // }
+      }
+    });
   }
 
   function addRecoveryOptionToDashboard(recoveryItem){
