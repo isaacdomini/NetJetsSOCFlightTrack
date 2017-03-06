@@ -168,7 +168,10 @@
   }
   function getOSAcceptContent(osReaction){
     console.log(osReaction);
-    return parseInt(osReaction) == 5 ? `<span class="glyphicon glyphicon-thumbs-up"></span>` : "..."
+      if(parseInt(osReaction)==5 || parseInt(osReaction)==6){
+          return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
+      }
+      return "..."
   }
 
   function getExpandedSection(data){
