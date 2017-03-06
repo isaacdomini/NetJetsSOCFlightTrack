@@ -43,14 +43,43 @@
       console.log("addingrecovery");
       console.log(data.content);
       addRecoveryOptionToDashboard(data.content);
+    }else if(data.action == "recoveryreaction"){
+      console.log("received");
+      console.log("recoveryreaction");
+      console.log(data.content);
+      changeRecoveryReaction(data.content);
     }else{
       console.log("error");
     }
   }
 
+
   function removeRecoveryFromDashboard(data){
     console.log(data);
     $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
+    criticalFlightData.forEach(cFlight=> {
+      if(cFlight.id == data.critical_flight_id){
+        console.log(cFlight.recovery);
+        i = 0;
+        deleteIndex = -1;
+        cFlight.recovery.forEach(r=> {
+          if(r.id == data.recovery_id){
+            deleteIndex = i;
+            console.log(`deleteIndex set to: ${deleteIndex}`);
+          }
+        });
+        if(deleteIndex!=-1){
+          cFlight.recovery.splice(deleteIndex,1);
+        }
+        console.log(cFlight.recovery);
+      }
+    });
+  }
+
+  function changeRecoveryReaction(options){
+    dropdownitem = $(`#${options.critical_flight_id}-${options.recovery_id}-${options.department}-selectedrecovery`);
+    dropdownitem.removeClass();
+    dropdownitem.addClass(`glyphicon glyphicon-${getDefaultIcon(options.department, parseInt(options.reaction_number))}`);
   }
 
   function addRecoveryOptionToDashboard(recoveryItem){
@@ -105,10 +134,10 @@
       var y = node.parentNode.previousSibling
       y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
-  function getDropdownList(role){
+  function getDropdownList(recoveryItem, role){
     listHTML = "";
     recoveryReactionSelectors[role].forEach(option=> {
-      listHTML += `<li onclick="dropdown(this);" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-${recoveryReactionOptions[option]}"></span>${option}</a></li>`
+      listHTML += `<li class="recoveryReactionDropdown" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-${recoveryReactionSelectors[role].indexOf(option)+1}-dropdownitem" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-${recoveryReactionOptions[option]}"></span>${option}</a></li>`
     });
     return listHTML;
   }
@@ -147,9 +176,9 @@
     Object.keys(recoveryReactionSelectors).forEach(role=> {
       returnString +=
       `<div class="col-md-1 col-sm-1"><div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span class="glyphicon glyphicon-${getDefaultIcon(role, recoveryItem[role])}"></span>
+          <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recoveryItem[role]))}"></span>
           <span class="caret"></span></button>
-          <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(role)}</ul>
+          <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
       </div></div>`
     });
     returnString += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a></div>`;
@@ -416,6 +445,24 @@
         alert("Fill at least one of the fields!");
       }
       checkboxInit();
+    });
+
+    $(document).on("click",".recoveryReactionDropdown",function(){
+      console.log(this.id);
+      // changeRecoveryReactionCall(this.id);
+      reactionOptions = this.id.split("-");
+      console.log(reactionOptions);
+      $.post( "/critical_flight/recovery_reaction.json",
+        {
+          authenticity_token: window._token,
+          critical_flight: reactionOptions[0],
+          recovery: reactionOptions[1],
+          department: reactionOptions[2],
+          recovery_reaction: reactionOptions[3]
+        })
+      .done(function( data ){
+        console.log("Recovery Removed");
+      });
     });
     $(document).on("click","#criticalFlightFormButton",function(){
       if($("input:checked").length != 1){

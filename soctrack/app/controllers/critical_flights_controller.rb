@@ -41,9 +41,11 @@ class CriticalFlightsController < ApplicationController
 
   def changeRecoveryReaction
     cFlight = CriticalFlight.find(params[:critical_flight])
+    critical_flight_id = params[:critical_flight];
     recoveryid = params[:recovery]
     department = params[:department]
     reactionNumber = params[:recovery_reaction]
+    returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid, "department" => department, "reaction_number" => reactionNumber];
     puts "STEP 1"
     cFlight.recovery.each{ |r|
       print "#{r.id} == #{recoveryid}"
@@ -54,10 +56,7 @@ class CriticalFlightsController < ApplicationController
         puts "RECOVERy"
         puts dRecovery
         ActionCable.server.broadcast 'critical_flight_channel',
-                                   content:  dRecovery,
-                                   recoveryid: recoveryid,
-                                   department: department,
-                                   reactionnumber: reactionNumber,
+                                   content:  returnHash,
                                    action: "recoveryreaction"
         head :ok
       end
