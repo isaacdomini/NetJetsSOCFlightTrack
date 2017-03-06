@@ -30,16 +30,15 @@
   </tr>
 </tfoot>
 </table>
-<!-- Modal -->
-<div class="modal fade" id="addFlightModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="addRecoveryModal" tabindex="-1" role="dialog" aria-labelledby="">
   <div class="modal-dialog" role="document">
-    <form id="newFlightForm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="createFlightModal">Create Flight</h4>
+          <h4 class="modal-title" id="createFlightModal">Add Recovery</h4>
         </div>
         <div class="modal-body">
+            <form id="newFlightForm" class ="findFlightsForm">
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">Tail No.</span>
@@ -66,9 +65,72 @@
                 </div></div>
               </div>
             </div>
-            <button type="button" id="findFlightsButton" class="btn btn-success" >Find Flights</button>
+            <button type="button" class="findFlightsButton btn btn-success" >Find Flights</button>
             <div class="row">
-              <table class="table table-striped"id="flightsSelectTable">
+              <table class="table table-striped flightsSelectTable">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Tail</th>
+                    <th>Leg</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>ETD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" id="addRecoveryOptionCallButton"class="btn btn-primary">Add To Flight</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addFlightModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="createFlightModal">Create Flight</h4>
+        </div>
+        <div class="modal-body">
+            <form id="newFlightForm" class ="findFlightsForm">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tail No.</span>
+                <input class="form-control" placeholder="Enter Tail Number here" name="tail" type="text"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Leg ID</span>
+                <input class="form-control" placeholder="Enter Leg ID here" name="leg" type="text"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <div class="form-group"><div class="input-group">
+                  <span class="input-group-addon">Departure</span>
+                  <input class="form-control" placeholder="Enter Departure Airport Code" name="departure" type="text"/>
+                </div></div>
+              </div>
+              <div class="col-md-6 col-xs-6 col-sm-6">
+                <div class="form-group"><div class="input-group">
+                  <span class="input-group-addon">Arrival</span>
+                  <input class="form-control" placeholder="Enter Arrival Airport Code" name="arrival" type="text"/>
+                </div></div>
+              </div>
+            </div>
+            <button type="button" class="findFlightsButton btn btn-success" >Find Flights</button>
+            <div class="row">
+              <table class="table table-striped flightsSelectTable">
                 <thead>
                   <tr>
                     <th></th>
@@ -84,6 +146,7 @@
                 </tbody>
               </table>
             </div>
+            </form>
             <select id="eventsSelector" class="selectpicker show-tick" multiple data-live-search="true" title="Choose Events">
               <% Event.find(1).event_hash.each do |type, vals| %>
                 <optgroup label="<%=type%>">
@@ -100,7 +163,6 @@
           <button type="button" id="criticalFlightFormButton"class="btn btn-primary">Create</button>
         </div>
       </div>
-    </form>
   </div>
 </div>
 <!-- # <%= javascript_include_tag 'critical_flight', 'data-turbolinks-track': 'reload' %> -->

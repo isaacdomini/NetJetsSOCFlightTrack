@@ -23,7 +23,7 @@
       return `<div class="container"><div class="row">
                 <div class="row"><div class="col-md-9" id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
-                <div class="container"><div class="row"><div class="col-md-offset-5"><button id="critical_flight_add_recovery_${rowData.id}" class="btn btn-default addRecoveryButton">Add</button></div></div></div>
+                <div class="container"><div class="row"><div class="col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="btn btn-default addRecoveryButton">Add</button></div></div></div>
               </div></div>`;
   }
 
@@ -419,38 +419,41 @@
   }
 
   function initializeEventListeners(){
-    $(document).on("click","#findFlightsButton",function(){
+    $(document).on("click",".findFlightsButton",function(){
       var url = "/flights.json?"
       var paramCount = 0;
-      if($('input[name="tail"]').val() != ""){
-        url+=`tail=${$('input[name="tail"]').val()}`;
+      console.log("TEST");
+      form = $(this).parents('form:first');
+      if(form.find('input[name="tail"]').val() != ""){
+        url+=`tail=${form.find('input[name="tail"]').val()}`;
         paramCount++;
       }
-      if($('input[name="leg"]').val() != ""){
+      if(form.find('input[name="leg"]').val() != ""){
         if(paramCount>0){
           url+="&"
         }
-        url+=`leg=${$('input[name="leg"]').val()}`;
+        url+=`leg=${form.find('input[name="leg"]').val()}`;
         paramCount++;
       }
-      if($('input[name="departure"]').val() != ""){
+      if(form.find('input[name="departure"]').val() != ""){
         if(paramCount>0){
           url+="&"
         }
-        url+=`departure=${$('input[name="departure"]').val()}`;
+        url+=`departure=${form.find('input[name="departure"]').val()}`;
         paramCount++;
       }
-      if($('input[name="arrival"]').val() != ""){
+      if(form.find('input[name="arrival"]').val() != ""){
         if(paramCount>0){
           url+="&"
         }
-        url+=`arrival=${$('input[name="arrival"]').val()}`;
+        url+=`arrival=${form.find('input[name="arrival"]').val()}`;
         paramCount++;
       }
+      console.log(paramCount);
       if(paramCount>0){
         $.getJSON(url, function(data){
           console.log(data);
-          flightsSelectTable = $("#flightsSelectTable").find("tbody");
+          flightsSelectTable = form.find("tbody");
           flightsSelectTable.html("");
           flightsSelectTableContent = ""
           data.forEach(d=> {
@@ -483,11 +486,50 @@
         console.log("Recovery Removed");
       });
     });
-    $(document).on("click","#criticalFlightFormButton",function(){
-      if($("input:checked").length != 1){
+    $(document).on("click","#addRecoveryOptionCallButton",function(){
+      if($("#addRecoveryModal").find("input:checked").length != 1){
         alert("Pick 1 Flight.");
       }else{
-        tr = $("input:checked").attr('id')
+        tr = $("#addRecoveryModal").find("input:checked").attr('id')
+        // console.log(tr);
+        console.log(tr.slice(21));
+        flightLeg = tr.slice(21);
+        criticalFlight = $("#addFlightModal").attr("data-critical_flight_id");
+        //GET CRITICALFLIGHT ID and send request
+        //
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        ////
+        $.post( "/critical_flight/add_recovery.json",
+          {
+            authenticity_token: window._token,
+            "critical_flight": criticalFlight,
+            "flight_leg": flightLeg
+          })
+        .done(function( data ) {
+          console.log( "Data Loaded: " + data );
+        });
+        $("#addFlightModal").find(".flightsSelectTable").find("tbody").html(" ")
+      }
+    });
+    $(document).on("click","#criticalFlightFormButton",function(){
+      if($("#addFlightModal").find("input:checked").length != 1){
+        alert("Pick 1 Flight.");
+      }else{
+        tr = $("#addFlightModal").find("input:checked").attr('id')
         // console.log(tr);
         console.log(tr.slice(21));
         flightLeg = tr.slice(21);
@@ -504,12 +546,14 @@
         .done(function( data ) {
           console.log( "Data Loaded: " + data );
         });
-        $("#flightsSelectTable").find("tbody").html(" ")
+        $("#addFlightModal").find(".flightsSelectTable").find("tbody").html(" ")
       }
     });
     $(document).on("click",".addRecoveryButton",function(){
       console.log("CLICKED");
       console.log(this.id);
+      $("#addFlightModal").attr("data-critical_flight_id" , this.id.split("-")[1]);
+      console.log($("#addFlightModal").attr("data-critical_flight_id"));
     });
     $(document).on("click",".removeRecoveryOptionButton",function(){
       console.log(this.children[0]);
