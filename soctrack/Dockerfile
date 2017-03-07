@@ -14,4 +14,3 @@ RUN bundle install
 COPY . .
 
 CMD exec bundle exec rails s
-
