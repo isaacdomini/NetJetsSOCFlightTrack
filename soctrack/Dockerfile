@@ -13,4 +13,4 @@ COPY Gemfile* ./
 RUN bundle install
 COPY . .
 
-CMD exec bundle exec rails s
+CMD exec bundle exec rails server
