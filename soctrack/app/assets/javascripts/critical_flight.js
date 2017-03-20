@@ -572,8 +572,6 @@
   }
 
   function initFireChat() {
-      console.log("clickkk");
-      console.log(this);
       initApp();
       var userId = window._userid;
       var token = generateToken(userId);
@@ -608,12 +606,12 @@
     var sHeader = JSON.stringify(oHeader);
     var sPayload = JSON.stringify(oPayload);
     var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
-    console.log(sJWT);
+    //console.log(sJWT);
     return sJWT
   }
 
   function signIn(token) {
-      firebase.auth().signInWithCustomToken(token).catch(function(error) {
+      firebase.auth().signInWithCustomToken(token).catch(function(error, authData) {
         console.log("Error authenticating user:", error);
       });
     }
@@ -626,9 +624,16 @@
         var chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
 
         // Set the Firechat user
-        console.log("userId: "+ user.uid + "    userName: ");
         chat.setUser(user.uid, window._username);
-        console.log(user);
+       $("#firechat-btn-rooms").waitUntilExists(function(){
+          $("#firechat-btn-rooms").click();
+          console.log("Open submenu to load all possible rooms");
+        });
+        $("li[data-room-id='GeneralChat']").waitUntilExists(function(){
+          $("li[data-room-id='GeneralChat'] a").click();
+          console.log("Simulating clicking on chatroom GeneralChat");
+        });
+
   }
 
   function initApp() {
