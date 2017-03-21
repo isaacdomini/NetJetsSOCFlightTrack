@@ -1,3 +1,5 @@
+  firebaseAuthFlag = false;
+
   /* Formatting function for row details - modify as you need */
   var table = "";
   var initalized = false;
@@ -580,7 +582,6 @@
 
   // Generate an ID token and sign it with the private key.
   function generateToken(userId) {
-    console.log(userId);
     var kid = "d6d95f9ffc24ac9ebe3adac7008386f4cd27d37c";
     var sPKCS8PEM = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC89Xljk8Od2V1d\n3SxANYFwxvmykghB1/iBsWRF0iQ03zUmxnIjqQqvpn5WB6hcxa7tEnGarmiwQFHZ\ndVcFpxKD8UXpImsXq/dup92AtU524sfr14RCRbE6AuqfJshWqN5Z9JF5b2t/nkqh\nkxUJSMxfCLaNaw7KvJKA2VjitoKk5WKm3q7Jz5BAReVbQDAAG7RNqbZkhTALdf9E\np1VsjmQnvmKIGBZeU/I9iDhnDvgZBhuWwItr2Yz9EYMVVUpMJT9kUVoed4/5iJEz\n+00+CG7Co0hGQZWCgsx0vq1foTDHobGa6Pza2A7n5SfKmxST7XBTzU7r4SAaEc8A\ngfVU7muVAgMBAAECggEATObacFxC0IsWJI1O5RLhizRviu1DzwhGawH2/TN46Muu\npgk9iqXRY4su/3Q+YQNTHcjT01AH6zNCHG5U7EgCkRAwk6EeVJP4L2DCFQ+0z02c\nb69WdGJIroNhWUQ/ZIV1eMbALdvatCWH2hoyBYVLJ6I0KXnYm0oDlczfD+WXZeQA\n0Pm7i9kmbXFqhxKFKRqpAPMxJHJmPcb1SqSi+Z8mB7L9Q32gyaShHmFcIWxMqFGf\n45hxm7yzJ9RPVvpXz1L9fxxqUMXaPbCVdi8VsQ13n7eo6w+40uzAcuJoGpe4nxUo\nIGIj+/C8r9G/neCBxVcmGQNyaZCCFD4f66DIk0w0QQKBgQD4vNTkzGw2F32hL4q7\nfJPCrUKVnyV/WwQXOykmTDhYPEkwrg9k5MiH5spMHlfm3kjeHMS+hsWygomQ2rnQ\ntw+NWr9BBAIeQL65YhCyECMDWmQ0gMSE2fmVmbUcD+GK2qg4HV+kOS5xdHAQhlYh\nOei050Vg40sapy7yEC74dbF8zwKBgQDCedTXS/hyNNbHZBjZwgkTTOXNdo8KXzvS\nD7GnFKT8CVE2PjXNM3cKe5MhPR3S1gOmUHCd3M0RkQi41tkRXp4YcqunVeNym/eT\nkfzrpfUAFtyOcnpqxzJC/bd0xsQ5cMIe1NGiq5loT4mFYSOhIs0vD2BaVB00Pecf\nfoXHZAeSWwKBgQDTHTJ0nyyZHIb8b6WIS8v9x6Bj7Zed6FoofYYHg1mvSju0nYdj\nUusArdm1kWt5/+BI5JH4Q9s4D6NC1uIvS7BfgU4imIxTsRAvuBQDjb6p8eZqyYAC\nYh974eHd13zOpZdxST0L3ZyVnwYegGZJ/SSNpl00RrZQAOXPffzf1MS38QKBgHZs\ngfNoy62gB3n7tjZENgqOtRFctNX4EBFmhSPdKmpfshh54YFHaaH0hi+ja9nLgQVx\nzmIS5r1fuBP2oNA28capbWXEo3BTEXvHVmCY+oxHX59OjsUe77hjj6eIskzYIR1t\nMwr/u7cNWAzkjjG9Y3zYvC/FMNNzLp67CPPWMdYpAoGBAICtP2FaLpn9POhG7EEl\n+Niua1i03+Usy69Tgi91UZsNqGa+Ij/ShgCcJgUx2j4J7qjEsTEMRgbzyC6Qb70p\nTFdwin13lJYT0N2rqRRZwTC6ewbls9Oqo/Bg0/SpwoLkst+BxJJBX15BPcGOzOWl\ne6MOIgfXiXWKImsB9uweNDzk\n-----END PRIVATE KEY-----\n";
     var sub = "firebase-adminsdk-pdqba@soctrackdev-1e409.iam.gserviceaccount.com";
@@ -606,7 +607,6 @@
     var sHeader = JSON.stringify(oHeader);
     var sPayload = JSON.stringify(oPayload);
     var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
-    //console.log(sJWT);
     return sJWT
   }
 
@@ -625,25 +625,27 @@
 
         // Set the Firechat user
         chat.setUser(user.uid, window._username);
-       $("#firechat-btn-rooms").waitUntilExists(function(){
-          $("#firechat-btn-rooms").click();
-          console.log("Open submenu to load all possible rooms");
-        });
-        $("li[data-room-id='GeneralChat']").waitUntilExists(function(){
-          $("li[data-room-id='GeneralChat'] a").click();
-          console.log("Simulating clicking on chatroom GeneralChat");
-        });
+
+       $("#firechat-btn-rooms").click();
+       console.log("Open submenu to load all possible rooms");
+
+       setTimeout(2000);
+       $("li[data-room-id='GeneralChat'] a").click();
+       console.log("Simulating clicking on chatroom GeneralChat");
 
   }
 
   function initApp() {
-      // Listening for auth state changes.
-      // [START authstatelistener]
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          initChat(user);
-        }
-      });
+    // Listening for auth state changes.
+    // [START authstatelistener]
+    firebase.auth().onAuthStateChanged(function(user) {
+      console.log("checking");
+      if (user && !firebaseAuthFlag) {
+        console.log("userFound");
+        firebaseAuthFlag = true;
+        initChat(user);
+      }
+    });
   }
 
   $(document).ready(function() {
