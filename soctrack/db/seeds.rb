@@ -122,12 +122,15 @@ end
 domains = ["osu.edu", "gmail.com", "netjets.com"]
 roles = ["AB","OS","CS","DX","OPS","MX","ITP","SC"]
 lname = ["Buckeye", "Doe", "Bedich", "Nanayakkara", "Bhardwaj", "Domini"]
-fname = ["Josh", "Jacob", "Jonathan", "Jared", "John", "Brutus"]
+fname = ["Josh", "Jacob", "Jonathan", "Jared", "John", "Brutus","Steve","Bill","Bob","Tom","Phil","Leslie","Gary","Gregg","Geoffrey","Jeffrey","Donald","Mike","Ned","Mary","Lisa","Danielle","Kaitlyn","Umesh"]
 i=0
+n=0
+
 puts "\nCREATING USERS ..."
 for r in roles
   for d in domains
-    u = User.new(:email => r+"@"+d, :password => 'password', :password_confirmation => 'password', :role => r, :name => fname.sample+" "+lname.sample+" ("+r+")")
+    u = User.new(:email => r+"@"+d, :password => 'password', :password_confirmation => 'password', :role => r, :name => fname[n]+" "+lname[n%lname.size])
+    n = n+1;
     # print u.email + " " + u.name;
     u.save
     # puts i
