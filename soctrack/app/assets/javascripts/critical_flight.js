@@ -1,3 +1,5 @@
+  firebaseAuthFlag = false;
+
   /* Formatting function for row details - modify as you need */
   var table = "";
   var initalized = false;
@@ -572,8 +574,6 @@
   }
 
   function initFireChat() {
-      console.log("clickkk");
-      console.log(this);
       initApp();
       var userId = window._userid;
       var token = generateToken(userId);
@@ -582,10 +582,9 @@
 
   // Generate an ID token and sign it with the private key.
   function generateToken(userId) {
-    console.log(userId);
-    var kid = "618c8bdfb010aedd9ce33b8f7aeb3eff3fb49e99";
-    var sPKCS8PEM = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDcyOgcm6rRMZa+\nVYrvjVgDh8o3b0fNc1UZODLEJDjIWHVGpLG3T8gomJXxe9/VtniwtSKp8M/WMAZ0\nt4gooxjl5rxT4agllqtd2WLoDWUfq05S4JZjoiEKUr2Kd5KPm6RniHE747Ap8HfN\ng7rXeO5JNNSy+RmDTbot1a6fQFrCX86mKCizpamsAeMnQpvLjC+MKaFVx2jCd73Y\nd4BVm9f3kjidJ6UOjeMeHyrqUnsWORNCyMQlK9zGuzSs7/tD7UqVqqZcBcsErju0\nNfb1gH58A1vS1jXtfXfyrgbEwtYBnIgZjqkToph04d1qhKueqYF6fRBMhkIaSWXK\nZOyDYR3xAgMBAAECggEBANAautYEUJz//dOH8/5aHwSs4Ikh5e8cb7DmzMseTTti\nTaB5ql1b4RGKyYKlvVTGurns8jB2oKCGAf/P4pJTMSu6MfdqssBDZWF/fv+1aITS\nRnBN6tMcxcHiPXAfxtB/5xYDgJ/vvGO7mmDncpyZCxmLp5TOwSKHiB6d1AudcC7W\nuPrna/330Xht4RkC/YVOOri3OGqUB97gFwft9e+LWnYtTKytQYenffuk/ijfz4Ya\nqKTgnVotRhCe3BmhBJOJOAs7vXyIQzrMxnS5BX1+L1/RLmfCX4IZ8yRjsUFJqTKG\ngngwFGauPs091U8CCrwENCeTfA1Kr/pBDObUi+GS6GUCgYEA9295FZ2QIlPYAVYk\n6MW0if2UOYw1mDcOrelcykLjqwGEHQAsVejZu+NDg8TuN2lOKihrX6ye8RhIpzS5\n6l5DaSV+4dV5Jpq6ObAYwVHmT3KL38vk27m/Ykg70rUxFFx3ZdYwvn5a+TPZ6Rwa\nn8jqqJGNdYKwD4RPQV9f3AkmVoMCgYEA5G1IOV5q98vfXOqypNxgYWjt+p4OxvJt\nXlNht/X2KzS5irT/ZP3j537ggKBQJIDLI1Kc8FJ2buQ9VGoN2Yt5XstbWCUrfZlX\nlXLBDc+l8x67hNvRsIQCffUc6ba/OHI+NNBZtz/12Lx9C+uvdWZpY5FRBzXGC+iB\nNJXIL+tGr3sCgYAfcjpYResQgclc+h68uoukUebpnWkeTDkAXz0cs32NuSaaLPB1\nhp9NYqes8nU385ksgHCM+zpD98sb/PZ3070LeulyOBgqkNWECV5MC2WSyUL/kUEn\nr6akDfwUXlS7erjt51fQjexv6WgTWTAFCJrSC5WHzrEjd7Q+4akkJMGLkwKBgQDJ\nMeg3f45AC/YE5UPMKb9KjR1vbOAfI1BpkI+1dJMKozn5jkqVLXsbX4lmQc3VGQvT\nZOSOWFOwgJ/0RiVEw7B3ai5eiP6xderK23RnMco9RYhtESC0lNGNF+QLhscOdLGN\n2yXqXg+wgvSxFzpH8ZhJ9qij7R0vR+7l3jeg3V45GQKBgAndlCOtggAMjlbrz+ir\ntla+AicmOm3XYsruMDuNfcR2LROrFPsMh7AMFsrN/lRZLrb0+CYqVt5qNIJBGNf2\nCxrNAT0Tn+iDYEtVwDD2qGgRaiG7AuUytJp4Brf9iDkrLtXWiPKoqQCNHfDv9Gxe\nLU0o1McF/DBIZZ0xp5ysPNDx\n-----END PRIVATE KEY-----\n";
-    var sub = "firebase-adminsdk-glsqf@soctrack-5ec1b.iam.gserviceaccount.com";
+    var kid = "d6d95f9ffc24ac9ebe3adac7008386f4cd27d37c";
+    var sPKCS8PEM = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC89Xljk8Od2V1d\n3SxANYFwxvmykghB1/iBsWRF0iQ03zUmxnIjqQqvpn5WB6hcxa7tEnGarmiwQFHZ\ndVcFpxKD8UXpImsXq/dup92AtU524sfr14RCRbE6AuqfJshWqN5Z9JF5b2t/nkqh\nkxUJSMxfCLaNaw7KvJKA2VjitoKk5WKm3q7Jz5BAReVbQDAAG7RNqbZkhTALdf9E\np1VsjmQnvmKIGBZeU/I9iDhnDvgZBhuWwItr2Yz9EYMVVUpMJT9kUVoed4/5iJEz\n+00+CG7Co0hGQZWCgsx0vq1foTDHobGa6Pza2A7n5SfKmxST7XBTzU7r4SAaEc8A\ngfVU7muVAgMBAAECggEATObacFxC0IsWJI1O5RLhizRviu1DzwhGawH2/TN46Muu\npgk9iqXRY4su/3Q+YQNTHcjT01AH6zNCHG5U7EgCkRAwk6EeVJP4L2DCFQ+0z02c\nb69WdGJIroNhWUQ/ZIV1eMbALdvatCWH2hoyBYVLJ6I0KXnYm0oDlczfD+WXZeQA\n0Pm7i9kmbXFqhxKFKRqpAPMxJHJmPcb1SqSi+Z8mB7L9Q32gyaShHmFcIWxMqFGf\n45hxm7yzJ9RPVvpXz1L9fxxqUMXaPbCVdi8VsQ13n7eo6w+40uzAcuJoGpe4nxUo\nIGIj+/C8r9G/neCBxVcmGQNyaZCCFD4f66DIk0w0QQKBgQD4vNTkzGw2F32hL4q7\nfJPCrUKVnyV/WwQXOykmTDhYPEkwrg9k5MiH5spMHlfm3kjeHMS+hsWygomQ2rnQ\ntw+NWr9BBAIeQL65YhCyECMDWmQ0gMSE2fmVmbUcD+GK2qg4HV+kOS5xdHAQhlYh\nOei050Vg40sapy7yEC74dbF8zwKBgQDCedTXS/hyNNbHZBjZwgkTTOXNdo8KXzvS\nD7GnFKT8CVE2PjXNM3cKe5MhPR3S1gOmUHCd3M0RkQi41tkRXp4YcqunVeNym/eT\nkfzrpfUAFtyOcnpqxzJC/bd0xsQ5cMIe1NGiq5loT4mFYSOhIs0vD2BaVB00Pecf\nfoXHZAeSWwKBgQDTHTJ0nyyZHIb8b6WIS8v9x6Bj7Zed6FoofYYHg1mvSju0nYdj\nUusArdm1kWt5/+BI5JH4Q9s4D6NC1uIvS7BfgU4imIxTsRAvuBQDjb6p8eZqyYAC\nYh974eHd13zOpZdxST0L3ZyVnwYegGZJ/SSNpl00RrZQAOXPffzf1MS38QKBgHZs\ngfNoy62gB3n7tjZENgqOtRFctNX4EBFmhSPdKmpfshh54YFHaaH0hi+ja9nLgQVx\nzmIS5r1fuBP2oNA28capbWXEo3BTEXvHVmCY+oxHX59OjsUe77hjj6eIskzYIR1t\nMwr/u7cNWAzkjjG9Y3zYvC/FMNNzLp67CPPWMdYpAoGBAICtP2FaLpn9POhG7EEl\n+Niua1i03+Usy69Tgi91UZsNqGa+Ij/ShgCcJgUx2j4J7qjEsTEMRgbzyC6Qb70p\nTFdwin13lJYT0N2rqRRZwTC6ewbls9Oqo/Bg0/SpwoLkst+BxJJBX15BPcGOzOWl\ne6MOIgfXiXWKImsB9uweNDzk\n-----END PRIVATE KEY-----\n";
+    var sub = "firebase-adminsdk-pdqba@soctrackdev-1e409.iam.gserviceaccount.com";
 
     var uid = userId;
     if (uid == '') {
@@ -608,44 +607,55 @@
     var sHeader = JSON.stringify(oHeader);
     var sPayload = JSON.stringify(oPayload);
     var sJWT = KJUR.jws.JWS.sign(null, sHeader, sPayload, sPKCS8PEM, 'notasecret');
-    console.log(sJWT);
     return sJWT
   }
 
   function signIn(token) {
-      firebase.auth().signInWithCustomToken(token).catch(function(error) {
+      firebase.auth().signInWithCustomToken(token).catch(function(error, authData) {
         console.log("Error authenticating user:", error);
       });
     }
 
   function initChat(user) {
         // Get a Firebase Database ref
-        var chatRef = firebase.database().ref("chat");
+        var chatRef = firebase.database().ref("firechat");
 
         // Create a Firechat instance
         var chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
 
         // Set the Firechat user
-        console.log("userId: "+ user.uid + "    userName: ");
         chat.setUser(user.uid, window._username);
-        console.log(user);
+
+       $("#firechat-btn-rooms").click();
+
+       setTimeout(function() {
+          $("li[data-room-id='GeneralChat'] a").click();
+       }, 1000);
+
+       setTimeout(function() {
+          $("li[data-room-id='" + window._userrole + "Chat'] a").click();
+       }, 3000);
+
   }
 
   function initApp() {
-      // Listening for auth state changes.
-      // [START authstatelistener]
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          initChat(user);
-        }
-      });
+    // Listening for auth state changes.
+    // [START authstatelistener]
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user && !firebaseAuthFlag) {
+        firebaseAuthFlag = true;
+        initChat(user);
+      }
+    });
   }
 
   $(document).ready(function() {
-    dataTableInitialize();
-    addValidatorRegExMethod();
-    flightFormValidation('#newFlightForm');
-    checkboxInit();
-    initializeEventListeners();
-    initFireChat();
+    if(window._userid !== undefined) {
+      dataTableInitialize();
+      addValidatorRegExMethod();
+      flightFormValidation('#newFlightForm');
+      checkboxInit();
+      initializeEventListeners();
+      initFireChat();
+    }
   });
