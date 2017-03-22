@@ -629,9 +629,18 @@
        $("#firechat-btn-rooms").click();
        console.log("Open submenu to load all possible rooms");
 
-       setTimeout(2000);
-       $("li[data-room-id='GeneralChat'] a").click();
-       console.log("Simulating clicking on chatroom GeneralChat");
+       setTimeout(function() {
+          $("li[data-room-id='GeneralChat'] a").click();
+          console.log("Simulating clicking on chatroom GeneralChat");
+       }, 1000);
+
+
+       //$("#firechat-btn-rooms").click();
+       console.log("Open submenu to load all possible rooms");
+       setTimeout(function() {
+          $("li[data-room-id='" + window._userrole + "Chat'] a").click();
+          console.log("Simulating clicking on chatroom role");
+       }, 3000);
 
   }
 

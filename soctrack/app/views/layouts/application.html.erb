@@ -8,6 +8,7 @@
     <% if user_signed_in? %>
     <%= javascript_tag "window._userid = '#{current_user.id}'" %>
     <%= javascript_tag "window._username = '#{current_user.name}'" %>
+    <%= javascript_tag "window._userrole = '#{current_user.role}'" %>
     <% end %>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
