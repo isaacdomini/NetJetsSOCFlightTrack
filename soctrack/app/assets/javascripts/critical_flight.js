@@ -627,19 +627,13 @@
         chat.setUser(user.uid, window._username);
 
        $("#firechat-btn-rooms").click();
-       console.log("Open submenu to load all possible rooms");
 
        setTimeout(function() {
           $("li[data-room-id='GeneralChat'] a").click();
-          console.log("Simulating clicking on chatroom GeneralChat");
        }, 1000);
 
-
-       //$("#firechat-btn-rooms").click();
-       console.log("Open submenu to load all possible rooms");
        setTimeout(function() {
           $("li[data-room-id='" + window._userrole + "Chat'] a").click();
-          console.log("Simulating clicking on chatroom role");
        }, 3000);
 
   }
@@ -648,9 +642,7 @@
     // Listening for auth state changes.
     // [START authstatelistener]
     firebase.auth().onAuthStateChanged(function(user) {
-      console.log("checking");
       if (user && !firebaseAuthFlag) {
-        console.log("userFound");
         firebaseAuthFlag = true;
         initChat(user);
       }
@@ -658,10 +650,12 @@
   }
 
   $(document).ready(function() {
-    dataTableInitialize();
-    addValidatorRegExMethod();
-    flightFormValidation('#newFlightForm');
-    checkboxInit();
-    initializeEventListeners();
-    initFireChat();
+    if(window._userid !== undefined) {
+      dataTableInitialize();
+      addValidatorRegExMethod();
+      flightFormValidation('#newFlightForm');
+      checkboxInit();
+      initializeEventListeners();
+      initFireChat();
+    }
   });
