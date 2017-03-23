@@ -24,11 +24,10 @@
 
   function format (rowData) {
       // `d` is the original data object for the row
-      return `<div class="container col-md-8"><div class="row">
-                <div class="row"><div class="col-md-9" id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
+      return `<div class="col-md-12">
+                <div class="row"><div id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
-                <div class="container"><div class="row"><div class="col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="btn btn-default addRecoveryButton">Add</button></div></div></div>
-              </div></div>`;
+                <div><div class="col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="btn btn-default addRecoveryButton">Add</button></div></div>`;
   }
 
   function actionCableHandle(data){
