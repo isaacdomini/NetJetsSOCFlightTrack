@@ -152,4 +152,11 @@ a.controlBtn:hover {
 }
 
  /*bootstrap navbar padding */
-body { padding-top: 70px; }
+body {
+  padding-top: 70px;
+  margin: 0px;
+}
+
+#firechat-wrapper {
+  margin-top: 25px; 
+}
