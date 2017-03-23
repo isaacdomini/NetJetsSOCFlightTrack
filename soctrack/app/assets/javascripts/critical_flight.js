@@ -222,7 +222,12 @@
       var tr = this.node();
       var sp = this.node().querySelector("span");
       this.child( format(this.data())).show();
-      tr.className += " shown";
+      if(tr.className.includes("odd")){
+        tr.className = "odd shown";
+      } else if(tr.className.includes("even")){
+        tr.className = "even shown";
+      }
+      // tr.className += " shown";
       if(sp!=null){
         sp.className = "glyphicon glyphicon-minus";
       }
@@ -235,9 +240,9 @@
       var tr = this.node();
       var sp = this.node().querySelector("span");
       this.child.hide();
-      if(tr.className == "odd shown"){
+      if(tr.className.includes("odd")){
         tr.className = "odd";
-      } else if(tr.className == "even shown"){
+      } else if(tr.className.includes("even")){
         tr.className = "even";
       }
       if(sp!=null){
@@ -433,6 +438,9 @@
   }
 
   function initializeEventListeners(){
+    $('#flightsTable').on( 'page.dt', function () {
+      hideAll();
+    });
     $(document).on("click",".findFlightsButton",function(){
       var url = "/flights.json?"
       var paramCount = 0;
