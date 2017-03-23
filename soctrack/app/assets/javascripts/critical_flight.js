@@ -584,8 +584,8 @@
     });
     $(document).on("click", "#flightChatBtn", function(){
       var data = table.row($(this).parents('tr')).data();
-      var flightTail = data.flight.tail;
-      var flightChatName = "Flight " + flightTail;
+      var legID = data.flight.leg;
+      var flightChatName = "Leg ID:" + legID;
       var roomList;
       var roomExists = false;
       firechat.getRoomList(function(obj) {
@@ -599,6 +599,12 @@
         if(!roomExists) {
           firechat.createRoom(flightChatName, "public", function(roomId) {});
         }
+
+        $("#firechat-btn-rooms").click();
+
+       setTimeout(function() {
+          $("li[data-room-name='Leg ID:"+legID+"'] a").click();
+       }, 1000);
       });
     });
   }
