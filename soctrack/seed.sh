@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose run app rails db:reset
+cp devdb db/development.sqlite3
