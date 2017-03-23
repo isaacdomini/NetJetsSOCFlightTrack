@@ -1,4 +1,6 @@
   firebaseAuthFlag = false;
+  var chat;
+  var firechat;
 
   /* Formatting function for row details - modify as you need */
   var table = "";
@@ -337,12 +339,15 @@
         { "data": "flight.departure" },
         { "data": "flight.arrival" },
         { "data": "event" },
+        { "data": null,
+          "orderable": false,
+          "defaultContent": '<button class="btn" id="flightChatBtn">Chat</button>'
+        },
         { "data": "recovery" },
-        // { "data": "messages" },
         { "data": "flight.etd" }
       ],
       "aoColumnDefs":[{
-        "aTargets":[ 6 ],
+        "aTargets":[ 7 ],
         "mRender": function(data, type, full) {
            return (data == "null") ? "No" : "Yes";
         }
@@ -571,6 +576,25 @@
       $('#updateTableAlertDiv').addClass('hide');
       refreshTable(criticalFlightData);
     });
+    $(document).on("click", "#flightChatBtn", function(){
+      var data = table.row($(this).parents('tr')).data();
+      var flightTail = data.flight.tail;
+      var flightChatName = "Flight " + flightTail;
+      var roomList;
+      var roomExists = false;
+      firechat.getRoomList(function(obj) {
+        roomList = obj;
+        for(var key in roomList) {
+          if(flightChatName == obj[key].name) {
+            roomExists = true;
+            break;
+          }
+        }
+        if(!roomExists) {
+          firechat.createRoom(flightChatName, "public", function(roomId) {});
+        }
+      });
+    });
   }
 
   function initFireChat() {
@@ -621,7 +645,8 @@
         var chatRef = firebase.database().ref("firechat");
 
         // Create a Firechat instance
-        var chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
+        chat = new FirechatUI(chatRef, document.getElementById("firechat-wrapper"));
+        firechat = new Firechat(chatRef);
 
         // Set the Firechat user
         chat.setUser(user.uid, window._username);
