@@ -335,7 +335,8 @@
           "className": 'details-control',
           "orderable": false,
           "data": null,
-          "defaultContent": ''
+          "defaultContent": '',
+          "width": '16px'
         },
         { "data": "flight.tail" },
         { "data": "flight.leg" },
