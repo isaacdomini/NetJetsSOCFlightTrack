@@ -309,7 +309,18 @@
         $(this).append('<span class="glyphicon glyphicon-plus"></span>');
       }
     });
-
+    $('#changePane').on('click', function (e) {
+      if ($("#dashboardPane").hasClass("col-md-9")) {
+        $("#dashboardPane").removeClass("col-md-9");
+      }else{
+        $("#dashboardPane").addClass("col-md-9");
+      }
+      if ($("#chatPane").hasClass("col-md-3")) {
+        $("#chatPane").removeClass("col-md-3");
+      }else{
+        $("#chatPane").addClass("col-md-3");
+      }
+    });
 
     $('.details-control').on('click', function (e) {
         e.stopPropagation();
