@@ -35,6 +35,13 @@
  	background-color: #333;
  }
 
+ .details-control{
+     width: 13px !important;
+ }
+
+ #flightsTable{
+    width: 100%;
+ }
  td.details-control {
      cursor: pointer;
  }
