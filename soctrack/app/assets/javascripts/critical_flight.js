@@ -51,11 +51,21 @@
       console.log("recoveryreaction");
       console.log(data.content);
       changeRecoveryReaction(data.content);
+    }if(data.action == "acceptrecovery"){
+      console.log("received");
+      console.log("recoveryreaction");
+      console.log(data.content);
+      acceptRecoveryOptionDashboard(data.content);
     }else{
       console.log("error");
     }
   }
 
+  function acceptRecoveryOptionDashboard(data){
+    data.removed_recovery.forEach(removed_recovery=> {
+      removeRecoveryFromDashboard(removed_recovery);
+    });
+  }
 
   function removeRecoveryFromDashboard(data){
     console.log(data);
@@ -211,7 +221,8 @@
           <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
       </div></div>`
     });
-    returnString += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a></div>`;
+    returnString += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
+    returnString += `<a id="acceptRecoveryOptionButton" class="controlBtn acceptRecoveryOptionButton" title="Remove Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
     returnString += `</div>`
     return returnString
   }
@@ -271,13 +282,45 @@
     })
   }
 
+  function acceptRecoveryOption(node){
+    console.log(node.children[0]);
+    var childId = node.children[0].id;
+    var ids = childId.split("-");
+    console.log(ids[0]);
+    console.log(ids[1]);
+    var criticalFlightId = ids[0];
+    var recoveryId = ids[1];
+    console.log(" "+criticalFlightId+" : "+recoveryId);
+    $.post( "/critical_flight/accept_recovery",
+      {
+        authenticity_token: window._token,
+        "critical_flight": recoveryId,
+        "recovery": criticalFlightId
+      })
+    .done(function( data ){
+      console.log("Recovery Accepted");
+      console.log(data);
+    })
+  }
+
   function tableDrawUpdateElements(){
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
         $(this).append('<span class="glyphicon glyphicon-plus"></span>');
       }
     });
-
+    $('#changePane').on('click', function (e) {
+      if ($("#dashboardPane").hasClass("col-md-9")) {
+        $("#dashboardPane").removeClass("col-md-9");
+      }else{
+        $("#dashboardPane").addClass("col-md-9");
+      }
+      if ($("#chatPane").hasClass("col-md-3")) {
+        $("#chatPane").removeClass("col-md-3");
+      }else{
+        $("#chatPane").addClass("col-md-3");
+      }
+    });
 
     $('.details-control').on('click', function (e) {
         e.stopPropagation();
@@ -335,7 +378,8 @@
           "className": 'details-control',
           "orderable": false,
           "data": null,
-          "defaultContent": ''
+          "defaultContent": '',
+          "width": '16px'
         },
         { "data": "flight.tail" },
         { "data": "flight.leg" },
@@ -584,8 +628,8 @@
     });
     $(document).on("click", "#flightChatBtn", function(){
       var data = table.row($(this).parents('tr')).data();
-      var flightTail = data.flight.tail;
-      var flightChatName = "Flight " + flightTail;
+      var legID = data.flight.leg;
+      var flightChatName = "Leg ID:" + legID;
       var roomList;
       var roomExists = false;
       firechat.getRoomList(function(obj) {
@@ -599,6 +643,12 @@
         if(!roomExists) {
           firechat.createRoom(flightChatName, "public", function(roomId) {});
         }
+
+        $("#firechat-btn-rooms").click();
+
+       setTimeout(function() {
+          $("li[data-room-name='Leg ID:"+legID+"'] a").click();
+       }, 1000);
       });
     });
   }
