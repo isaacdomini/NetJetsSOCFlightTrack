@@ -40,7 +40,7 @@
  }
 
  #flightsTable{
-    width: 100%;
+    width: 100% !important;
  }
  td.details-control {
      cursor: pointer;
