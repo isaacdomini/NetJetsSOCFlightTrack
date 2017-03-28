@@ -96,31 +96,37 @@ class CriticalFlightsController < ApplicationController
     recoveryid = params[:recovery]
     dRecovery = nil
     print "Recovery ID: #{recoveryid} ; CFlightID: #{params[:critical_flight]}"
+    removed_recovery = []
     cFlight.recovery.each{ |r|
-      if(r.id.to_i != recoveryid.to_i)
-        dRecovery = r
-        dRecovery.destroy
-        returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => r.id]
-        print "RETURN HASH"
-        puts returnHash
-        cFlight.save
-        ActionCable.server.broadcast 'critical_flight_channel',
-                                   content:  returnHash,
-                                   action: "removerecovery"
-        head :ok
-      else
+      if(r.id.to_i == recoveryid.to_i)
         r.selected = true
-        
-        returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid]
+
         cFlight.save
+        returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid]
         ActionCable.server.broadcast 'critical_flight_channel',
                                    content:  returnHash,
                                    action: "acceptrecovery"
         head :ok
-        return true
+      else
+        dRecovery = r
+        dRecovery.destroy
+        removed_recovery_hash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => r.id]
+        print "RETURN HASH"
+        puts removed_recovery_hash
+        cFlight.save
+        removed_recovery.push(removed_recovery_hash);
+        # ActionCable.server.broadcast 'critical_flight_channel',
+        #                            content:  returnHash,
+        #                            action: "removerecovery"
+        # head :ok
       end
     }
-    return false
+    returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid, "removed_recovery" => removed_recovery]
+    ActionCable.server.broadcast 'critical_flight_channel',
+                               content:  returnHash,
+                               action: "acceptrecovery"
+    head :ok
+    return
   end
 
   # GET /critical_flights/1

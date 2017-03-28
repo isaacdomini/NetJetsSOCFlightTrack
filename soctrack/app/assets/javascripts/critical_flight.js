@@ -51,11 +51,21 @@
       console.log("recoveryreaction");
       console.log(data.content);
       changeRecoveryReaction(data.content);
+    }if(data.action == "acceptrecovery"){
+      console.log("received");
+      console.log("recoveryreaction");
+      console.log(data.content);
+      acceptRecoveryOptionDashboard(data.content);
     }else{
       console.log("error");
     }
   }
 
+  function acceptRecoveryOptionDashboard(data){
+    data.removed_recovery.forEach(removed_recovery=> {
+      removeRecoveryFromDashboard(removed_recovery);
+    });
+  }
 
   function removeRecoveryFromDashboard(data){
     console.log(data);
@@ -211,7 +221,8 @@
           <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
       </div></div>`
     });
-    returnString += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a></div>`;
+    returnString += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
+    returnString += `<a id="acceptRecoveryOptionButton" class="controlBtn acceptRecoveryOptionButton" title="Remove Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
     returnString += `</div>`
     return returnString
   }
@@ -267,6 +278,27 @@
       })
     .done(function( data ){
       console.log("Recovery Removed");
+      console.log(data);
+    })
+  }
+
+  function acceptRecoveryOption(node){
+    console.log(node.children[0]);
+    var childId = node.children[0].id;
+    var ids = childId.split("-");
+    console.log(ids[0]);
+    console.log(ids[1]);
+    var criticalFlightId = ids[0];
+    var recoveryId = ids[1];
+    console.log(" "+criticalFlightId+" : "+recoveryId);
+    $.post( "/critical_flight/accept_recovery",
+      {
+        authenticity_token: window._token,
+        "critical_flight": recoveryId,
+        "recovery": criticalFlightId
+      })
+    .done(function( data ){
+      console.log("Recovery Accepted");
       console.log(data);
     })
   }
