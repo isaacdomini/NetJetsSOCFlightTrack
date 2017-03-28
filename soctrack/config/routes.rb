@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     root :to => 'critical_flights#index'
   end
 
+  post '/critical_flight/accept_recovery', to: 'critical_flights#acceptRecovery'
   post '/critical_flight/remove_recovery', to: 'critical_flights#removeRecovery'
   post '/critical_flight/add_recovery', to: 'critical_flights#addRecovery'
   post '/critical_flight/recovery_reaction', to: 'critical_flights#changeRecoveryReaction'

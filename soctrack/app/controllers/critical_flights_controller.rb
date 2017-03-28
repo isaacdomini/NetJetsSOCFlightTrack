@@ -90,6 +90,39 @@ class CriticalFlightsController < ApplicationController
     }
   end
 
+  def acceptRecovery
+    cFlight = CriticalFlight.find(params[:critical_flight])
+    critical_flight_id = params[:critical_flight]
+    recoveryid = params[:recovery]
+    dRecovery = nil
+    print "Recovery ID: #{recoveryid} ; CFlightID: #{params[:critical_flight]}"
+    cFlight.recovery.each{ |r|
+      if(r.id.to_i != recoveryid.to_i)
+        dRecovery = r
+        dRecovery.destroy
+        returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => r.id]
+        print "RETURN HASH"
+        puts returnHash
+        cFlight.save
+        ActionCable.server.broadcast 'critical_flight_channel',
+                                   content:  returnHash,
+                                   action: "removerecovery"
+        head :ok
+      else
+        r.selected = true
+        
+        returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid]
+        cFlight.save
+        ActionCable.server.broadcast 'critical_flight_channel',
+                                   content:  returnHash,
+                                   action: "acceptrecovery"
+        head :ok
+        return true
+      end
+    }
+    return false
+  end
+
   # GET /critical_flights/1
   # GET /critical_flights/1.json
   def show
