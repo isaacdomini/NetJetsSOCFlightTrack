@@ -393,12 +393,24 @@
         { "data": "recovery" },
         { "data": "flight.etd" }
       ],
-      "aoColumnDefs":[{
-        "aTargets":[ 7 ],
-        "mRender": function(data, type, full) {
-           return (data == "null") ? "No" : "Yes";
+      "aoColumnDefs":[
+        {
+          "mRender": function(data, type, full) {
+            return (data == "null") ? "No" : "Yes";
+          },
+          "aTargets":[ 7 ]
+        },
+        {
+          "mRender": function(data, type, full) {
+            var flightDate = new Date(Date.parse(data));
+            var currentDate = moment().format();
+            var diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("DD HH:mm");
+            return flightDate.toString().substring(0,21) + "\n" + diff;           
+          },
+          "aTargets":[ 8 ]
         }
-      }],
+
+      ],
       "fnDrawCallback": tableDrawUpdateElements,
       "order": [[1, 'asc']],
       dom: 'l<"toolbar">frtip',
@@ -411,6 +423,13 @@
 
       }
     });
+  }
+
+  function updateTimeDiff(data){
+    var flightDate = new Date(Date.parse(data));
+    var currentDate = moment().format();
+    var diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("DD HH:mm:ss");
+    return diff;  
   }
 
   function dataTableInitialize(){
@@ -738,5 +757,8 @@
       checkboxInit();
       initializeEventListeners();
       initFireChat();
+      setInterval(function(){
+        refreshTable(criticalFlightData);
+      }, 5000);
     }
   });
