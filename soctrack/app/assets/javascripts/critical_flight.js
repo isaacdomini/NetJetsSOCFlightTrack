@@ -20,6 +20,30 @@
     "ITP" : ["Yes", "Maybe", "No", "Working","ITP"],
     "SC" : ["Yes", "Maybe", "No", "Working", "SC"],
   }
+  
+  const roleRestrictions = {
+    "AB" : ["AB"],
+    "OS" : ["AB","OS"],
+    "CS" : ["AB","CS"],
+    "DX" : ["AB","DX"],
+    "OPS" : ["AB","OPS"],
+    "MX" : ["AB","MX"],
+    "ITP" : ["AB","ITP"],
+    "SC" : ["AB","SC"],
+    "add" : ["AB"],
+    "accept" : ["AB"],
+    "remove" : ["AB"]
+  }
+ 
+  function roleActions (action){
+    return roleRestrictions[action].includes(window._userrole); 
+  }
+  function disableRestriction(action){
+    return roleActions(action) ? "":"disabled ";
+  }
+  function hideRestriction(action){
+    return roleActions(action) ? "":"hide ";
+  }
 
 
   function format (rowData) {
@@ -27,7 +51,7 @@
       return `<div class="col-md-12">
                 <div class="row"><div id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
-                <div><div class="col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="btn btn-default addRecoveryButton">Add</button></div></div>`;
+                <div><div class="col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="${disableRestriction("add")}btn btn-default addRecoveryButton">Add</button></div></div>`;
   }
 
   function actionCableHandle(data){
@@ -216,13 +240,13 @@
     Object.keys(recoveryReactionSelectors).forEach(role=> {
       returnString +=
       `<div class="col-md-1 col-sm-1"><div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recoveryItem[role]))}"></span>
+          <button class="${disableRestriction(role)}btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recoveryItem[role]))}"></span>
           <span class="caret"></span></button>
           <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
       </div></div>`
     });
-    returnString += `<div class="col-md-1 col-sm-1" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
-    returnString += `<a id="acceptRecoveryOptionButton" class="controlBtn acceptRecoveryOptionButton" title="Remove Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
+    returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("add")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
+    returnString += `<a id="acceptRecoveryOptionButton" class="${disableRestriction("accept")}controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
     returnString += `</div>`
     return returnString
   }

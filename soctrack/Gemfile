@@ -32,6 +32,7 @@ gem 'redis', '~> 3.0'
 # Devise gem
 gem 'devise'
 
+gem 'capybara'
 
 
 # Use Capistrano for deployment
