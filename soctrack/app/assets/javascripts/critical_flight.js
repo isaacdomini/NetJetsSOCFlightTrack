@@ -51,7 +51,7 @@
       return `<div class="col-md-12">
                 <div class="row"><div id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
-                <div><div class="col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="${disableRestriction("add")}btn btn-default addRecoveryButton">Add</button></div></div>`;
+                <div><div class="${hideRestriction("add")} col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="${disableRestriction("add")}btn btn-default addRecoveryButton">Add</button></div></div>`;
   }
 
   function actionCableHandle(data){
@@ -245,7 +245,7 @@
           <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
       </div></div>`
     });
-    returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("add")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
+    returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("remove")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
     returnString += `<a id="acceptRecoveryOptionButton" class="${disableRestriction("accept")}controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
     returnString += `</div>`
     return returnString
@@ -675,6 +675,12 @@
        }, 1000);
       });
     });
+
+    chatPaneTop = $("#chatPane").offset().top;
+    $(window).scroll(function() {
+      $("#chatPane").toggleClass('staticChatPane', $(window).scrollTop() > chatPaneTop);
+    }); 
+
   }
 
   function initFireChat() {
