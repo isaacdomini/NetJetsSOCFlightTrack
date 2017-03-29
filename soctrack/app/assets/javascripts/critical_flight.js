@@ -1,6 +1,7 @@
   firebaseAuthFlag = false;
   var chat;
   var firechat;
+  var i= 0;
 
   /* Formatting function for row details - modify as you need */
   var table = "";
@@ -422,6 +423,7 @@
       ],
       "aoColumnDefs":[
         {
+
           "mRender": function(data, type, full) {
             return (data == "null") ? "No" : "Yes";
           },
@@ -429,10 +431,24 @@
         },
         {
           "mRender": function(data, type, full) {
-            var flightDate = new Date(Date.parse(data));
-            var currentDate = moment().format();
-            var diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("DD HH:mm");
-            return flightDate.toString().substring(0,21) + "<br>" + diff;
+            var flightDate = moment(data).format("YYYY MM DD HH:mm:ss");
+            var currentDate = moment().format("YYYY MM DD HH:mm:ss");
+            //var d = moment(currentDate).subtract(flightDate)
+            //var currentDate = moment().subtract(3, "day").format("YYYY MM DD HH:mm:ss");
+            //var currentDate = moment().format("2017 03 27 14:39:33");
+            var ms = moment(flightDate,"YYYY MM DD HH:mm:ss").diff(moment(currentDate, "YYYY MM DD HH:mm:ss"));
+            var d = moment.duration(ms);
+            var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm");
+            if(s.includes("-")){
+              //flight already happened
+              //diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("YYYY MM DD HH:mm");
+              return flightDate.toString().substring(4,16) + "<br><span class=\"pastFlight\">(" + s +")</span>";
+            } else {
+              //flight in the future
+              //diff = moment.utc(moment(flightDate).diff(moment(currentDate))).format("YYYY MM DD HH:mm");
+              return flightDate.toString().substring(4,16) + "<br><span class=\"futureFlight\">(" + s + ")</span>";
+
+            }
           },
           "aTargets":[ 8 ]
         }
@@ -784,8 +800,5 @@
       checkboxInit();
       initializeEventListeners();
       initFireChat();
-      setInterval(function(){
-        refreshTable(criticalFlightData);
-      }, 5000);
     }
   });
