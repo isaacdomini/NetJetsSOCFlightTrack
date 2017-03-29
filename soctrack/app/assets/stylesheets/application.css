@@ -172,3 +172,11 @@ body {
 #firechat-wrapper {
   margin-top: 25px; 
 }
+
+.futureFlight {
+  color: green;
+}
+
+.pastFlight {
+  color: red;
+}
