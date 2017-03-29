@@ -391,7 +391,10 @@
           "defaultContent": '<button class="btn" id="flightChatBtn">Chat</button>'
         },
         { "data": "recovery" },
-        { "data": "flight.etd" }
+        { 
+          "data": "flight.etd",
+          "width": "18%"
+        }
       ],
       "aoColumnDefs":[
         {
@@ -405,7 +408,7 @@
             var flightDate = new Date(Date.parse(data));
             var currentDate = moment().format();
             var diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("DD HH:mm");
-            return flightDate.toString().substring(0,21) + "\n" + diff;           
+            return flightDate.toString().substring(0,21) + "<br>" + diff;
           },
           "aTargets":[ 8 ]
         }
