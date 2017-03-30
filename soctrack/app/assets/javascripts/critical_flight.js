@@ -557,10 +557,6 @@
       }
       checkboxInit();
     });
-    $(document).on("click","#logoutbutton", function(){
-      window.localStorage.clear();
-      $("#railslogout").click();
-    });
     $(document).on("click",".recoveryReactionDropdown",function(){
       console.log(this.id);
       // changeRecoveryReactionCall(this.id);
@@ -764,6 +760,7 @@
   }
 
   $(document).ready(function() {
+    window.localStorage.clear();
     if(window._userid !== undefined) {
       dataTableInitialize();
       addValidatorRegExMethod();
