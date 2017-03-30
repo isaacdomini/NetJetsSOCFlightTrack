@@ -69,7 +69,8 @@
               <ul class="dropdown-menu">
                 <li><a href="javascript:;">Role: <%= current_user.role %></a></li>
                 <li role="separator" class="divider"></li>
-                <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+                <li id="logoutbutton">Log Out</li>
+                <li id="railslogoutbutton"><%= link_to('Logout fake', destroy_user_session_path, :method => :delete) %></li>
               </ul>
             </li>
           </ul>
