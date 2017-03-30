@@ -799,6 +799,7 @@
   }
 
   $(document).ready(function() {
+    window.localStorage.clear();
     if(window._userid !== undefined) {
       dataTableInitialize();
       addValidatorRegExMethod();
