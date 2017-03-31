@@ -205,7 +205,7 @@
     returnString = "";
     returnString+=`<div id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-popover" class="hide"><table class="table">
       <thead><tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr></thead>
-      <tbody><tr><td>${recoveryItem.flight.leg}</td><td>${recoveryItem.flight.etd}</td>
+      <tbody><tr><td>${recoveryItem.flight.leg}</td><td>${formatEtd(recoveryItem.flight.etd)}</td>
       <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr></tbody>
     </table></div>`;
 
@@ -399,7 +399,6 @@
       ],
       "aoColumnDefs":[
         {
-
           "mRender": function(data, type, full) {
             return (data == "null") ? "No" : "Yes";
           },
@@ -407,24 +406,7 @@
         },
         {
           "mRender": function(data, type, full) {
-            var flightDate = moment(data).format("YYYY MM DD HH:mm:ss");
-            var currentDate = moment().format("YYYY MM DD HH:mm:ss");
-            //var d = moment(currentDate).subtract(flightDate)
-            //var currentDate = moment().subtract(3, "day").format("YYYY MM DD HH:mm:ss");
-            //var currentDate = moment().format("2017 03 27 14:39:33");
-            var ms = moment(flightDate,"YYYY MM DD HH:mm:ss").diff(moment(currentDate, "YYYY MM DD HH:mm:ss"));
-            var d = moment.duration(ms);
-            var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm");
-            if(s.includes("-")){
-              //flight already happened
-              //diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("YYYY MM DD HH:mm");
-              return flightDate.toString().substring(4,16) + "<br><span class=\"pastFlight\">(" + s +")</span>";
-            } else {
-              //flight in the future
-              //diff = moment.utc(moment(flightDate).diff(moment(currentDate))).format("YYYY MM DD HH:mm");
-              return flightDate.toString().substring(4,16) + "<br><span class=\"futureFlight\">(" + s + ")</span>";
-
-            }
+            return formatEtd(data);
           },
           "aTargets":[ 8 ]
         }
@@ -444,11 +426,20 @@
     });
   }
 
-  function updateTimeDiff(data){
-    var flightDate = new Date(Date.parse(data));
-    var currentDate = moment().format();
-    var diff = moment.utc(moment(currentDate).diff(moment(flightDate))).format("DD HH:mm:ss");
-    return diff;  
+  function formatEtd(data){
+    var flightDate = moment(data).format("YYYY MM DD HH:mm:ss");
+    var currentDate = moment().format("YYYY MM DD HH:mm:ss");
+    var ms = moment(flightDate,"YYYY MM DD HH:mm:ss").diff(moment(currentDate, "YYYY MM DD HH:mm:ss"));
+    var d = moment.duration(ms);
+    var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm");
+    formatFlightDate = moment(data).format("MM/DD HH:mm");
+    if(s.includes("-")){
+      //flight already happened
+      return formatFlightDate.toString() + "<span class=\"pastFlight\"> (" + s +")</span>";
+    } else {
+      //flight in the future
+      return formatFlightDate.toString() + "<span class=\"futureFlight\"> (+" + s + ")</span>";
+    }
   }
 
   function dataTableInitialize(){
