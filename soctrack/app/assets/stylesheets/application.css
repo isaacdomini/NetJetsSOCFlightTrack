@@ -40,22 +40,27 @@
  	background-color: #333;
  }
 
- .details-control{
-     width: 13px !important;
- }
-
  #flightsTable{
     width: 100% !important;
  }
+ 
  td.details-control {
-     cursor: pointer;
+    cursor: pointer;
+ }
+
+ td.favorites-control {
+    cursor: pointer;
+ }
+
+ .favorite {
+    color: yellow;
  }
 
  .glyphicon-plus {
-     color: green;
+    color: green;
  }
   .glyphicon-minus {
-      color: red;
+    color: red;
   }
 
   .glyphicon-thumbs-up {

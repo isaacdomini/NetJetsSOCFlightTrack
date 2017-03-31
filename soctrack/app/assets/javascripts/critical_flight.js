@@ -334,6 +334,11 @@
         $(this).append('<span class="glyphicon glyphicon-plus"></span>');
       }
     });
+    $('td.favorites-control').each(function(i, obj) {
+      if($(this).children().length < 1){
+        $(this).append('<span class="glyphicon glyphicon-star"></span>');
+      }
+    });
     $('#changePane').on('click', function (e) {
       if ($("#dashboardPane").hasClass("col-md-9")) {
         $("#dashboardPane").removeClass("col-md-9");
@@ -352,7 +357,6 @@
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
         var row = table.row( tr );
-
         if ( row.child.isShown() ) {
             // This row is already open - close it
             row.child.hide();
@@ -368,6 +372,16 @@
             sp.addClass('glyphicon-minus');
         }
         recoveryReactionPopover();
+    } );
+
+    $('.favorites-control').on('click', function (e) {
+        e.stopPropagation();
+        var sp = $(this).find('span');
+        if(sp.hasClass('favorite')) {
+          sp.removeClass('favorite');
+        } else {
+          sp.addClass('favorite');
+        }
     } );
   }
 
@@ -400,11 +414,17 @@
       "rowId": "flight.leg",
       "columns": [
         {
+          "className": 'favorites-control',
+          "data": null,
+          "defaultContent": '',
+          "width": '16px'
+        },
+        {
           "className": 'details-control',
           "orderable": false,
           "data": null,
           "defaultContent": '',
-          "width": '16px'
+          "width": '13px'
         },
         { "data": "flight.tail" },
         { "data": "flight.leg" },
@@ -426,18 +446,18 @@
           "mRender": function(data, type, full) {
             return (data == "null") ? "No" : "Yes";
           },
-          "aTargets":[ 7 ]
+          "aTargets":[ 8 ]
         },
         {
           "mRender": function(data, type, full) {
             return formatEtd(data);
           },
-          "aTargets":[ 8 ]
+          "aTargets":[ 9 ]
         }
 
       ],
       "fnDrawCallback": tableDrawUpdateElements,
-      "order": [[1, 'asc']],
+      "order": [[2, 'asc']],
       dom: 'l<"toolbar">frtip',
       initComplete: function(){
       $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
