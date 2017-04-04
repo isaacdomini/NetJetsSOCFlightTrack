@@ -255,8 +255,10 @@
   function showAll(node){
     table.rows().every( function (){
       var tr = this.node();
-      var sp = this.node().querySelector("span");
+      var sp = this.node().querySelector(".expand");
       this.child( format(this.data())).show();
+      console.log(tr);
+      console.log(sp);
       if(tr.className.includes("odd")){
         tr.className = "odd shown";
       } else if(tr.className.includes("even")){
@@ -264,7 +266,7 @@
       }
       // tr.className += " shown";
       if(sp!=null){
-        sp.className = "glyphicon glyphicon-minus";
+        sp.className = "glyphicon glyphicon-minus expand";
       }
     });
     recoveryReactionPopover();
@@ -273,7 +275,7 @@
   function hideAll(node){
     table.rows().every( function (){
       var tr = this.node();
-      var sp = this.node().querySelector("span");
+      var sp = this.node().querySelector(".expand");
       this.child.hide();
       if(tr.className.includes("odd")){
         tr.className = "odd";
@@ -281,7 +283,7 @@
         tr.className = "even";
       }
       if(sp!=null){
-        sp.className = "glyphicon glyphicon-plus";
+        sp.className = "glyphicon glyphicon-plus expand";
       }
     });
   }
@@ -331,7 +333,7 @@
   function tableDrawUpdateElements(){
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
-        $(this).append('<span class="glyphicon glyphicon-plus"></span>');
+        $(this).append('<span class="glyphicon glyphicon-plus expand"></span>');
       }
     });
     $('td.favorites-control').each(function(i, obj) {
