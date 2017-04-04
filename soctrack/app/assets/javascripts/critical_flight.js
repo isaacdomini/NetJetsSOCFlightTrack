@@ -49,7 +49,7 @@
 
   function format (rowData) {
       // `d` is the original data object for the row
-      return `<div class="col-md-12">
+      return `<div id="expandedSection-${rowData.id}" class="col-md-12">
                 <div class="row"><div id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
                 <div><div class="${hideRestriction("add")} col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="${disableRestriction("add")}btn btn-default addRecoveryButton">Add</button></div></div>`;
@@ -329,11 +329,16 @@
       console.log(data);
     })
   }
-
+  function getCurrentStatus(elem){
+    var tr = $(elem).parent().closest('tr')
+    var row = table.row( tr );
+    return  row.child.isShown()? "minus" : "plus"
+  }
   function tableDrawUpdateElements(){
+
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
-        $(this).append('<span class="glyphicon glyphicon-plus expand"></span>');
+        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(this)} expand"></span>`);
       }
     });
     $('td.favorites-control').each(function(i, obj) {
