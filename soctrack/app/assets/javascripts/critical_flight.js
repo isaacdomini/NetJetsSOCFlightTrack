@@ -377,11 +377,23 @@
     $('.favorites-control').on('click', function (e) {
         e.stopPropagation();
         var sp = $(this).find('span');
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
         if(sp.hasClass('favorite')) {
           sp.removeClass('favorite');
         } else {
           sp.addClass('favorite');
         }
+
+        criticalFlightLegId = row.data().flight.leg;
+
+        $.post( "/critical_flights.json",
+        {
+          authenticity_token: window._token,
+          critical_flight: {
+            "critical_flight": criticalFlightLegId
+          }
+        })
     } );
   }
 
