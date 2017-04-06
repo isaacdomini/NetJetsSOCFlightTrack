@@ -1,27 +1,5 @@
 require 'csv'
 
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-# events = Hash.new
-# CSV.foreach("events.csv") do |row|
-#   puts row;
-# end
-# require 'csv'
-
-# hash = Hash[csv_text[0]]
-# puts hash
-# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-
-# keys = ['category']
-# array = CSV.parse(csv_text).map {|a| Hash[ keys.zip(a) ] }
-# array.reduce(&:deep_merge)
-# puts array
-
 events =
 Hash["ATC"=> ["En Route ATC","Ground Delay Program"],
 "Aircraft Related" => ["Ammenities" ,"Speed" ,"Weather/SIGOPS" ,"Luggage Space" ,"Release Problems" ,"Seating"],
@@ -126,10 +104,12 @@ fname = ["Josh", "Jacob", "Jonathan", "Jared", "John", "Brutus","Steve","Bill","
 i=0
 n=0
 
+favs = Array.new
+
 puts "\nCREATING USERS ..."
 for r in roles
   for d in domains
-    u = User.new(:email => r+"@"+d, :password => 'password', :password_confirmation => 'password', :role => r, :name => fname[n]+" "+lname[n%lname.size])
+    u = User.new(:email => r+"@"+d, :password => 'password', :password_confirmation => 'password', :role => r, :name => fname[n]+" "+lname[n%lname.size], :favorite => favs)
     n = n+1;
     # print u.email + " " + u.name;
     u.save

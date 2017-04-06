@@ -390,11 +390,11 @@
 
         criticalFlightId = row.data().id;
 
-        $.post( "/update_favorites.json",
+        $.post( "/user/update_favorites",
         {
           authenticity_token: window._token,
           user: window._userid,
-          "critical_flight": criticalFligthId,
+          "critical_flight": criticalFlightId,
           "favorite": favStatus
         })
     } );
