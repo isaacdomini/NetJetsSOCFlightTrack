@@ -49,7 +49,7 @@
 
   function format (rowData) {
       // `d` is the original data object for the row
-      return `<div id="expandedSection-${rowData.id}" class="col-md-12">
+      return `<div id="expandedSection-${rowData.flight.leg}" class="col-md-12">
                 <div class="row"><div id="critical_flight_row_${rowData.id}">${getExpandedSection(rowData)}</div></div>
                 <br/>
                 <div><div class="${hideRestriction("add")} col-md-offset-5"><button id="critical_flight_add_recovery-${rowData.id}" data-toggle="modal" data-target="#addRecoveryModal" class="${disableRestriction("add")}btn btn-default addRecoveryButton">Add</button></div></div>`;
@@ -205,7 +205,6 @@
     return indexOfIcon == 0 ? "empty-dot" : recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
   }
   function getOSAcceptContent(osReaction){
-    console.log(osReaction);
       if(parseInt(osReaction)==5 || parseInt(osReaction)==6){
           return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
       }
@@ -253,21 +252,21 @@
   }
 
   function showAll(node){
-    table.rows().every( function (){
-      var tr = this.node();
-      var sp = this.node().querySelector(".expand");
-      this.child( format(this.data())).show();
-      console.log(tr);
-      console.log(sp);
-      if(tr.className.includes("odd")){
-        tr.className = "odd shown";
-      } else if(tr.className.includes("even")){
-        tr.className = "even shown";
-      }
-      // tr.className += " shown";
-      if(sp!=null){
-        sp.className = "glyphicon glyphicon-minus expand";
-      }
+    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+      var rowNode = this.node();
+      rowObject = this;
+      $(rowNode).find("td:visible").each(function (){
+        if($(this).hasClass("details-control")){
+          var tr = $(this).parent();
+          var sp = this.querySelector(".expand");
+          rowObject.child( format(rowObject.data())).show();
+          tr.addClass("shown");
+          // tr.className += " shown";
+          if(sp!=null){
+            sp.className = "glyphicon glyphicon-minus expand";
+          }
+        }
+      });
     });
     recoveryReactionPopover();
   }
@@ -330,15 +329,20 @@
     })
   }
   function getCurrentStatus(elem){
-    var tr = $(elem).parent().closest('tr')
-    var row = table.row( tr );
-    return  row.child.isShown()? "minus" : "plus"
+    
+    return $(`#expandedSection-${cLeg}`).length == 0 ? "plus" : "minus"
   }
-  function tableDrawUpdateElements(){
+  function tableComplete(){
+    console.log("initComplete");
+  }
 
+  function tableDrawUpdateElements(){
+    console.log("drawUpdateTable");
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
-        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(this)} expand"></span>`);
+        cLeg = $(this).parent().attr('id')
+        // console.log(cLeg);
+        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(cLeg)} expand"></span>`);
       }
     });
     $('td.favorites-control').each(function(i, obj) {
@@ -346,20 +350,7 @@
         $(this).append('<span class="glyphicon glyphicon-star"></span>');
       }
     });
-    $('#changePane').on('click', function (e) {
-      if ($("#dashboardPane").hasClass("col-md-9")) {
-        $("#dashboardPane").removeClass("col-md-9");
-      }else{
-        $("#dashboardPane").addClass("col-md-9");
-      }
-      if ($("#chatPane").hasClass("col-md-3")) {
-        $("#chatPane").removeClass("col-md-3");
-      }else{
-        $("#chatPane").addClass("col-md-3");
-      }
-    });
-
-    $('.details-control').on('click', function (e) {
+        $('.details-control').on('click', function (e) {
         e.stopPropagation();
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
@@ -415,7 +406,6 @@
         idCount++;
       }
     });
-    console.log("checked everyflight");
     if(idCount==0){
       criticalFlightData.push(newData);
       promptCriticalFlightCreationToUser();
@@ -423,7 +413,6 @@
   }
 
   function promptCriticalFlightCreationToUser(){
-    console.log("prompt called");
     $('#updateTableAlertDiv').removeClass('hide');
   }
 
@@ -482,7 +471,8 @@
       "order": [[2, 'asc']],
       dom: 'l<"toolbar">frtip',
       initComplete: function(){
-      $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
+        console.log("initComplete");
+        $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
                             <button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>
                             <button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>
                             <button type="button" class="btn btn-primary" role="group" aria-label="..." data-toggle="modal" data-target="#addFlightModal">Add Critical Flight</button>
@@ -576,13 +566,22 @@
   }
 
   function initializeEventListeners(){
-    $('#flightsTable').on( 'page.dt', function () {
-      hideAll();
+
+    $('#changePane').on('click', function (e) {
+      if ($("#dashboardPane").hasClass("col-md-9")) {
+        $("#dashboardPane").removeClass("col-md-9");
+      }else{
+        $("#dashboardPane").addClass("col-md-9");
+      }
+      if ($("#chatPane").hasClass("col-md-3")) {
+        $("#chatPane").removeClass("col-md-3");
+      }else{
+        $("#chatPane").addClass("col-md-3");
+      }
     });
     $(document).on("click",".findFlightsButton",function(){
       var url = "/flights.json?"
       var paramCount = 0;
-      console.log("TEST");
       form = $(this).parents('form:first');
       if(form.find('input[name="tail"]').val() != ""){
         url+=`tail=${form.find('input[name="tail"]').val()}`;
@@ -609,10 +608,8 @@
         url+=`arrival=${form.find('input[name="arrival"]').val()}`;
         paramCount++;
       }
-      console.log(paramCount);
       if(paramCount>0){
         $.getJSON(url, function(data){
-          console.log(data);
           flightsSelectTable = form.find("tbody");
           flightsSelectTable.html("");
           flightsSelectTableContent = ""
@@ -630,10 +627,8 @@
     });
 
     $(document).on("click",".recoveryReactionDropdown",function(){
-      console.log(this.id);
       // changeRecoveryReactionCall(this.id);
       reactionOptions = this.id.split("-");
-      console.log(reactionOptions);
       $.post( "/critical_flight/recovery_reaction.json",
         {
           authenticity_token: window._token,
@@ -652,7 +647,6 @@
       }else{
         tr = $("#addRecoveryModal").find("input:checked").attr('id')
         // console.log(tr);
-        console.log(tr.slice(21));
         flightLeg = tr.slice(21);
         criticalFlight = $("#addFlightModal").attr("data-critical_flight_id");
         $.post( "/critical_flight/add_recovery.json",
