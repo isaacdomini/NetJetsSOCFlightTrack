@@ -379,11 +379,26 @@
     $('.favorites-control').on('click', function (e) {
         e.stopPropagation();
         var sp = $(this).find('span');
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+        var favStatus = true;
         if(sp.hasClass('favorite')) {
           sp.removeClass('favorite');
+          favStatus = false;
         } else {
           sp.addClass('favorite');
+          favStatus = true;
         }
+
+        criticalFlightId = row.data().id;
+
+        $.post( "/user/update_favorites",
+        {
+          authenticity_token: window._token,
+          user: window._userid,
+          "critical_flight": criticalFlightId,
+          "favorite": favStatus
+        })
     } );
   }
 

@@ -13,6 +13,33 @@ class CriticalFlightsController < ApplicationController
     end
   end
 
+  def updateFavorites
+    cFlight = CriticalFlight.find(params[:critical_flight])
+    favStatus = params[:favorite]
+    puts "\n\n\nFAV STATUS ................................................."
+    puts favStatus
+    if favStatus
+     if current_user.favorite == nil
+      current_user.favorite = []
+      current_user.save
+     end
+     current_user.push(cFlight.id)
+    else
+     if current_user.favorite != nil
+       current_user.favorite.delete_if {|f| f==cFlight.id}
+     end
+    end
+    
+    respond_to do |format|
+      #if newRecovery.save
+      
+      #else
+        
+      #end
+      return true
+    end
+  end
+
 
   def addRecovery
     cFlight = CriticalFlight.find(params[:critical_flight])

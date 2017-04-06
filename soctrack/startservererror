@@ -1,0 +1,35 @@
+/home/cyriac/Projects/Sp17FlightDashBoard/soctrack/vendor/bundle/ruby/2.4.0/gems/activesupport-5.0.1/lib/active_support/xml_mini.rb:51: warning: constant ::Fixnum is deprecated
+/home/cyriac/Projects/Sp17FlightDashBoard/soctrack/vendor/bundle/ruby/2.4.0/gems/activesupport-5.0.1/lib/active_support/xml_mini.rb:52: warning: constant ::Bignum is deprecated
+/home/cyriac/Projects/Sp17FlightDashBoard/soctrack/vendor/bundle/ruby/2.4.0/gems/activesupport-5.0.1/lib/active_support/core_ext/numeric/conversions.rb:138: warning: constant ::Fixnum is deprecated
+== 20170222183601 AddRoleAndNameToUsers: migrating ============================
+-- add_column(:users, :role, :string)
+   -> 0.0066s
+-- add_column(:users, :name, :string)
+   -> 0.0005s
+== 20170222183601 AddRoleAndNameToUsers: migrated (0.0072s) ===================
+
+== 20170222183604 CreateFlights: migrating ====================================
+-- create_table(:flights)
+   -> 0.0038s
+== 20170222183604 CreateFlights: migrated (0.0039s) ===========================
+
+== 20170222183721 CreateEvents: migrating =====================================
+-- create_table(:events)
+   -> 0.0084s
+== 20170222183721 CreateEvents: migrated (0.0085s) ============================
+
+== 20170222183843 CreateCriticalFlights: migrating ============================
+-- create_table(:critical_flights)
+   -> 0.0008s
+== 20170222183843 CreateCriticalFlights: migrated (0.0009s) ===================
+
+== 20170222183940 CreateRecoveries: migrating =================================
+-- create_table(:recoveries)
+   -> 0.0052s
+== 20170222183940 CreateRecoveries: migrated (0.0053s) ========================
+
+== 20170406000000 AddFavoriteToUsers: migrating ===============================
+-- add_column(:users, :favorite, :text)
+   -> 0.0007s
+== 20170406000000 AddFavoriteToUsers: migrated (0.0007s) ======================
+
