@@ -379,20 +379,23 @@
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
         var row = table.row( tr );
+        var favStatus = true;
         if(sp.hasClass('favorite')) {
           sp.removeClass('favorite');
+          favStatus = false;
         } else {
           sp.addClass('favorite');
+          favStatus = true;
         }
 
-        criticalFlightLegId = row.data().flight.leg;
+        criticalFlightId = row.data().id;
 
-        $.post( "/critical_flights.json",
+        $.post( "/update_favorites.json",
         {
           authenticity_token: window._token,
-          critical_flight: {
-            "critical_flight": criticalFlightLegId
-          }
+          user: window._userid,
+          "critical_flight": criticalFligthId,
+          "favorite": favStatus
         })
     } );
   }
