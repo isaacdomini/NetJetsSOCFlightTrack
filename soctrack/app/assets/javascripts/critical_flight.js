@@ -251,42 +251,6 @@
     return returnString
   }
 
-  function showAll(node){
-    table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-      var rowNode = this.node();
-      rowObject = this;
-      $(rowNode).find("td:visible").each(function (){
-        if($(this).hasClass("details-control")){
-          var tr = $(this).parent();
-          var sp = this.querySelector(".expand");
-          rowObject.child( format(rowObject.data())).show();
-          tr.addClass("shown");
-          // tr.className += " shown";
-          if(sp!=null){
-            sp.className = "glyphicon glyphicon-minus expand";
-          }
-        }
-      });
-    });
-    recoveryReactionPopover();
-  }
-
-  function hideAll(node){
-    table.rows().every( function (){
-      var tr = this.node();
-      var sp = this.node().querySelector(".expand");
-      this.child.hide();
-      if(tr.className.includes("odd")){
-        tr.className = "odd";
-      } else if(tr.className.includes("even")){
-        tr.className = "even";
-      }
-      if(sp!=null){
-        sp.className = "glyphicon glyphicon-plus expand";
-      }
-    });
-  }
-
   function removeRecoveryOption(node){
     console.log(node.children[0]);
     var childId = node.children[0].id;
@@ -328,9 +292,55 @@
       console.log(data);
     })
   }
-  function getCurrentStatus(elem){
-    
-    return $(`#expandedSection-${cLeg}`).length == 0 ? "plus" : "minus"
+
+function showAll(node){
+    table.rows().every( function (){
+      var tr = this.node();
+      var sp = this.node().querySelector(".expand");
+      this.child( format(this.data())).show();
+      console.log(tr);
+      console.log(sp);
+      if(tr.className.includes("odd")){
+        tr.className = "odd shown";
+      } else if(tr.className.includes("even")){
+        tr.className = "even shown";
+      } else {
+        tr.className = "shown";
+      }
+      // tr.className += " shown";
+      if(sp!=null){
+        sp.className = "glyphicon glyphicon-minus expand";
+      }
+    });
+    recoveryReactionPopover();
+  }
+
+  function hideAll(node){
+    table.rows().every( function (){
+      var tr = this.node();
+      var sp = this.node().querySelector(".expand");
+      this.child.hide();
+      if(tr.className.includes("odd")){
+        tr.className = "odd";
+      } else if(tr.className.includes("even")){
+        tr.className = "even";
+      } else {
+        tr.className = "";
+      }
+      if(sp!=null){
+        sp.className = "glyphicon glyphicon-plus expand";
+      }
+      console.log(tr);
+      console.log(sp);
+    });
+  }
+
+  function getCurrentStatus(elem, tr){
+    if(tr.hasClass("shown")){
+      return 'minus'
+    } else {
+      return 'plus'
+    }
   }
   function tableComplete(){
     console.log("initComplete");
@@ -340,9 +350,11 @@
     console.log("drawUpdateTable");
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
+      console.log($(this).parent())
+        tr = $(this).parent()
         cLeg = $(this).parent().attr('id')
         // console.log(cLeg);
-        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(cLeg)} expand"></span>`);
+        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(cLeg, tr)} expand"></span>`);
       }
     });
     $('td.favorites-control').each(function(i, obj) {
