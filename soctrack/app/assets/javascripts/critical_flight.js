@@ -350,7 +350,7 @@
         $(this).append('<span class="glyphicon glyphicon-star"></span>');
       }
     });
-        $('.details-control').on('click', function (e) {
+        $('.details-control').unbind().on('click', function (e) {
         e.stopPropagation();
         var sp = $(this).find('span');
         var tr = $(this).closest('tr');
