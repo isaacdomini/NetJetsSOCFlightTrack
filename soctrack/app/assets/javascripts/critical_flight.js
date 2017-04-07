@@ -298,8 +298,6 @@ function showAll(node){
       var tr = this.node();
       var sp = this.node().querySelector(".expand");
       this.child( format(this.data())).show();
-      console.log(tr);
-      console.log(sp);
       if(tr.className.includes("odd")){
         tr.className = "odd shown";
       } else if(tr.className.includes("even")){
@@ -307,7 +305,6 @@ function showAll(node){
       } else {
         tr.className = "shown";
       }
-      // tr.className += " shown";
       if(sp!=null){
         sp.className = "glyphicon glyphicon-minus expand";
       }
@@ -330,12 +327,10 @@ function showAll(node){
       if(sp!=null){
         sp.className = "glyphicon glyphicon-plus expand";
       }
-      console.log(tr);
-      console.log(sp);
     });
   }
 
-  function getCurrentStatus(elem, tr){
+  function getCurrentStatus(tr){
     if(tr.hasClass("shown")){
       return 'minus'
     } else {
@@ -352,9 +347,7 @@ function showAll(node){
       if($(this).children().length < 1){
       console.log($(this).parent())
         tr = $(this).parent()
-        cLeg = $(this).parent().attr('id')
-        // console.log(cLeg);
-        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(cLeg, tr)} expand"></span>`);
+        $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(tr)} expand"></span>`);
       }
     });
     $('td.favorites-control').each(function(i, obj) {
