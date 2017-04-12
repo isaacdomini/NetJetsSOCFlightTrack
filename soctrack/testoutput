@@ -1,0 +1,198 @@
+Run options: --seed 2780
+
+# Running:
+
+E
+
+Error:
+FlightsControllerTest#test_should_get_edit:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:10.949229', '2017-04-12 19:20:10.949229', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:31
+
+E
+
+Error:
+FlightsControllerTest#test_should_show_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.015078', '2017-04-12 19:20:11.015078', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:26
+
+E
+
+Error:
+FlightsControllerTest#test_should_create_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.021463', '2017-04-12 19:20:11.021463', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:18
+
+E
+
+Error:
+FlightsControllerTest#test_should_get_new:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.029610', '2017-04-12 19:20:11.029610', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:13
+
+E
+
+Error:
+FlightsControllerTest#test_should_update_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.035268', '2017-04-12 19:20:11.035268', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:36
+
+E
+
+Error:
+FlightsControllerTest#test_should_destroy_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.042308', '2017-04-12 19:20:11.042308', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:41
+
+E
+
+Error:
+FlightsControllerTest#test_should_get_index:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.048327', '2017-04-12 19:20:11.048327', 298486374)
+    
+
+bin/rails test test/controllers/flights_controller_test.rb:8
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_get_edit:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.054516', '2017-04-12 19:20:11.054516', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:31
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_get_new:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.060294', '2017-04-12 19:20:11.060294', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:13
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_create_critical_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.065852', '2017-04-12 19:20:11.065852', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:18
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_update_critical_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.071611', '2017-04-12 19:20:11.071611', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:36
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_destroy_critical_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.078698', '2017-04-12 19:20:11.078698', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:41
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_get_index:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.084374', '2017-04-12 19:20:11.084374', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:8
+
+E
+
+Error:
+CriticalFlightsControllerTest#test_should_show_critical_flight:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.090847', '2017-04-12 19:20:11.090847', 298486374)
+    
+
+bin/rails test test/controllers/critical_flights_controller_test.rb:26
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_get_index:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.097258', '2017-04-12 19:20:11.097258', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:8
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_get_new:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.103104', '2017-04-12 19:20:11.103104', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:13
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_update_recovery:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.110328', '2017-04-12 19:20:11.110328', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:36
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_destroy_recovery:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.118648', '2017-04-12 19:20:11.118648', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:41
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_show_recovery:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.124949', '2017-04-12 19:20:11.124949', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:26
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_create_recovery:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.130689', '2017-04-12 19:20:11.130689', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:18
+
+E
+
+Error:
+RecoveriesControllerTest#test_should_get_edit:
+ActiveRecord::RecordNotUnique: SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2017-04-12 19:20:11.136349', '2017-04-12 19:20:11.136349', 298486374)
+    
+
+bin/rails test test/controllers/recoveries_controller_test.rb:31
+
+
+
+Finished in 0.208016s, 100.9539 runs/s, 0.0000 assertions/s.
+
+21 runs, 0 assertions, 0 failures, 21 errors, 0 skips
