@@ -53,8 +53,8 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="">
         <div class="navbar-header">
-          <a class="navbar-brand" href=""><%= image_tag "netjetsLogo.png", :style => "max-height: 100%;"%></a>
-          <a class="navbar-brand" href=""><%= @title || "SocTrack" %></a>
+          <a class="navbar-brand"><%= image_tag "netjetsLogo.png", :style => "max-height: 100%;"%></a>
+          <a class="navbar-brand"><%= @title || "SocTrack" %></a>
         </div>
         <div class="collapse navbar-collapse" >
           <% if user_signed_in? %>
