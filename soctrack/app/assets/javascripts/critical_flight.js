@@ -87,9 +87,10 @@
   }
 
   function acceptRecoveryOptionDashboard(data){
-    data.removed_recovery.forEach(removed_recovery=> {
-      removeRecoveryFromDashboard(removed_recovery);
-    });
+    //TODO: stuff
+    console.log(data.critical_flight_id);
+    console.log(data.recovery_id);
+    $("#"+data.critical_flight_id+"-"+data.recovery_id+"-row").addClass('acceptedRecovery');
   }
 
   function removeRecoveryFromDashboard(data){
@@ -206,7 +207,7 @@
   }
   function getOSAcceptContent(osReaction){
       if(parseInt(osReaction)==5 || parseInt(osReaction)==6){         
-          return '<a id="acceptRecoveryOptionButton" class="${disableRestriction("accept")}controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a>'
+          return '<a id="acceptRecoveryOptionButton" class="controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span class="glyphicon glyphicon-ok"></span></a>'
           //return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
       }
       return ""
@@ -244,7 +245,7 @@
     //Dropdown reaction selector
     Object.keys(recoveryReactionSelectors).forEach(role=> {
       returnString +=
-      `<div class="col-md-1 col-sm-1"><div class="dropdown">
+      `<div class="col-md-1 col-sm-1"><div class="dropdown actionsDropdown">
           <button class="${disableRestriction(role)}btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recoveryItem[role]))}"></span>
           <span class="caret"></span></button>
           <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
@@ -261,14 +262,14 @@
     var ids = childId.split("-");
     console.log(ids[0]);
     console.log(ids[1]);
-    var criticalFlightId = ids[0];
-    var recoveryId = ids[1];
+    var recoveryId = ids[0];
+    var criticalFlightId = ids[1];
     console.log(" "+criticalFlightId+" : "+recoveryId);
     $.post( "/critical_flight/remove_recovery",
       {
         authenticity_token: window._token,
-        "critical_flight": recoveryId,
-        "recovery": criticalFlightId
+        "critical_flight": criticalFlightId,
+        "recovery": recoveryId
       })
     .done(function( data ){
       console.log("Recovery Removed");
@@ -282,8 +283,8 @@
     var ids = parentId.split("-");
     console.log("id1 " + ids[0]);
     console.log("id2 " + ids[1]);
-    var criticalFlightId = ids[0];
-    var recoveryId = ids[1];
+    var recoveryId = ids[0];
+    var criticalFlightId = ids[1];
     console.log(" "+criticalFlightId+" : "+recoveryId);
     $.post( "/critical_flight/accept_recovery",
       {
