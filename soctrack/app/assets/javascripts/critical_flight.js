@@ -205,10 +205,15 @@
     return indexOfIcon == 0 ? "empty-dot" : recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
   }
   function getOSAcceptContent(osReaction){
-      if(parseInt(osReaction)==5 || parseInt(osReaction)==6){
-          return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
+      if(parseInt(osReaction)==5 || parseInt(osReaction)==6){         
+          return '<a id="acceptRecoveryOptionButton" class="${disableRestriction("accept")}controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a>'
+          //return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
       }
-      return "..."
+      return ""
+  }
+
+  function getIdFromParent(node){
+    console.log(node)
   }
 
   function getExpandedSection(data){
@@ -246,8 +251,7 @@
       </div></div>`
     });
     returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("remove")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
-    returnString += `<a id="acceptRecoveryOptionButton" class="${disableRestriction("accept")}controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
-    returnString += `</div>`
+    returnString += `</div></div>`
     return returnString
   }
 
@@ -273,11 +277,11 @@
   }
 
   function acceptRecoveryOption(node){
-    console.log(node.children[0]);
-    var childId = node.children[0].id;
-    var ids = childId.split("-");
-    console.log(ids[0]);
-    console.log(ids[1]);
+    console.log(node.parentNode.parentNode.id);
+    var parentId = node.parentNode.parentNode.id;
+    var ids = parentId.split("-");
+    console.log("id1 " + ids[0]);
+    console.log("id2 " + ids[1]);
     var criticalFlightId = ids[0];
     var recoveryId = ids[1];
     console.log(" "+criticalFlightId+" : "+recoveryId);
@@ -345,7 +349,7 @@ function showAll(node){
     console.log("drawUpdateTable");
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
-      console.log($(this).parent())
+      //console.log($(this).parent())
         tr = $(this).parent()
         $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(tr)} expand"></span>`);
       }
