@@ -457,14 +457,14 @@ function showAll(node){
         { "data": "flight.departure" },
         { "data": "flight.arrival" },
         { "data": "event" },
-        { "data": null,
-          "orderable": false,
-          "defaultContent": '<button class="btn" id="flightChatBtn">Chat</button>'
-        },
         { "data": "recovery" },
         { 
           "data": "flight.etd",
           "width": "18%"
+        },
+        { "data": null,
+          "orderable": false,
+          "defaultContent": '<a class="controlBtn"><span class="glyphicon glyphicon-comment" id="flightChatBtn"></span></a>'
         }
       ],
       "aoColumnDefs":[
@@ -472,13 +472,13 @@ function showAll(node){
           "mRender": function(data, type, full) {
             return (data == "null") ? "No" : "Yes";
           },
-          "aTargets":[ 8 ]
+          "aTargets":[ 7 ]
         },
         {
           "mRender": function(data, type, full) {
             return formatEtd(data);
           },
-          "aTargets":[ 9 ]
+          "aTargets":[ 8 ]
         }
 
       ],
