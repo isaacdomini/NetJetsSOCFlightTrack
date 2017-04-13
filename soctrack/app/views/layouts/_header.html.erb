@@ -1,0 +1,27 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="">
+    <div class="navbar-header">
+      <a class="navbar-brand"><%= image_tag "netjetsLogo.png", :style => "max-height: 100%;"%></a>
+      <a class="navbar-brand"><%= @title || "SocTrack" %></a>
+    </div>
+    <div class="collapse navbar-collapse" >
+      <% if user_signed_in? %>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="changePane">
+          <button class="btn btn-default">
+            <span class="glyphicon glyphicon-th"></span>
+          </button>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.name %><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="javascript:;">Role: <%= current_user.role %></a></li>
+            <li role="separator" class="divider"></li>
+            <li id="railslogoutbutton"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+          </ul>
+        </li>
+      </ul>
+      <%end%>
+    </div>
+  </div>
+</nav>
