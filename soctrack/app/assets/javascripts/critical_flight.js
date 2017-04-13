@@ -620,7 +620,7 @@ function showAll(node){
           flightsSelectTableContent = ""
           data.forEach(d=> {
             flightsSelectTableContent+=`<tr><td><input id="flightsSelectTableLeg${d.leg}" type="checkbox" class="radio" value="1" name="flightsSelect" /></td>
-            <td>${d.tail}</td><td id="flightsSelectTableLeg">${d.leg}</td><td>${d.departure}</td><td>${d.arrival}</td><td>${d.etd}</td></tr>`;
+            <td>${d.tail}</td><td id="flightsSelectTableLeg">${d.leg}</td><td>${d.departure}</td><td>${d.arrival}</td><td>${formatEtd(d.etd)}</td></tr>`;
             flightsSelectTable.html(flightsSelectTableContent);
           });
           checkboxInit();
