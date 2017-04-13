@@ -87,9 +87,10 @@
   }
 
   function acceptRecoveryOptionDashboard(data){
-    data.removed_recovery.forEach(removed_recovery=> {
-      removeRecoveryFromDashboard(removed_recovery);
-    });
+    //TODO: stuff
+    console.log(data.critical_flight_id);
+    console.log(data.recovery_id);
+    $("#"+data.critical_flight_id+"-"+data.recovery_id+"-row").addClass('acceptedRecovery');
   }
 
   function removeRecoveryFromDashboard(data){
@@ -205,10 +206,15 @@
     return indexOfIcon == 0 ? "empty-dot" : recoveryReactionOptions[recoveryReactionSelectors[role][indexOfIcon-1]]
   }
   function getOSAcceptContent(osReaction){
-      if(parseInt(osReaction)==5 || parseInt(osReaction)==6){
-          return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
+      if(parseInt(osReaction)==5 || parseInt(osReaction)==6){         
+          return '<a id="acceptRecoveryOptionButton" class="controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span class="glyphicon glyphicon-ok"></span></a>'
+          //return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
       }
-      return "..."
+      return ""
+  }
+
+  function getIdFromParent(node){
+    console.log(node)
   }
 
   function getExpandedSection(data){
@@ -223,6 +229,10 @@
     });
     return expandedSection;
   }
+  function selectedRecoveryClass(recoveryItem){
+    console.log(recoveryItem.selected);
+    return  recoveryItem.selected ? "acceptedRecovery" : "";
+  }
 
   function recoveryOptionExpandedHTML(recoveryItem){
     returnString = "";
@@ -232,22 +242,22 @@
       <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr></tbody>
     </table></div>`;
 
-    returnString +=`<div class="row" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
+    //TODO: figure out if recovery has been accepted
+    returnString +=`<div class="row ${selectedRecoveryClass(recoveryItem)}" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
     <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${recoveryItem.critical_flight_id}-${recoveryItem.id}-popover" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}">
     <span class="glyphicon glyphicon-info-sign"></span></a></div><div id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-osreaction" class="col-md-1 col-sm-1">${getOSAcceptContent(recoveryItem["OS"])}</div>`;
 
     //Dropdown reaction selector
     Object.keys(recoveryReactionSelectors).forEach(role=> {
       returnString +=
-      `<div class="col-md-1 col-sm-1"><div class="dropdown">
+      `<div class="col-md-1 col-sm-1"><div class="dropdown actionsDropdown">
           <button class="${disableRestriction(role)}btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recoveryItem[role]))}"></span>
           <span class="caret"></span></button>
           <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
       </div></div>`
     });
     returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("remove")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
-    returnString += `<a id="acceptRecoveryOptionButton" class="${disableRestriction("accept")}controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-ok"></span></a></div>`;
-    returnString += `</div>`
+    returnString += `</div></div>`
     return returnString
   }
 
@@ -257,14 +267,14 @@
     var ids = childId.split("-");
     console.log(ids[0]);
     console.log(ids[1]);
-    var criticalFlightId = ids[0];
-    var recoveryId = ids[1];
+    var recoveryId = ids[0];
+    var criticalFlightId = ids[1];
     console.log(" "+criticalFlightId+" : "+recoveryId);
     $.post( "/critical_flight/remove_recovery",
       {
         authenticity_token: window._token,
-        "critical_flight": recoveryId,
-        "recovery": criticalFlightId
+        "critical_flight": criticalFlightId,
+        "recovery": recoveryId
       })
     .done(function( data ){
       console.log("Recovery Removed");
@@ -273,13 +283,13 @@
   }
 
   function acceptRecoveryOption(node){
-    console.log(node.children[0]);
-    var childId = node.children[0].id;
-    var ids = childId.split("-");
-    console.log(ids[0]);
-    console.log(ids[1]);
-    var criticalFlightId = ids[0];
-    var recoveryId = ids[1];
+    console.log(node.parentNode.parentNode.id);
+    var parentId = node.parentNode.parentNode.id;
+    var ids = parentId.split("-");
+    console.log("id1 " + ids[0]);
+    console.log("id2 " + ids[1]);
+    var recoveryId = ids[0];
+    var criticalFlightId = ids[1];
     console.log(" "+criticalFlightId+" : "+recoveryId);
     $.post( "/critical_flight/accept_recovery",
       {
@@ -345,7 +355,7 @@ function showAll(node){
     console.log("drawUpdateTable");
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
-      console.log($(this).parent())
+      //console.log($(this).parent())
         tr = $(this).parent()
         $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(tr)} expand"></span>`);
       }
@@ -447,14 +457,14 @@ function showAll(node){
         { "data": "flight.departure" },
         { "data": "flight.arrival" },
         { "data": "event" },
-        { "data": null,
-          "orderable": false,
-          "defaultContent": '<button class="btn" id="flightChatBtn">Chat</button>'
-        },
         { "data": "recovery" },
         { 
           "data": "flight.etd",
           "width": "18%"
+        },
+        { "data": null,
+          "orderable": false,
+          "defaultContent": '<a class="controlBtn"><span class="glyphicon glyphicon-comment" id="flightChatBtn"></span></a>'
         }
       ],
       "aoColumnDefs":[
@@ -462,13 +472,13 @@ function showAll(node){
           "mRender": function(data, type, full) {
             return (data == "null") ? "No" : "Yes";
           },
-          "aTargets":[ 8 ]
+          "aTargets":[ 7 ]
         },
         {
           "mRender": function(data, type, full) {
             return formatEtd(data);
           },
-          "aTargets":[ 9 ]
+          "aTargets":[ 8 ]
         }
 
       ],
