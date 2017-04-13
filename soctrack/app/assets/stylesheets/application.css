@@ -185,3 +185,8 @@ body {
 .pastFlight {
   color: red;
 }
+
+body.modal-open div.modal-backdrop {
+  position: relative;
+  /*do something with z-index maybe?*/
+}
