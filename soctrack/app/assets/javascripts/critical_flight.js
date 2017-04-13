@@ -229,6 +229,10 @@
     });
     return expandedSection;
   }
+  function selectedRecoveryClass(recoveryItem){
+    console.log(recoveryItem.selected);
+    return  recoveryItem.selected ? "acceptedRecovery" : "";
+  }
 
   function recoveryOptionExpandedHTML(recoveryItem){
     returnString = "";
@@ -238,7 +242,8 @@
       <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr></tbody>
     </table></div>`;
 
-    returnString +=`<div class="row" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
+    //TODO: figure out if recovery has been accepted
+    returnString +=`<div class="row ${selectedRecoveryClass(recoveryItem)}" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
     <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${recoveryItem.critical_flight_id}-${recoveryItem.id}-popover" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}">
     <span class="glyphicon glyphicon-info-sign"></span></a></div><div id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-osreaction" class="col-md-1 col-sm-1">${getOSAcceptContent(recoveryItem["OS"])}</div>`;
 

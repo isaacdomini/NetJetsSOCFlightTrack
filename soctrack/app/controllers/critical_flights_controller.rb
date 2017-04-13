@@ -127,7 +127,7 @@ class CriticalFlightsController < ApplicationController
     cFlight.recovery.each{ |r|
       if(r.id.to_i == recoveryid.to_i)
         r.selected = true
-
+        r.save
         cFlight.save
         returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid]
         ActionCable.server.broadcast 'critical_flight_channel',
