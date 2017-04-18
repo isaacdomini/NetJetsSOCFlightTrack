@@ -83,34 +83,29 @@
       acceptRecoveryOptionDashboard(data.content);
     }else{
       console.log("error");
+      console.log(data.action);
     }
   }
 
   function acceptRecoveryOptionDashboard(data){
-    //TODO: stuff
-    console.log(data.critical_flight_id);
     console.log(data.recovery_id);
     $("#"+data.critical_flight_id+"-"+data.recovery_id+"-row").addClass('acceptedRecovery');
   }
 
   function removeRecoveryFromDashboard(data){
-    console.log(data);
     $(`#${data.critical_flight_id}-${data.recovery_id}-row`).remove();
     criticalFlightData.forEach(cFlight=> {
       if(cFlight.id == data.critical_flight_id){
-        console.log(cFlight.recovery);
         i = 0;
         deleteIndex = -1;
         cFlight.recovery.forEach(r=> {
           if(r.id == data.recovery_id){
             deleteIndex = i;
-            console.log(`deleteIndex set to: ${deleteIndex}`);
           }
         });
         if(deleteIndex!=-1){
           cFlight.recovery.splice(deleteIndex,1);
         }
-        console.log(cFlight.recovery);
       }
     });
   }
@@ -134,7 +129,7 @@
         console.log("Found CriticalFlight in dataset");
 
         // if(rIndex==-1){
-        //   cFlight.recovery.push(recoveryItem);
+        //   cFlight.recovery.push(recovery);
         // }
       }
     });
@@ -143,30 +138,23 @@
     }
   }
 
-  function addRecoveryOptionToDashboard(recoveryItem){
-    cFlightRow = $(`#critical_flight_row_${recoveryItem.critical_flight_id}`);
-    console.log("CFLIGHT ROW "+ `critical_flight_row_${recoveryItem.critical_flight_id}`);
-    console.log($(`#critical_flight_row_${recoveryItem.critical_flight_id}`).html());
-    console.log("CHILD");
-    console.log($(`#critical_flight_row_${recoveryItem.critical_flight_id}`).find(`#${recoveryItem.critical_flight_id}-${recoveryItem.id}-row`));
-    if(cFlightRow.find(`#${recoveryItem.critical_flight_id}-${recoveryItem.id}-row`).length == 0){
-      console.log("about to add");
-      console.log(recoveryOptionExpandedHTML(recoveryItem));
-      cFlightRow.append(recoveryOptionExpandedHTML(recoveryItem).toString());
+  function addRecoveryOptionToDashboard(recovery){
+    cFlightRow = $(`#critical_flight_row_${recovery.critical_flight_id}`);
+    if(cFlightRow.find(`#${recovery.critical_flight_id}-${recovery.id}-row`).length == 0){
+      cFlightRow.append(recoveryOptionExpandedHTML(recovery).toString());
       recoveryReactionPopover();
       criticalFlightData.forEach(cFlight=> {
-        if(cFlight.id == recoveryItem.critical_flight_id){
+        if(cFlight.id == recovery.critical_flight_id){
           rIndex = -1;
           rIterator = 0;
           cFlight.recovery.forEach(r=> {
-            if(r.id == recoveryItem.id){
+            if(r.id == recovery.id){
               rIndex = rIterator;
             }
             rIterator ++;
           });
-          console.log("Found CriticalFlight in dataset");
           if(rIndex==-1){
-            cFlight.recovery.push(recoveryItem);
+            cFlight.recovery.push(recovery);
           }
         }
       });
@@ -175,15 +163,21 @@
   }
 
   function recoveryReactionPopover(){
-    // console.log("REcovery Option Popover");
-    // console.log($('[rel="recoveryItemPopover"]'));
-    $('[rel="recoveryItemPopover"]').popover({
+    $('[rel="recoveryPopoverSelected"]').popover({
         container: 'body',
         html: true,
         content: function () {
             var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
-            console.log("CONTETN");
-            console.log(clone);
+            return clone;
+        }
+    }).click(function(e) {
+        e.preventDefault();
+    });
+    $('[rel="recoveryPopover"]').popover({
+        container: 'body',
+        html: true,
+        content: function () {
+            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
             return clone;
         }
     }).click(function(e) {
@@ -195,10 +189,10 @@
       var y = node.parentNode.previousSibling
       y.innerHTML = node.children[0].children[0].outerHTML + '<span class="caret"></span></button>';
   }
-  function getDropdownList(recoveryItem, role){
+  function getDropdownList(recovery, role){
     listHTML = "";
     recoveryReactionSelectors[role].forEach(option=> {
-      listHTML += `<li class="recoveryReactionDropdown" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-${recoveryReactionSelectors[role].indexOf(option)+1}-dropdownitem" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-${recoveryReactionOptions[option]}"></span>${option}</a></li>`
+      listHTML += `<li class="recoveryReactionDropdown" id="${recovery.critical_flight_id}-${recovery.id}-${role}-${recoveryReactionSelectors[role].indexOf(option)+1}-dropdownitem" role="presentation"><a role="menuitem" tabindex="-1" ><span class="glyphicon glyphicon-${recoveryReactionOptions[option]}"></span>${option}</a></li>`
     });
     return listHTML;
   }
@@ -213,10 +207,6 @@
       return ""
   }
 
-  function getIdFromParent(node){
-    console.log(node)
-  }
-
   function getExpandedSection(data){
 
     var expandedSection = `<div class="row text-center">Recovery Options:</div>`;
@@ -224,52 +214,46 @@
     expandedSection += `<div class="col-md-2 col-sm-2"><b>Flights</b></div>`;
     recoveryReactionHeaders.forEach(reactionHeader=> expandedSection += `<div class="col-md-1 col-sm-1"><b>${reactionHeader}</b></div>`);
     expandedSection += `</div> <hr style="margin:0px;height:2px;background-color:#333;">`;
-    data.recovery.forEach(recoveryItem=> {
-      expandedSection +=recoveryOptionExpandedHTML(recoveryItem);
+    data.recovery.forEach(recovery=> {
+      expandedSection +=recoveryOptionExpandedHTML(recovery);
     });
     return expandedSection;
   }
-  function selectedRecoveryClass(recoveryItem){
-    console.log(recoveryItem);
-    return  recoveryItem.selected ? "acceptedRecovery" : "";
+  function selectedRecoveryClass(recovery){
+    return  recovery.selected ? "acceptedRecovery" : "";
   }
 
-  function recoveryOptionExpandedHTML(recoveryItem){
+  function recoveryOptionExpandedHTML(recovery){
     returnString = "";
-    returnString+=`<div id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-popover" class="hide"><table class="table">
+    returnString+=`<div id="${recovery.critical_flight_id}-${recovery.id}-popover" class="hide"><table class="table">
       <thead><tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr></thead>
-      <tbody><tr><td>${recoveryItem.flight.leg}</td><td>${formatEtd(recoveryItem.flight.etd)}</td>
-      <td>${recoveryItem.flight.departure}</td><td>${recoveryItem.flight.arrival}</td></tr></tbody>
+      <tbody><tr><td>${recovery.flight.leg}</td><td>${formatEtd(recovery.flight.etd)}</td>
+      <td>${recovery.flight.departure}</td><td>${recovery.flight.arrival}</td></tr></tbody>
     </table></div>`;
 
-    //TODO: figure out if recovery has been accepted
-    returnString +=`<div class="row ${selectedRecoveryClass(recoveryItem)}" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-row"><div class="col-md-2 col-sm-2">${recoveryItem.flight.tail}
-    <a class="controlBtn" href="#" rel="recoveryItemPopover" data-trigger="focus" data-popover-content="#${recoveryItem.critical_flight_id}-${recoveryItem.id}-popover" id="${recoveryItem.critical_flight_id}-${recoveryItem.id}">
-    <span class="glyphicon glyphicon-info-sign"></span></a></div><div id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-osreaction" class="col-md-1 col-sm-1">${getOSAcceptContent(recoveryItem["OS"])}</div>`;
+    returnString +=`<div class="row ${selectedRecoveryClass(recovery)}" id="${recovery.critical_flight_id}-${recovery.id}-row"><div class="col-md-2 col-sm-2">${recovery.flight.tail}
+    <a class="controlBtn" href="#" rel="recoveryPopover" data-trigger="focus" data-popover-content="#${recovery.critical_flight_id}-${recovery.id}-popover" id="${recovery.critical_flight_id}-${recovery.id}">
+    <span class="glyphicon glyphicon-info-sign"></span></a></div><div id="${recovery.critical_flight_id}-${recovery.id}-osreaction" class="col-md-1 col-sm-1">${getOSAcceptContent(recovery["OS"])}</div>`;
 
     //Dropdown reaction selector
     Object.keys(recoveryReactionSelectors).forEach(role=> {
       returnString +=
       `<div class="col-md-1 col-sm-1"><div class="dropdown actionsDropdown">
-          <button class="${disableRestriction(role)}btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recoveryItem.critical_flight_id}-${recoveryItem.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recoveryItem[role]))}"></span>
+          <button class="${disableRestriction(role)}btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"><span id="${recovery.critical_flight_id}-${recovery.id}-${role}-selectedrecovery" class="glyphicon glyphicon-${getDefaultIcon(role, parseInt(recovery[role]))}"></span>
           <span class="caret"></span></button>
-          <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recoveryItem, role)}</ul>
+          <ul class="dropdown-menu" id="divNewNotifications" role="menu" aria-labelledby="menu1">${getDropdownList(recovery, role)}</ul>
       </div></div>`
     });
-    returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("remove")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recoveryItem.id}-${recoveryItem.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
+    returnString += `<div class="col-md-1 col-sm-1 ${hideRestriction("remove")}" style="margin-top:10px;"><a id="removeRecoveryOptionButton" class="${disableRestriction("remove")}controlBtn removeRecoveryOptionButton" title="Remove Flight" onclick="removeRecoveryOption(this)"><span id="${recovery.id}-${recovery.critical_flight_id}" class="glyphicon glyphicon-remove"></span></a>`;
     returnString += `</div></div>`
     return returnString
   }
 
   function removeRecoveryOption(node){
-    console.log(node.children[0]);
     var childId = node.children[0].id;
     var ids = childId.split("-");
-    console.log(ids[0]);
-    console.log(ids[1]);
     var recoveryId = ids[0];
     var criticalFlightId = ids[1];
-    console.log(" "+criticalFlightId+" : "+recoveryId);
     $.post( "/critical_flight/remove_recovery",
       {
         authenticity_token: window._token,
@@ -278,19 +262,14 @@
       })
     .done(function( data ){
       console.log("Recovery Removed");
-      console.log(data);
     })
   }
 
   function acceptRecoveryOption(node){
-    console.log(node.parentNode.parentNode.id);
     var parentId = node.parentNode.parentNode.id;
     var ids = parentId.split("-");
-    console.log("id1 " + ids[0]);
-    console.log("id2 " + ids[1]);
     var recoveryId = ids[0];
     var criticalFlightId = ids[1];
-    console.log(" "+criticalFlightId+" : "+recoveryId);
     $.post( "/critical_flight/accept_recovery",
       {
         authenticity_token: window._token,
@@ -299,7 +278,6 @@
       })
     .done(function( data ){
       console.log("Recovery Accepted");
-      console.log(data);
     })
   }
 
@@ -457,10 +435,11 @@ function showAll(node){
         { "data": "flight.departure" },
         { "data": "flight.arrival" },
         { "data": "event" },
-        { "data": "recovery" },
+        { "data": "recovery",
+          "width": "15%" },
         { 
           "data": "flight.etd",
-          "width": "18%"
+          "width": "15%"
         },
         { "data": null,
           "orderable": false,
@@ -470,13 +449,20 @@ function showAll(node){
       "aoColumnDefs":[
         {
           "mRender": function(data, type, full) {
-            data.forEach(recovery => {
-              console.log(recovery);
-              if(recovery.selected){
-                console.log(recovery[0]);
-                return recovery.flight.tail;
+              for(var i = 0; i < Object.keys(data).length; i++){
+                var recovery = data[i];
+                if(recovery.selected){
+                  return `<div id="${recovery.critical_flight_id}-${recovery.id}-popoverselected" class="hide"><table class="table">
+                          <thead><tr><th>Leg</th><th>ETD</th><th>Departure</th><th>Arrival</th></tr></thead>
+                          <tbody><tr><td>${recovery.flight.leg}</td><td>${formatEtd(recovery.flight.etd)}</td>
+                          <td>${recovery.flight.departure}</td><td>${recovery.flight.arrival}</td></tr></tbody>
+                          </table></div>
+                          <div class="row ${selectedRecoveryClass(recovery)}">
+                          <div>${recovery.flight.tail}
+                          <a class="controlBtn" href="#" rel="recoveryPopoverSelected" data-trigger="focus" data-popover-content="#${recovery.critical_flight_id}-${recovery.id}-popoverselected" id="${recovery.critical_flight_id}-${recovery.id}">
+                          <span class="glyphicon glyphicon-info-sign"></span></a></div>`;
+                }
               }
-            });
             return "None Selected";
           },
           "aTargets":[ 7 ]
@@ -493,7 +479,6 @@ function showAll(node){
       "order": [[2, 'asc']],
       dom: 'l<"toolbar">frtip',
       initComplete: function(){
-        console.log("initComplete");
         $("div.toolbar").html(`<div class="btn-group" role="toolbar" aria-label="...">
                             <button type="button" class="btn" role="group" aria-label="..." onclick="showAll(this)" id="showBtn">Show All</button>
                             <button type="button" class="btn" role="group" aria-label="..." onclick="hideAll(this)" id="hideBtn">Hide All</button>
@@ -689,10 +674,8 @@ function showAll(node){
       }else{
         tr = $("#addFlightModal").find("input:checked").attr('id')
         // console.log(tr);
-        console.log(tr.slice(21));
         flightLeg = tr.slice(21);
         eventsArray = $("#eventsSelector").siblings("button")[0].title.split(", ");
-        console.log(eventsArray);
         $.post( "/critical_flights.json",
           {
             authenticity_token: window._token,
@@ -708,17 +691,11 @@ function showAll(node){
       }
     });
     $(document).on("click",".addRecoveryButton",function(){
-      console.log("CLICKED");
-      console.log(this.id);
       $("#addFlightModal").attr("data-critical_flight_id" , this.id.split("-")[1]);
-      console.log($("#addFlightModal").attr("data-critical_flight_id"));
     });
     $(document).on("click",".removeRecoveryOptionButton",function(){
-      console.log(this.children[0]);
       var childId = this.children[0].id;
       var ids = childId.split("-");
-      console.log(ids[0]);
-      console.log(ids[1]);
       var criticalFlightId = ids[0];
       var recoveryId = ids[1];
       $.post( "/critical_flight/remove_recovery.json",
