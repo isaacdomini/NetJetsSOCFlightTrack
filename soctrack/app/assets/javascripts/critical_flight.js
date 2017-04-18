@@ -230,7 +230,7 @@
     return expandedSection;
   }
   function selectedRecoveryClass(recoveryItem){
-    console.log(recoveryItem.selected);
+    console.log(recoveryItem);
     return  recoveryItem.selected ? "acceptedRecovery" : "";
   }
 
@@ -470,7 +470,14 @@ function showAll(node){
       "aoColumnDefs":[
         {
           "mRender": function(data, type, full) {
-            return (data == "null") ? "No" : "Yes";
+            data.forEach(recovery => {
+              console.log(recovery);
+              if(recovery.selected){
+                console.log(recovery[0]);
+                return recovery.flight.tail;
+              }
+            });
+            return "None Selected";
           },
           "aTargets":[ 7 ]
         },
