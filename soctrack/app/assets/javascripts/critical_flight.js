@@ -330,7 +330,7 @@ function showAll(node){
   }
 
   function tableDrawUpdateElements(){
-    console.log("drawUpdateTable");
+    recoveryReactionPopover();
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
       //console.log($(this).parent())
