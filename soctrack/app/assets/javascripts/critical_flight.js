@@ -343,27 +343,27 @@ function showAll(node){
         $(this).append('<span class="glyphicon glyphicon-star"></span>');
       }
     });
-        $('.details-control').unbind().on('click', function (e) {
-        e.stopPropagation();
-        var sp = $(this).find('span');
-        var tr = $(this).closest('tr');
-        var row = table.row( tr );
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-            sp.removeClass('glyphicon-minus');
-            sp.addClass('glyphicon-plus');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-            sp.removeClass('glyphicon-plus');
-            sp.addClass('glyphicon-minus');
-        }
-        recoveryReactionPopover();
-    } );
+    $('.details-control').unbind().on('click', function (e) {
+      e.stopPropagation();
+      var sp = $(this).find('span');
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+      if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('shown');
+          sp.removeClass('glyphicon-minus');
+          sp.addClass('glyphicon-plus');
+      }
+      else {
+          // Open this row
+          row.child( format(row.data()) ).show();
+          tr.addClass('shown');
+          sp.removeClass('glyphicon-plus');
+          sp.addClass('glyphicon-minus');
+      }
+      recoveryReactionPopover();
+    });
 
     $('.favorites-control').on('click', function (e) {
         e.stopPropagation();
@@ -388,7 +388,7 @@ function showAll(node){
           "critical_flight": criticalFlightId,
           "favorite": favStatus
         })
-    } );
+    });
   }
 
   function addToCriticalFlightData(newData){
