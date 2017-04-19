@@ -591,7 +591,7 @@ function showAll(node){
       var paramCount = 0;
       form = $(this).parents('form:first');
       if(form.find('input[name="tail"]').val() != ""){
-        url+=`tail=${form.find('input[name="tail"]').val()}`;
+        url+=`tail=${form.find('input[name="tail"]').val().toUpperCase()}`;
         paramCount++;
       }
       if(form.find('input[name="leg"]').val() != ""){
@@ -605,14 +605,14 @@ function showAll(node){
         if(paramCount>0){
           url+="&"
         }
-        url+=`departure=${form.find('input[name="departure"]').val()}`;
+        url+=`departure=${form.find('input[name="departure"]').val().toUpperCase()}`;
         paramCount++;
       }
       if(form.find('input[name="arrival"]').val() != ""){
         if(paramCount>0){
           url+="&"
         }
-        url+=`arrival=${form.find('input[name="arrival"]').val()}`;
+        url+=`arrival=${form.find('input[name="arrival"]').val().toUpperCase()}`;
         paramCount++;
       }
       if(paramCount>0){
