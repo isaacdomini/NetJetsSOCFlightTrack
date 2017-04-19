@@ -180,7 +180,6 @@
   function getOSAcceptContent(osReaction){
       if(parseInt(osReaction)==5 || parseInt(osReaction)==6){         
           return '<a id="acceptRecoveryOptionButton" class="controlBtn acceptRecoveryOptionButton" title="Accept Flight" onclick="acceptRecoveryOption(this)"><span class="glyphicon glyphicon-ok"></span></a>'
-          //return `<span class="glyphicon glyphicon-${getDefaultIcon("OS",parseInt(osReaction))}"></span>`;
       }
       return ""
   }
@@ -306,7 +305,6 @@ function showAll(node){
     recoveryReactionPopover();
     $('td.details-control').each(function(i, obj) {
       if($(this).children().length < 1){
-      //console.log($(this).parent())
         tr = $(this).parent()
         $(this).append(`<span class="glyphicon glyphicon-${getCurrentStatus(tr)} expand"></span>`);
       }
@@ -607,7 +605,6 @@ function showAll(node){
     });
 
     $(document).on("click",".recoveryReactionDropdown",function(){
-      // changeRecoveryReactionCall(this.id);
       reactionOptions = this.id.split("-");
       $.post( "/critical_flight/recovery_reaction.json",
         {
