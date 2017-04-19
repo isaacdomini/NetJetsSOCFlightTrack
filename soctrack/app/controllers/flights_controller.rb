@@ -4,7 +4,7 @@ class FlightsController < ApplicationController
   # GET /flights
   # GET /flights.json
   def index
-    @flights = Flight.all
+    @flights = Flight.all.select{|f| f.critical_flight_id==nil}
     if params.has_key?("tail")
       @flights = @flights.select {|flight| flight["tail"] == params["tail"] }
     end
