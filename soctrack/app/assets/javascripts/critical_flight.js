@@ -57,38 +57,21 @@
 
   function actionCableHandle(data){
     if(data.action=="flightcreate"){
-      console.log("received");
-      console.log(data.content);
       addToCriticalFlightData(data.content);
-      console.log("pushed to table");
     }else if(data.action == "removerecovery"){
-      console.log("received");
-      console.log("deleted");
-      console.log(data.content);
       removeRecoveryFromDashboard(data.content);
     }else if(data.action == "addrecovery"){
-      console.log("received");
-      console.log("addingrecovery");
-      console.log(data.content);
       addRecoveryOptionToDashboard(data.content);
     }else if(data.action == "recoveryreaction"){
-      console.log("received");
-      console.log("recoveryreaction");
-      console.log(data.content);
       changeRecoveryReaction(data.content);
     }if(data.action == "acceptrecovery"){
-      console.log("received");
-      console.log("recoveryreaction");
-      console.log(data.content);
       acceptRecoveryOptionDashboard(data.content);
     }else{
       console.log("error");
-      console.log(data.action);
     }
   }
 
   function acceptRecoveryOptionDashboard(data){
-    console.log(data.recovery_id);
     $("#"+data.critical_flight_id+"-"+data.recovery_id+"-row").addClass('acceptedRecovery');
   }
 
@@ -126,11 +109,6 @@
           }
           rIterator ++;
         });
-        console.log("Found CriticalFlight in dataset");
-
-        // if(rIndex==-1){
-        //   cFlight.recovery.push(recovery);
-        // }
       }
     });
     if(options.department == "OS"){
@@ -261,7 +239,6 @@
         "recovery": recoveryId
       })
     .done(function( data ){
-      console.log("Recovery Removed");
     })
   }
 
@@ -277,7 +254,6 @@
         "recovery": criticalFlightId
       })
     .done(function( data ){
-      console.log("Recovery Accepted");
     })
   }
 
@@ -324,9 +300,6 @@ function showAll(node){
     } else {
       return 'plus'
     }
-  }
-  function tableComplete(){
-    console.log("initComplete");
   }
 
   function tableDrawUpdateElements(){
@@ -645,7 +618,6 @@ function showAll(node){
           recovery_reaction: reactionOptions[3]
         })
       .done(function( data ){
-        console.log("Recovery Removed");
       });
     });
     $(document).on("click","#addRecoveryOptionCallButton",function(){
@@ -653,7 +625,6 @@ function showAll(node){
         alert("Pick 1 Flight.");
       }else{
         tr = $("#addRecoveryModal").find("input:checked").attr('id')
-        // console.log(tr);
         flightLeg = tr.slice(21);
         criticalFlight = $("#addFlightModal").attr("data-critical_flight_id");
         $.post( "/critical_flight/add_recovery.json",
@@ -663,7 +634,6 @@ function showAll(node){
             "flight_leg": flightLeg
           })
         .done(function( data ) {
-          console.log( "Data Loaded: " + data );
         });
         $("#addRecoveryModal").find(".flightsSelectTable").find("tbody").html(" ");
       }
@@ -673,7 +643,6 @@ function showAll(node){
         alert("Pick 1 Flight.");
       }else{
         tr = $("#addFlightModal").find("input:checked").attr('id')
-        // console.log(tr);
         flightLeg = tr.slice(21);
         eventsArray = $("#eventsSelector").siblings("button")[0].title.split(", ");
         $.post( "/critical_flights.json",
@@ -685,7 +654,6 @@ function showAll(node){
             }
           })
         .done(function( data ) {
-          console.log( "Data Loaded: " + data );
         });
         $("#addFlightModal").find(".flightsSelectTable").find("tbody").html(" ")
       }
@@ -707,7 +675,6 @@ function showAll(node){
           }
         })
       .done(function( data ){
-        console.log("Recovery Removed");
       });
     });
     $(document).on("click","#updateTableAlert",function(){
