@@ -57,7 +57,6 @@
 
   function actionCableHandle(data){
     if(data.action=="flightcreate"){
-      addToCriticalFlightData(data.content);
     }else if(data.action == "removerecovery"){
       removeRecoveryFromDashboard(data.content);
     }else if(data.action == "addrecovery"){
@@ -66,8 +65,6 @@
       changeRecoveryReaction(data.content);
     }if(data.action == "acceptrecovery"){
       acceptRecoveryOptionDashboard(data.content);
-    }else{
-      console.log("error");
     }
   }
 
@@ -633,6 +630,7 @@ function showAll(node){
         .done(function( data ) {
         });
         $("#addRecoveryModal").find(".flightsSelectTable").find("tbody").html(" ");
+        $("#addRecoveryModal").modal('hide');
       }
     });
     $(document).on("click","#criticalFlightFormButton",function(){
@@ -652,7 +650,8 @@ function showAll(node){
           })
         .done(function( data ) {
         });
-        $("#addFlightModal").find(".flightsSelectTable").find("tbody").html(" ")
+        $("#addFlightModal").find(".flightsSelectTable").find("tbody").html(" ");
+        $("#addFlightModal").modal('hide');
       }
     });
     $(document).on("click",".addRecoveryButton",function(){
