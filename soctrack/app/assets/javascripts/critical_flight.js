@@ -510,7 +510,7 @@ function showAll(node){
         rules: {
             tail: {
               // required: true,
-              regx: /^N[0-9]{3}QS$/
+              regx: /^[Nn][0-9]{3}[QS|qs]$/
             },
             leg: {
               // required: true,
@@ -518,11 +518,11 @@ function showAll(node){
             },
             departure: {
               // required: true,
-              regx: /^K[A-Z]{3}$/
+              regx: /^[Kk][A-Za-z]{3}$/
             },
             arrival: {
               // required: true,
-              regx: /^K[A-Z]{3}$/
+              regx: /^[Kk][A-Za-z]{3}$/
             }
         },
         highlight: function(element) {
@@ -793,7 +793,7 @@ function showAll(node){
     if(window._userid !== undefined) {
       dataTableInitialize();
       addValidatorRegExMethod();
-      flightFormValidation('#newFlightForm');
+      flightFormValidation('.newFlightForm');
       checkboxInit();
       initializeEventListeners();
       initFireChat();
