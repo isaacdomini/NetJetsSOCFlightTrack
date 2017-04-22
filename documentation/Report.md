@@ -1,17 +1,8 @@
- 
-
-SOC DASHBOARD
+# SOC DASHBOARD
 
 Daniel Bedich, Shantanu Bhardwaj, Cyriac Thundathil, Asanka Nanayakkara
 
 Department of Computer Science and Engineering
-
-* * *
-
-
-TABLE OF CONTENTS
-
-2……………………………………………………………………………………………...Introduction
 
 # SETUP INSTRUCTIONS
 
@@ -27,7 +18,10 @@ PROBLEM STATEMENT
 
 *"Our organization has hundreds of flights that are flown each day. We would like to build an application that is a dashboard of our critical flights, with ability to identify critical issues. And this tool shall have the ability for the SOC members to communicate among themselves to resolve critical issues. The application shall have the following features:*
 
-*a. Publish /subscribe functionality so that as the data changes, user’s screens are	updated immediately.b. Tracking communication among SOC members and associating communications with key entitiesc. Dashboard for flights to identify critical issuesd. Ability to search past communications"*
+*a. Publish /subscribe functionality so that as the data changes, user’s screens are	updated immediately.
+b. Tracking communication among SOC members and associating communications with key entities
+c. Dashboard for flights to identify critical issues
+d. Ability to search past communications"*
 
 The goal of our capstone project is to improve the current SocTrack dashboard application, both functionally and aesthetically. Our point of contact project was Umesh Vaswani, an architect. With him, we analyzed the functional requirements, current application, and points of improvement on the current application. He also advised us how to approach the project like software engineers in industry would. 
 
@@ -69,9 +63,9 @@ In order to save time and redundant work, we applied external open-source librar
 
 # CODE AND TEAM MANAGEMENT
 
-# In order to best manage our project and allow us to collaborate on changes, we first put our Rails application on github, since we were all familiar with using it. We used strict branching in order for seamless merges. This also prevented people’s changes from adversely affecting the whole project.
+In order to best manage our project and allow us to collaborate on changes, we first put our Rails application on github, since we were all familiar with using it. We used strict branching in order for seamless merges. This also prevented people’s changes from adversely affecting the whole project.
 
-#  In order to assign tasks and track their progress, we initially tried Trello but later opted to switch to Visual Studio Team Services due its ease. Communication between group members were through a dedicated GroupMe room.
+In order to assign tasks and track their progress, we initially tried Trello but later opted to switch to Visual Studio Team Services due its ease. Communication between group members were through a dedicated GroupMe room.
 
 In order to make sure we were going in the right direction, we met with Umesh once every week at NetJets to provide updates on our progress. He always gave us input and advice on what we had. These weekly meetings also served as an opportunity to discuss and update the requirements if need be.
 
@@ -83,7 +77,7 @@ Shantanu and Daniel took the initiative to set up the application’s front end.
 
 # RISK AVOIDANCE & MITIGATION
 
-# Throughout the project, we faced varying degrees of risk. As a team, we learned to avoid, manage, and mitigate risk at every step of the way.
+Throughout the project, we faced varying degrees of risk. As a team, we learned to avoid, manage, and mitigate risk at every step of the way.
 
 1. RISK: Not finishing the project in time
 
