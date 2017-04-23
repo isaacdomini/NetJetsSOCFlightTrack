@@ -7,7 +7,7 @@
   var table = "";
   var initalized = false;
   var criticalFlightData = "";
-  const recoveryReactionHeaders = ["...","AB","OS","CS","DX","OPS","MX","ITP","SC","-"];
+  const recoveryReactionHeaders = ["  ","AB","OS","CS","DX","OPS","MX","ITP","SC","  "];
   const recoveryReactionOptions = {
     "null":"empty-dot", "Yes":"green-dot", "Maybe":"yellow-dot", "No":"red-dot", "Working":"blue-dot", "Accept":"thumbs-up" ,"Decline":"thumbs-down", "ITP":"plane", "SC":"globe"
   };
