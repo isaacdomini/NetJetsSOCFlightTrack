@@ -1,3 +1,6 @@
+Ruby on Rails:
+	- http://guides.rubyonrails.org/
+
 jQuery
 	- https://api.jquery.com/
 
