@@ -45,7 +45,7 @@ for i in 0..999
   until !Flight.find_by_leg(randLeg)
     randLeg = rand(99999999).to_s.center(8, rand(9).to_s)
   end
-  flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(3.days).seconds.from_now)
+  flight = Flight.new(:tail => "N"+randTail+"QS", :leg => randLeg, :arrival => sourceDest[0], :departure => sourceDest[1], :etd => rand(1.days).seconds.from_now)
   flight.save
   fls << i+1
   printProgressUpdate(i,999);
