@@ -16,14 +16,12 @@ class CriticalFlightsController < ApplicationController
   def updateFavorites
     cFlight = CriticalFlight.find(params[:critical_flight])
     favStatus = params[:favorite]
-    puts "\n\n\nFAV STATUS ................................................."
-    puts favStatus
     if favStatus
      if current_user.favorite == nil
       current_user.favorite = []
       current_user.save
      end
-     current_user.push(cFlight.id)
+     current_user.favorite.push(cFlight.id)
     else
      if current_user.favorite != nil
        current_user.favorite.delete_if {|f| f==cFlight.id}
@@ -127,32 +125,15 @@ class CriticalFlightsController < ApplicationController
     cFlight.recovery.each{ |r|
       if(r.id.to_i == recoveryid.to_i)
         r.selected = true
-
+        r.save
         cFlight.save
         returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid]
         ActionCable.server.broadcast 'critical_flight_channel',
                                    content:  returnHash,
                                    action: "acceptrecovery"
         head :ok
-      else
-        dRecovery = r
-        dRecovery.destroy
-        removed_recovery_hash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => r.id]
-        print "RETURN HASH"
-        puts removed_recovery_hash
-        cFlight.save
-        removed_recovery.push(removed_recovery_hash);
-        # ActionCable.server.broadcast 'critical_flight_channel',
-        #                            content:  returnHash,
-        #                            action: "removerecovery"
-        # head :ok
       end
     }
-    returnHash = Hash["critical_flight_id" => critical_flight_id, "recovery_id" => recoveryid, "removed_recovery" => removed_recovery]
-    ActionCable.server.broadcast 'critical_flight_channel',
-                               content:  returnHash,
-                               action: "acceptrecovery"
-    head :ok
     return
   end
 

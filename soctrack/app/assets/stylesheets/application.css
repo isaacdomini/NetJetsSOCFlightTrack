@@ -89,7 +89,11 @@
     color: #2196F3;
   }
 
- #actionsDropdown {
+  .glyphicon-ok {
+    color: green;
+  }
+
+ .actionsDropdown {
  	margin-left: -15px;
  }
 
@@ -184,4 +188,16 @@ body {
 
 .pastFlight {
   color: red;
+}
+
+.acceptedRecovery {
+  background-color: #A5D6A7;
+}
+
+.row {
+  margin: 0px;
+}
+
+#menu1{
+  min-height: 42px;
 }
