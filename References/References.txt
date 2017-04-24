@@ -1,0 +1,26 @@
+jQuery
+	- https://api.jquery.com/
+
+jQuery DataTables
+	- https://datatables.net/
+	- https://datatables.net/docs/DataTables/1.9.4/DataTable.html
+
+Firechat
+	- https://firechat.firebaseapp.com/docs/
+	- https://github.com/firebase/firechat
+
+Firebase
+	- https://firebase.google.com
+	- https://firebase.google.com/docs
+	- https://console.firebase.google.com
+		Email: soctrackdev@gmail.com
+		Password: sp17dashboard
+		contains all data from firchat (users, rooms, messages)
+
+ActionCable
+	- http://edgeguides.rubyonrails.org/action_cable_overview.html
+	- https://www.learnenough.com/action-cable-tutorial#sec-upgrading_to_action_cable
+
+MiniTest
+	- http://ruby-doc.org/stdlib-2.0.0/libdoc/minitest/rdoc/MiniTest.html
+	- https://github.com/seattlerb/minitest
