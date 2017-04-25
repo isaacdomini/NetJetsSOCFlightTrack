@@ -13,6 +13,13 @@ class CriticalFlightsController < ApplicationController
     end
   end
 
+  def getFavorites
+    respond_to do |format|
+      format.html
+      format.json { render :json => current_user.to_json() }
+    end
+  end
+  
   def updateFavorites
     cFlight = CriticalFlight.find(params[:critical_flight])
     favStatus = params[:favorite]
