@@ -1,17 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  tail: MyString
-  leg: MyString
-  source: MyString
-  destination: MyString
   event: MyText
-  etd: 2017-02-15 15:19:55
 
 two:
-  tail: MyString
-  leg: MyString
-  source: MyString
-  destination: MyString
   event: MyText
-  etd: 2017-02-15 15:19:55

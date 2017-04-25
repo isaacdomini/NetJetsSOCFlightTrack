@@ -17,7 +17,7 @@ class CriticalFlightsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create critical_flight" do
     assert_difference('CriticalFlight.count') do
-      post critical_flights_url, params: { critical_flight: { destination: @critical_flight.destination, etd: @critical_flight.etd, event: @critical_flight.event, leg: @critical_flight.leg, source: @critical_flight.source, tail: @critical_flight.tail } }
+      post critical_flights_url, params: { critical_flight: { event: @critical_flight.event } }
     end
 
     assert_redirected_to critical_flight_url(CriticalFlight.last)
@@ -34,7 +34,7 @@ class CriticalFlightsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update critical_flight" do
-    patch critical_flight_url(@critical_flight), params: { critical_flight: { destination: @critical_flight.destination, etd: @critical_flight.etd, event: @critical_flight.event, leg: @critical_flight.leg, source: @critical_flight.source, tail: @critical_flight.tail } }
+    patch critical_flight_url(@critical_flight), params: { critical_flight: {event: @critical_flight.event} }
     assert_redirected_to critical_flight_url(@critical_flight)
   end
 
